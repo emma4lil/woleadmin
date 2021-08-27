@@ -4,11 +4,15 @@
       <sales-chart />
     </v-col>
     <v-col cols="12" lg="6">
-      <info-card title="Active Users" :count="12322" />
-      <info-card title="Total flyers" count="334" />
+      <div class="d-flex justify-start">
+        <info-card class="mx-2" title="Active Users" :count="12322" />
+        <info-card class="mx-2" title="Total flyers" count="334" />
+      </div>
     </v-col>
 
-    {{$auth.user}}
+    {{ $auth.user }}
+    <br />
+    {{ metrics }}
   </v-row>
 </template>
 
@@ -19,5 +23,16 @@ export default {
   auth: true,
   components: { SalesChart, InfoCard },
   name: "Index",
+  data() {
+    return {
+      metrics: "some"
+    };
+  },
+  mounted () {
+      var r = this.$getMetrics()
+      r.then(d => {
+        this.metrics = d
+      })
+  }
 };
 </script>

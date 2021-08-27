@@ -27,7 +27,8 @@ export default {
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
-    "~/services/auth.js"
+    "~/services/auth.js",
+    "~/services/admin_repo.js"
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -81,8 +82,8 @@ export default {
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
-    // baseURL: "https://localhost:44366",
-    baseURL: "https://wole-api.herokuapp.com"
+   //baseURL: "https://localhost:44366",
+   baseURL: "https://wole-api.herokuapp.com"
   },
 
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
