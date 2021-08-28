@@ -4,13 +4,27 @@
       <sales-chart />
     </v-col>
     <v-col cols="12" lg="6">
-      <div class="d-flex justify-start">
-        <info-card class="mx-2" title="Active Users" :count="12322" />
-        <info-card class="mx-2" title="Total flyers" count="334" />
-      </div>
+      <v-row class="d-flex justify-start">
+        <v-col cols="6" lg="4">
+          <info-card title="Users" :count="metrics.noOfUsers" />
+        </v-col>
+        <v-col cols="6" lg="4">
+          <info-card title="Flyers" :count="metrics.noOfFlyers" />
+        </v-col>
+        <v-col cols="6" lg="4">
+          <info-card title="Trades" :count="metrics.noOfTrades" />
+        </v-col>
+        <v-col cols="6" lg="4">
+          <info-card title="Daily Trades" :count="metrics.noOfNewTrades" />
+        </v-col>
+        <v-col cols="6" lg="4">
+          <info-card title="Completed Trade" :count="metrics.noOfCompletedTrades" />
+        </v-col>
+        <v-col cols="6" lg="4">
+          <info-card title="Disputed Trades" :count="metrics.noOfDisputes" />
+        </v-col>
+      </v-row>
     </v-col>
-
-    {{ $auth.user }}
     <br />
     {{ metrics }}
   </v-row>
@@ -25,14 +39,16 @@ export default {
   name: "Index",
   data() {
     return {
-      metrics: "some"
+      metrics: {
+        noOfUsers: "wait...",
+      },
     };
   },
-  mounted () {
-      var r = this.$getMetrics()
-      r.then(d => {
-        this.metrics = d
-      })
-  }
+  mounted() {
+    var r = this.$getMetrics();
+    r.then((d) => {
+      this.metrics = d.data;
+    });
+  },
 };
 </script>
