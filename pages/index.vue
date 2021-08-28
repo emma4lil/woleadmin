@@ -1,5 +1,10 @@
 <template>
   <v-row>
+    <v-col cols="12">
+      <span class="text-h1">Site Metrics</span
+      >
+      <span v-if="refreshing" class="mx-2 grey--text caption">updates every 10 seconds</span>
+    </v-col>
     <v-col cols="12" lg="6">
       <sales-chart />
     </v-col>
@@ -18,7 +23,10 @@
           <info-card title="Daily Trades" :count="metrics.noOfNewTrades" />
         </v-col>
         <v-col cols="6" lg="4">
-          <info-card title="Completed Trade" :count="metrics.noOfCompletedTrades" />
+          <info-card
+            title="Completed Trade"
+            :count="metrics.noOfCompletedTrades"
+          />
         </v-col>
         <v-col cols="6" lg="4">
           <info-card title="Disputed Trades" :count="metrics.noOfDisputes" />
@@ -26,7 +34,7 @@
       </v-row>
     </v-col>
     <br />
-    {{ metrics }}
+    
   </v-row>
 </template>
 
@@ -42,6 +50,7 @@ export default {
       metrics: {
         noOfUsers: "wait...",
       },
+      refreshing: false
     };
   },
   mounted() {
@@ -49,6 +58,18 @@ export default {
     r.then((d) => {
       this.metrics = d.data;
     });
+
+    var k = setInterval(() => this.refresh(), 10000)
+  },
+  methods: {
+    refresh() {
+      this.refreshing = true
+      var r = this.$getMetrics();
+      r.then((d) => {
+        this.metrics = d.data;
+        this.refreshing = flase
+      });
+    },
   },
 };
 </script>
