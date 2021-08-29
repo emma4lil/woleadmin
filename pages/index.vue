@@ -5,7 +5,7 @@
       >
       <span v-if="refreshing" class="mx-2 grey--text caption">updates every 10 seconds</span>
     </v-col>
-    <v-col cols="12" lg="6">
+    <v-col v-if="false" cols="12" lg="6">
       <sales-chart />
     </v-col>
     <v-col cols="12" lg="6">

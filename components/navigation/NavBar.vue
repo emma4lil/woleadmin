@@ -1,5 +1,5 @@
 <template>
-  <div class="mx-3" style="width: 100%;">
+  <div class="mx-3">
     <div class="d-flex justify-end">
       <nav-drop-down />
     </div>
