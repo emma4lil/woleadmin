@@ -82,8 +82,8 @@ export default {
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
-   //baseURL: "https://localhost:44366",
-   baseURL: "https://wole-api.herokuapp.com"
+   baseURL: "https://localhost:44366",
+   //baseURL: "https://wole-api.herokuapp.com"
   },
 
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
