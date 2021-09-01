@@ -43,7 +43,7 @@
           <v-carousel height="250" hide-delimiter-background hide-delimiters>
             <v-carousel-item
               v-for="(item, i) in info.images"
-              :key="i"
+              :key="render + i"
               :src="item.url"
               reverse-transition="fade-transition"
               transition="fade-transition"
@@ -125,13 +125,56 @@
           <v-divider></v-divider>
           <v-sheet color="gray" class="pa-2">
             <v-spacer />
-            <v-btn small color="primary" dark>See Trades</v-btn>
-            <v-btn v-if="info.isPublished" small color="green" dark>Unpublish</v-btn>
-            <v-btn v-else small color="red" dark>Publish</v-btn>
+            <v-btn @click="seeTradeAction()" small color="primary" dark
+              >See Trades</v-btn
+            >
+            <v-btn
+              @click="toggleFlyerAction(info.id)"
+              v-if="info.isPublished"
+              small
+              color="green"
+              dark
+              >Unpublish</v-btn
+            >
+            <v-btn
+              @click="toggleFlyerAction(info.id)"
+              v-else
+              small
+              color="red"
+              dark
+              >Publish</v-btn
+            >
             <v-btn small dark>Delete</v-btn>
           </v-sheet>
         </v-col>
       </v-row>
+    </v-col>
+
+    <!-- Dialog -->
+    <v-col cols="12">
+      <v-dialog
+        v-model="dialog"
+        scrollable
+        :overlay="false"
+        max-width="500px"
+        transition="dialog-transition"
+      >
+        <v-card>
+          <v-card-title primary-title> Flyer Trades list </v-card-title>
+
+          <v-card-text>
+            <v-row>
+              <v-col v-for="(item, i) in info.trades" :key="i">
+                <v-card flat>
+                  <v-card-title primary-title>
+                    <span>{{i + 1}}</span> -- <span class="caption">{{ item.tradeId }}</span>
+                  </v-card-title>
+                </v-card>
+              </v-col>
+            </v-row>
+          </v-card-text>
+        </v-card>
+      </v-dialog>
     </v-col>
   </v-row>
 </template>
@@ -140,6 +183,8 @@
 export default {
   data() {
     return {
+      dialog: false,
+      render: 0,
       search: "",
       headers: [
         {
@@ -184,8 +229,17 @@ export default {
         this.flyers = d.data;
       });
     },
-    toggleflyerAction() {},
-    seeTradeAction() {},
+    toggleFlyerAction(id) {
+      this.$toggleFlyerPublishState(id).then((d) => {
+        this.getFlyers();
+        this.render += 1;
+        // this.$forceUpdate();
+        // this.$router.go()
+      });
+    },
+    seeTradeAction() {
+      this.dialog = true;
+    },
     deleteAction() {},
   },
 };
