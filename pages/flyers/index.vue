@@ -31,11 +31,27 @@
                   @click:row="rowClicked"
                 >
                   <template v-slot:item.action="{ item }">
-                    <v-btn text x-small color="blue">Info</v-btn>
                     <v-btn @click="seeFlyerDetail()" text x-small color="yellow"
-                      >See Trades</v-btn
+                      >see more</v-btn
                     >
-                    <v-btn text x-small color="green">Publish</v-btn>
+                    <v-btn
+                      :loading="loading"
+                      v-if="info.isPublished"
+                      @click="toggleFlyerAction(item.id)"
+                      text
+                      x-small
+                      color="red"
+                      >Unpublish</v-btn
+                    >
+                    <v-btn
+                      :loading="loading"
+                      v-if="!info.isPublished"
+                      @click="toggleFlyerAction(item.id)"
+                      text
+                      x-small
+                      color="green"
+                      >Publish</v-btn
+                    >
                   </template>
                 </v-data-table>
               </v-card>
@@ -148,12 +164,12 @@
                   </div>
                 </div>
 
-                <h3 class="mt-2">Flyer Actions</h3>
+                <!-- <h3 class="mt-2">Flyer Actions</h3>
                 <v-divider></v-divider>
                 <v-sheet color="gray" class="pa-2">
                   <v-spacer />
                   <v-btn @click="seeTradeAction()" small color="primary" dark
-                    >See Trades</v-btn
+                    >more</v-btn
                   >
                   <v-btn
                     @click="toggleFlyerAction(info.id)"
@@ -172,7 +188,7 @@
                     >Publish</v-btn
                   >
                   <v-btn small dark>Delete</v-btn>
-                </v-sheet>
+                </v-sheet> -->
               </v-col>
             </v-row>
           </v-card-text>
@@ -214,6 +230,7 @@
 export default {
   data() {
     return {
+      loading: false,
       dialog: false,
       dialog2: false,
       render: 0,
@@ -262,9 +279,11 @@ export default {
       });
     },
     toggleFlyerAction(id) {
+      this.loading = true
       this.$toggleFlyerPublishState(id).then((d) => {
         this.getFlyers();
-        this.render += 1;
+        this.loading = false
+        // this.render += 1;
         // this.$forceUpdate();
         // this.$router.go()
       });
