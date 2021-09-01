@@ -36,7 +36,7 @@
                     >
                     <v-btn
                       :loading="loading"
-                      v-if="info.isPublished"
+                      v-if="item.isPublished"
                       @click="toggleFlyerAction(item.id)"
                       text
                       x-small
@@ -45,7 +45,7 @@
                     >
                     <v-btn
                       :loading="loading"
-                      v-if="!info.isPublished"
+                      v-if="!item.isPublished"
                       @click="toggleFlyerAction(item.id)"
                       text
                       x-small
