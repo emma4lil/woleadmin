@@ -60,7 +60,7 @@ export default {
     items: [
       ["mdi-chart-areaspline", "Metrics", "/"],
       ["mdi-wallet-giftcard", "Flyers Management", "/flyers"],
-      ["mdi-alpha-t-box", "Trade Management", ""],
+      ["mdi-alpha-t-box", "Trade Management", "/trades"],
       ["mdi-clock-end", "Dispute Resolutions", ""],
       ["mdi-message-alert", "Complaints", ""],
       ["mdi-credit-card-marker-outline", "Payments", ""],

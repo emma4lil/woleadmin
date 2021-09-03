@@ -22,11 +22,20 @@ class AdminServices {
       const res = await this.axios.$get("/api/Flyers/admin/toggle-visibility/" + id)
       return res
    }
+
+   async getTrades() {
+      const res = await this.axios.$get("/api/Admin/get-trades")
+      return res
+
+   }
 }
 
 export default ({ app, $axios }, inject) => {
    var admin = new AdminServices($axios);
    inject('getMetrics', () => admin.getMetrics());
+   // flyers
    inject('getFlyers', () => admin.getFlyers())
    inject('toggleFlyerPublishState', (id) => admin.togglePublish(id))
+   // Trades
+   inject("getTrades", () => admin.getTrades())
 }

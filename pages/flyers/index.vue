@@ -11,7 +11,7 @@
               <v-card elevation="0">
                 <v-card-title>
                   <div class="text-h3 grey--text">
-                    <span>{{ flyers.length }}</span> Total Flyers
+                    <span>{{ flyers.length }}</span> - flyer(s)
                   </div>
                   <v-spacer></v-spacer>
                   <v-text-field
@@ -41,7 +41,7 @@
                       text
                       x-small
                       color="red"
-                      >Unpublish</v-btn
+                      >Hide/Remove</v-btn
                     >
                     <v-btn
                       :loading="loading"
@@ -50,7 +50,7 @@
                       text
                       x-small
                       color="green"
-                      >Publish</v-btn
+                      >Show</v-btn
                     >
                   </template>
                 </v-data-table>
@@ -266,8 +266,8 @@ export default {
       ],
     };
   },
-  mounted() {
-    this.getFlyers();
+  async mounted() {
+    this.flyers = await this.$getFlyers().data
   },
   methods: {
     rowClicked(arg1, arg2) {
