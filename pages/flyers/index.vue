@@ -266,8 +266,8 @@ export default {
       ],
     };
   },
-  async mounted() {
-    this.flyers = await this.$getFlyers().data
+  mounted() {
+    this.getFlyers()
   },
   methods: {
     rowClicked(arg1, arg2) {
