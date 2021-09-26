@@ -45,7 +45,6 @@
     </v-app-bar>
     <v-main>
       <v-container fluid>
-       
         <div>{{ status }}</div>
         {{ rtuser }}
         <Nuxt />
@@ -61,7 +60,7 @@ export default {
   async mounted() {
     const token = this.$auth.strategy.token.get().substring(7);
     this.notifconn = new signalR.HubConnectionBuilder()
-      .withUrl("https://localhost:44366/hubs/push-notifications", {
+      .withUrl(this.serverUrl + "hubs/push-notifications", {
         accessTokenFactory: () => token,
       })
       .configureLogging(signalR.LogLevel.Information)
@@ -69,7 +68,7 @@ export default {
     this.notifconn.on("notify", (message) => this.notificationHandler(message));
 
     this.chatConn = new signalR.HubConnectionBuilder()
-      .withUrl("https://localhost:44366/hubs/chats", {
+      .withUrl(this.serverUrl + "hubs/chats", {
         accessTokenFactory: () => token,
       })
       .configureLogging(signalR.LogLevel.Information)
@@ -142,6 +141,7 @@ export default {
     notifhist: [],
     chathist: [],
     status: "",
+    serverUrl: "https://wole-api.herokuapp.com/",
   }),
 };
 </script>
