@@ -67,7 +67,7 @@ export default {
       var r = this.$getMetrics();
       r.then((d) => {
         this.metrics = d.data;
-        this.refreshing = flase
+        this.refreshing = false
       });
     },
   },

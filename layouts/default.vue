@@ -12,7 +12,12 @@
       permanent
     >
       <v-list>
-        <v-list-item :to="link" v-for="([icon, text, link], i) in items" :key="i" link>
+        <v-list-item
+          :to="link"
+          v-for="([icon, text, link], i) in items"
+          :key="i"
+          link
+        >
           <v-list-item-icon>
             <v-icon>{{ icon }}</v-icon>
           </v-list-item-icon>
@@ -40,6 +45,9 @@
     </v-app-bar>
     <v-main>
       <v-container fluid>
+       
+        <div>{{ status }}</div>
+        {{ rtuser }}
         <Nuxt />
       </v-container>
     </v-main>
@@ -50,10 +58,71 @@
 import Footer from "~/components/navigation/Footer.vue";
 import NavBar from "~/components/navigation/NavBar.vue";
 export default {
+  async mounted() {
+    const token = this.$auth.strategy.token.get().substring(7);
+    this.notifconn = new signalR.HubConnectionBuilder()
+      .withUrl("https://localhost:44366/hubs/push-notifications", {
+        accessTokenFactory: () => token,
+      })
+      .configureLogging(signalR.LogLevel.Information)
+      .build();
+    this.notifconn.on("notify", (message) => this.notificationHandler(message));
+
+    this.chatConn = new signalR.HubConnectionBuilder()
+      .withUrl("https://localhost:44366/hubs/chats", {
+        accessTokenFactory: () => token,
+      })
+      .configureLogging(signalR.LogLevel.Information)
+      .build();
+    this.chatConn.on("get-offline-chats", (msg) =>
+      this.offlineChatHandler(msg)
+    );
+    this.chatConn.on("new-chat-msg", (msg) => this.newChatHandler(msg));
+    this.chatConn.on("user-data", (msg) => this.userProfileHandler(msg));
+    this.notifconn.onclose(async () => {
+      this.status = "disconnected!";
+    });
+
+    await this.start();
+  },
+
+  computed: {
+    chats() {
+      return this.$store.state.chat.chats;
+    },
+  },
+
   components: { NavBar, Footer },
   methods: {
     async logout() {
       this.$auth.logout("local");
+    },
+    async start() {
+      try {
+        this.status = "Attempting connection...";
+        await this.notifconn.start();
+        await this.chatConn.start();
+        this.status = "Connected!";
+      } catch (err) {
+        this.status = "Connection failed:" + err;
+        console.log(err);
+      }
+    },
+    notificationHandler(payload) {
+      this.notifhist = JSON.parse(payload);
+      console.log(payload);
+    },
+    userLoginHandler(payload) {
+      alert(user + "logged in");
+    },
+    offlineChatHandler(payload) {
+      this.$store.commit("chat/push_chats", JSON.parse(payload));
+    },
+    newChatHandler(payload) {
+      this.$store.commit("chat/push_chat", JSON.parse(payload));
+    },
+    userProfileHandler(payload) {
+      this.rtuser = payload;
     },
   },
   data: () => ({
@@ -61,13 +130,18 @@ export default {
       ["mdi-chart-areaspline", "Metrics", "/"],
       ["mdi-wallet-giftcard", "Flyers Management", "/flyers"],
       ["mdi-alpha-t-box", "Trade Management", "/trades"],
-      ["mdi-clock-end", "Dispute Resolutions", ""],
-      ["mdi-message-alert", "Complaints", ""],
-      ["mdi-credit-card-marker-outline", "Payments", ""],
-      ["mdi-wallet", "Wallet", ""],
-      ["mdi-account-supervisor-circle", "Users", ""],
-      ["mdi-toolbox", "Settings", ""],
+      ["mdi-clock-end", "Dispute Resolutions", "/disputes"],
+      ["mdi-message-alert", "Flyer Complaints", "/complaints"],
+      ["mdi-wallet", "Withdraw Requests", "/withdraws"],
+      ["mdi-credit-card-marker-outline", "Payments", "/payments"],
+      ["mdi-account-supervisor-circle", "Users", "/users"],
+      ["mdi-toolbox", "Settings", "/settingd"],
     ],
+    rtuser: "",
+    token: "token",
+    notifhist: [],
+    chathist: [],
+    status: "",
   }),
 };
 </script>

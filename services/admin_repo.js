@@ -28,6 +28,35 @@ class AdminServices {
       return res
 
    }
+
+   async getComplaints() {
+      const res = await this.axios.$get("api/admin/get-violating-flyers")
+      return res
+   }
+
+   async resolveComplaint(flyerId, isViolating) {
+      const res = await this.axios.$get("api/admin/resolve/" + flyerId + "/" + isViolating)
+      return res
+   }
+
+   async sendChat(tradeId, message) {
+      const payload = {
+         message,
+         tradeId
+      }
+      const res = await this.axios.$post("api/admin/send-chat", payload)
+      return res
+   }
+
+   async getTickets() {
+      const res = await this.axios.$get("api/admin/get-tickets")
+      return res
+   }
+
+   async setModerator(tradeId) {
+      const res = await this.axios.$get("api/admin/set-moderator/" + tradeId)
+      return res
+   }
 }
 
 export default ({ app, $axios }, inject) => {
@@ -36,6 +65,11 @@ export default ({ app, $axios }, inject) => {
    // flyers
    inject('getFlyers', () => admin.getFlyers())
    inject('toggleFlyerPublishState', (id) => admin.togglePublish(id))
+   inject('getComplaints', () => admin.getComplaints())
+   inject('resolveComplaint', (flyerId, violated) => admin.resolveComplaint(flyerId, violated))
    // Trades
    inject("getTrades", () => admin.getTrades())
+   inject("getTickets", () => admin.getTickets())
+   inject("setModerator", (tradeId) => admin.setModerator(tradeId))
+   inject("sendChat", (tradeId, message) => admin.sendChat(tradeId, message))
 }
