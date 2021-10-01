@@ -86,10 +86,16 @@ export default {
     middleware: ['auth']
   },
 
+  env: {
+    baseUrl: process.env.NODE_ENV == "production" ? "https://wole-api.herokuapp.com" : "https://localhost:44366"
+  },
+
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
     baseUrl: process.env.NODE_ENV == "production" ? "https://wole-api.herokuapp.com" : "https://localhost:44366"
   },
+
+
 
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
   vuetify: {

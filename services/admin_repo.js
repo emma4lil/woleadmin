@@ -57,6 +57,20 @@ class AdminServices {
       const res = await this.axios.$get("api/admin/set-moderator/" + tradeId)
       return res
    }
+
+   async getWithdraws() {
+      const res = await this.axios.$get("api/admin/get-withdrawals/")
+      return res
+   }
+
+   async setWithdrawStatus(id, status) {
+      const res = await this.axios.$post("api/admin/set-withdrawals/" + id + "/" + status)
+      return res
+   }
+   async makeRefund(id) {
+      const res = await this.axios.$post("api/admin/make-refund/" + id)
+      return res
+   }
 }
 
 export default ({ app, $axios }, inject) => {
@@ -72,4 +86,8 @@ export default ({ app, $axios }, inject) => {
    inject("getTickets", () => admin.getTickets())
    inject("setModerator", (tradeId) => admin.setModerator(tradeId))
    inject("sendChat", (tradeId, message) => admin.sendChat(tradeId, message))
+   //Wallet
+   inject("getWithdraws", () => admin.getWithdraws())
+   inject("setWithdrawStatus", (id, status) => admin.setWithdrawStatus(id, status))
+   inject("makeRefund", (id) => admin.makeRefund(id))
 }

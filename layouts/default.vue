@@ -45,8 +45,17 @@
     </v-app-bar>
     <v-main>
       <v-container fluid>
-        <div>{{ status }}</div>
-        {{ rtuser }}
+        <div class="d-flex justify-end">
+          <v-card width="230">
+            <div class="mx-3 py-2">SignalR Server: {{ status }}</div>
+            <v-divider></v-divider>
+            <v-card-text>
+              <div>API: {{ serverUrl }}</div>
+              <div>User: {{ rtuser }}</div>
+            </v-card-text>
+          </v-card>
+        </div>
+
         <Nuxt />
       </v-container>
     </v-main>
@@ -60,7 +69,7 @@ export default {
   async mounted() {
     const token = this.$auth.strategy.token.get().substring(7);
     this.notifconn = new signalR.HubConnectionBuilder()
-      .withUrl(this.serverUrl + "hubs/push-notifications", {
+      .withUrl(this.serverUrl + "/hubs/push-notifications", {
         accessTokenFactory: () => token,
       })
       .configureLogging(signalR.LogLevel.Information)
@@ -68,7 +77,7 @@ export default {
     this.notifconn.on("notify", (message) => this.notificationHandler(message));
 
     this.chatConn = new signalR.HubConnectionBuilder()
-      .withUrl(this.serverUrl + "hubs/chats", {
+      .withUrl(this.serverUrl + "/hubs/chats", {
         accessTokenFactory: () => token,
       })
       .configureLogging(signalR.LogLevel.Information)
@@ -141,7 +150,7 @@ export default {
     notifhist: [],
     chathist: [],
     status: "",
-    serverUrl: "https://wole-api.herokuapp.com/",
+    serverUrl: process.env.baseUrl,
   }),
 };
 </script>
