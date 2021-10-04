@@ -143,7 +143,7 @@ export default {
   props: ["withdraw"],
   data() {
     return {
-      timeout: 460000,
+      timeout: 90000,
       progress: 0,
       otp: Math.floor(Math.random() * 1000),
       iotp: "",
