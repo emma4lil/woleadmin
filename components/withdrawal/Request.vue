@@ -72,8 +72,33 @@
       </div>
     </v-card-text>
 
-    <v-card-text v-if="withdraw.status !== 'Refunded'">
-    <v-divider></v-divider>
+    <v-card-text
+      v-if="withdraw.status !== 'Refunded' && !revealActions"
+      class="code"
+      v
+    >
+      <v-sheet
+        class="d-flex flex-column justify-center pa-3 rounded-xl"
+        color="grey lighten-3"
+      >
+        <div class="caption">Confirmation Code: {{ otp }}</div>
+        <v-progress-linear
+          :color="changeColor"
+          rounded
+          v-model="progress"
+        ></v-progress-linear>
+        <v-text-field
+          color="green"
+          name="name"
+          label="Enter Code"
+          single-line
+          small
+          v-model="iotp"
+        ></v-text-field>
+      </v-sheet>
+    </v-card-text>
+    <v-card-text v-if="revealActions">
+      <v-divider></v-divider>
       <v-select
         outlined
         :items="status"
@@ -90,7 +115,7 @@
       ></v-select>
     </v-card-text>
 
-    <v-card-actions>
+    <v-card-actions v-if="revealActions">
       <v-btn
         class="elevation-0"
         @click="Save()"
@@ -101,7 +126,12 @@
         >Save status</v-btn
       >
       <v-spacer></v-spacer>
-      <v-btn @click="Refund()" class="elevation-0" v-if="select === 4" small color="yellow"
+      <v-btn
+        @click="Refund()"
+        class="elevation-0"
+        v-if="select === 4"
+        small
+        color="yellow"
         >Make Refund</v-btn
       >
     </v-card-actions>
@@ -113,6 +143,10 @@ export default {
   props: ["withdraw"],
   data() {
     return {
+      timeout: 460000,
+      progress: 0,
+      otp: Math.floor(Math.random() * 1000),
+      iotp: "",
       loading: false,
       select: 0,
       status: [
@@ -137,9 +171,37 @@ export default {
           key: 4,
         },
       ],
-
-      reasons: ["Invalid account details", "Account Name Mismatch"],
+      reasons: [
+        "Invalid account details",
+        "Account Name Mismatch",
+        "Invalid Wallet Address",
+      ],
     };
+  },
+
+  mounted() {
+    this.otp = Math.floor(Math.random() * 1000);
+    this.progress = 100;
+    setInterval(() => {
+      this.otp = Math.floor(Math.random() * 1000);
+      this.progress = 100;
+    }, this.timeout);
+    setInterval(() => {
+      this.progress -= 1;
+    }, this.timeout / 100);
+  },
+
+  computed: {
+    revealActions() {
+      return this.withdraw.status !== "Refunded" && +this.otp === +this.iotp;
+    },
+    changeColor() {
+      if (this.progress < 30) {
+        return "red";
+      } else {
+        return "blue";
+      }
+    },
   },
 
   methods: {

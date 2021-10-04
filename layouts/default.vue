@@ -46,7 +46,7 @@
     <v-main>
       <v-container fluid>
         <div class="d-flex justify-end">
-          <v-card width="230">
+          <v-card width="230" class="elevation-0 grey lighten-5">
             <div class="mx-3 py-2">SignalR Server: {{ status }}</div>
             <v-divider></v-divider>
             <v-card-text>
