@@ -1,13 +1,13 @@
 <template>
-  <v-card min-width="150" height="172" class="mb-2 elevation-0">
+  <v-card min-width="150" height="" class="mb-2 blue lighten-4 elevation-15">
     <v-card-title class="text-h6 font-weight-thin grey-text">
       {{ title }}
     </v-card-title>
     <v-card-text>
-      <div class="text-h2">
+      <div class="text-h4">
         <span>{{ prefix }}</span>
         {{ count }}
-        <span class="text-h6">{{ postfix }}</span>
+        <span class="caption">{{ postfix }}</span>
       </div>
     </v-card-text>
   </v-card>
