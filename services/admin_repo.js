@@ -71,6 +71,11 @@ class AdminServices {
       const res = await this.axios.$post("api/admin/make-refund/" + id)
       return res
    }
+
+   async getAllPayments() {
+      const res = await this.axios.$get("/api/Admin/get-payments")
+      return res
+   }
 }
 
 export default ({ app, $axios }, inject) => {
@@ -90,4 +95,5 @@ export default ({ app, $axios }, inject) => {
    inject("getWithdraws", () => admin.getWithdraws())
    inject("setWithdrawStatus", (id, status) => admin.setWithdrawStatus(id, status))
    inject("makeRefund", (id) => admin.makeRefund(id))
+   inject("getAllPayments", () => admin.getAllPayments())
 }

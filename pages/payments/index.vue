@@ -5,6 +5,7 @@
         <v-card-title class="caption my-3">Teles</v-card-title>
         <v-divider></v-divider>
 
+
         <div class="d-flex justify-space-between">
           <div class="my-2 ml-2" style="width: 200px;">
             <info-card :count="233" postfix="Tele" title="Daily Profit" />
@@ -21,6 +22,15 @@
         </div>
       </v-card>
     </v-col>
+    <!-- Payment Table -->
+    <v-col>
+      <v-data-table
+        :headers="headers"
+        :items="payments"
+        :items-per-page="5"
+        class="elevation-1"
+      ></v-data-table>
+    </v-col>
   </v-row>
 </template>
 
@@ -29,8 +39,31 @@ import infoCard from "~/components/statistics/info-card.vue";
 
 export default {
   components: { infoCard },
+  mounted() {
+    this.$getAllPayments().then((d) => {
+      this.payments = d.data
+    });
+  },
   data() {
-    return {};
+    return {
+      headers: [
+        {
+          text: "Transaction ID",
+          align: "start",
+          sortable: false,
+          value: "transactionId",
+        },
+        { text: "Provider", value: "provider" },
+        { text: "Currency", value: "currency" },
+        { text: "Amount (Currency)", value: "amountInCurrency" },
+        { text: "Amount (Tele)", value: "amountInTele" },
+        { text: "Email", value: "ownerEmail" },
+        { text: "Date", value: "created" },
+        { text: "Action", value: "" },
+      ],
+      payments: [],
+      
+    };
   },
 };
-</script>InfoCard
+</script>
