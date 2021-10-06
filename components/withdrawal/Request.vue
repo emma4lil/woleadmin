@@ -159,17 +159,14 @@ export default {
           key: 1,
         },
         {
-          text: "Failed",
+          text: "Success",
           key: 2,
         },
         {
-          text: "Success",
-          key: 3,
-        },
-        {
-          text: "Rejected",
+          text: "Refunded",
           key: 4,
         },
+        
       ],
       reasons: [
         "Invalid account details",

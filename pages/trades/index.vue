@@ -2,7 +2,7 @@
   <v-container class="mt-4" fluid>
     <v-row>
       <v-col>
-        <!-- {{trades}} -->
+        {{trades}}
         <v-card flat class="transparent">
           <v-card-title primary-title> Trade overview </v-card-title>
 
@@ -54,16 +54,18 @@ export default {
       search: "",
       headers: [
         {
-          text: "Trade Id",
+          text: "Trade Identifier ",
           align: "start",
           sortable: false,
           value: "id",
         },
         { text: "Trade Status", value: "statusDesc" },
-        { text: "Producer", value: "producerEmail" },
+        { text: "Created", value: "created" },
+        { text: "flyer owner", value: "producerEmail" },
         { text: "Consumer", value: "consumerEmail" },
         { text: "Agreed Price (Tele)", value: "price" },
         { text: "Quantity", value: "quantity" },
+        { text: "Delivery Address", value: "deliveryAddress" },
         { text: "Action", value: "action" },
       ],
       trades: [],
