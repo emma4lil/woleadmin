@@ -2,7 +2,7 @@
   <v-container class="mt-4" fluid>
     <v-row>
       <v-col>
-        {{trades}}
+        <!-- {{trades}} -->
         <v-card flat class="transparent">
           <v-card-title primary-title> Trade overview </v-card-title>
 
