@@ -64,6 +64,7 @@ export default {
         { text: "flyer owner", value: "producerEmail" },
         { text: "Consumer", value: "consumerEmail" },
         { text: "Agreed Price (Tele)", value: "price" },
+        {text: "Escrow Status", value: "escrowStatus"},
         { text: "Quantity", value: "quantity" },
         { text: "Delivery Address", value: "deliveryAddress" },
         { text: "Action", value: "action" },
