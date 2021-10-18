@@ -52,7 +52,7 @@ export default {
   components: { infoCard },
   mounted() {
     this.$getAllPayments().then((d) => {
-      this.payments = d.data
+      this.payments = d.data.Payments
     });
   },
   data() {
