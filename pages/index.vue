@@ -42,7 +42,7 @@
 import InfoCard from "~/components/statistics/info-card.vue";
 import SalesChart from "~/components/statistics/sales-chart.vue";
 export default {
-  auth: true,
+  auth: false,
   components: { SalesChart, InfoCard },
   name: "Index",
   data() {
@@ -58,7 +58,6 @@ export default {
     r.then((d) => {
       this.metrics = d.data;
     });
-
     var k = setInterval(() => this.refresh(), 10000)
   },
   methods: {
