@@ -143,7 +143,7 @@ export default {
       ["mdi-wallet", "Withdraw Requests", "/withdraws"],
       ["mdi-credit-card-marker-outline", "Payments", "/payments"],
       ["mdi-account-supervisor-circle", "Users", "/users"],
-      ["mdi-toolbox", "Settings", "/settingd"],
+      ["mdi-toolbox", "Settings", "/settings"],
     ],
     rtuser: "",
     token: "token",
