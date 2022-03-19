@@ -76,6 +76,16 @@ class AdminServices {
       const res = await this.axios.$get("/api/Admin/get-payments")
       return res
    }
+
+   async createCurrency(currency) {
+      const res = await this.axios.$post("/api/Admin/add-currency", currency)
+      return res
+   }
+
+   async getCurrencies() {
+      const res = await this.axios.$get("/api/Wallet/tele-rates")
+      return res
+   }
 }
 
 export default ({ app, $axios }, inject) => {
@@ -96,4 +106,7 @@ export default ({ app, $axios }, inject) => {
    inject("setWithdrawStatus", (id, status) => admin.setWithdrawStatus(id, status))
    inject("makeRefund", (id) => admin.makeRefund(id))
    inject("getAllPayments", () => admin.getAllPayments())
+   //Currency
+   inject("addCurrency", (currency) => admin.createCurrency(currency))
+   inject("getCurrencies", () => admin.getCurrencies())
 }
