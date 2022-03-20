@@ -86,6 +86,15 @@ class AdminServices {
       const res = await this.axios.$get("/api/Wallet/tele-rates")
       return res
    }
+   async deleteCurrency(id) {
+      const res = await this.axios.$delete("/api/Admin/remove-currency/" + id)
+      return res
+   }
+
+   async updateCurrency(currency) {
+      const res = await this.axios.$put("/api/Admin/update-currency/", currency)
+      return res
+   }
 }
 
 export default ({ app, $axios }, inject) => {
@@ -109,4 +118,7 @@ export default ({ app, $axios }, inject) => {
    //Currency
    inject("addCurrency", (currency) => admin.createCurrency(currency))
    inject("getCurrencies", () => admin.getCurrencies())
+   inject("updateCurrency", (currency) => admin.updateCurrency(currency))
+   inject("deleteCurrency", (id) => admin.deleteCurrency(id))
+
 }
