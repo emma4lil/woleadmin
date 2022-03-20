@@ -28,7 +28,7 @@
                 <td>{{ item.code }}</td>
                 <td>{{ item.rate }}</td>
                 <td>{{ item.prevRate }}</td>
-                <td>{{ item.direction == 1 ? "🟩" : "❤️" }}</td>
+                <td>{{ item.direction == 1 ? "🟩Up" : "❤️Down" }}</td>
               </tr>
             </tbody>
           </template>
