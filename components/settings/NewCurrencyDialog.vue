@@ -52,9 +52,13 @@ export default {
   methods: {
     async createCurrency() {
       let md = this.validatedCurrencyModel();
-      let c = this.$addCurrency()
-      
-      //this.$emit("xncdiag");
+      let c = this.$addCurrency(md);
+      c.then((r) => {
+        if (r.data) {
+          alert("Currency Created!");
+          this.$emit("xncdiag");
+        }
+      });
     },
     validatedCurrencyModel() {
       let md = this.currency;
@@ -65,8 +69,6 @@ export default {
       return md;
     },
   },
-  computed: {
-    
-  },
+  computed: {},
 };
 </script>

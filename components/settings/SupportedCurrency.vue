@@ -27,7 +27,7 @@
                 <td>{{ item.name }}</td>
                 <td>{{ item.code }}</td>
                 <td>{{ item.rate }}</td>
-                <td>{{ item.prev }}</td>
+                <td>{{ item.prevRate }}</td>
                 <td>{{ item.direction == 1 ? "🟩" : "❤️" }}</td>
               </tr>
             </tbody>
@@ -77,5 +77,8 @@ export default {
       ],
     };
   },
+  mounted () {
+    this.$getCurrencies().then(r => this.currencies = r.data.rates)
+  }
 };
 </script>
