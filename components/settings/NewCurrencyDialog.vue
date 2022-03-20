@@ -2,13 +2,8 @@
   <v-card>
     <v-card-title primary-title> New Currency </v-card-title>
     <v-card-text>
-      <v-text-field
-        name="code"
-        label="Code"
-        v-model="currency.code"
-        single-line
-        placeholder="999"
-      ></v-text-field>
+      <v-select :items="codes" v-model="currency.code" label="CODES"></v-select>
+
       <v-text-field
         name="name"
         label="Short Name"
@@ -21,7 +16,7 @@
         label="Initial Rate"
         v-model="currency.rate"
         single-line
-        placeholder="0.00"
+        placeholder="0.00/TELE"
       ></v-text-field>
       <v-switch
         :label="`Currency Type: ${currency.type ? 'FIAT' : 'CRYPTO'}`"
@@ -29,7 +24,7 @@
       ></v-switch>
     </v-card-text>
     <v-card-actions>
-      <v-btn color="blue" @click="createCurrency()">Save</v-btn>
+      <v-btn block color="blue" @click="createCurrency()">Save</v-btn>
     </v-card-actions>
 
     <v-card-text> Data: </v-card-text>
@@ -41,6 +36,7 @@ export default {
   name: "NewCurrencyDialog",
   data() {
     return {
+      codes: [111, 222, 333, 444, 555],
       currency: {
         code: 111,
         name: "USD",
@@ -57,6 +53,9 @@ export default {
         if (r.data) {
           alert("Currency Created!");
           this.$emit("xncdiag");
+        }
+        if (!r.data) {
+          alert("Currency code exists!");
         }
       });
     },
