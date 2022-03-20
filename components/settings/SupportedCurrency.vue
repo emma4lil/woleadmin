@@ -11,7 +11,7 @@
         </v-row>
       </v-card-text>
       <v-card-text>
-        <v-simple-table>
+        <v-simple-table dense>
           <template v-slot:default>
             <thead>
               <tr>
@@ -20,15 +20,21 @@
                 <th class="text-left">Rate</th>
                 <th class="text-left">Previous</th>
                 <th class="text-left">Direction</th>
+                <th class="text-left">Update</th>
+                <th class="text-left">Delete</th>
+
               </tr>
             </thead>
             <tbody>
-              <tr v-for="item in currencies" :key="item.name">
+              <tr v-for="item in currencies" :key="item.id">
                 <td>{{ item.name }}</td>
                 <td>{{ item.code }}</td>
                 <td>{{ item.rate }}</td>
                 <td>{{ item.prevRate }}</td>
                 <td>{{ item.direction == 1 ? "🟩Up" : "❤️Down" }}</td>
+                <td><v-btn text @click="updateCurrencyAction(item)" x-small color="info">update</v-btn></td>
+                <td><v-btn text @click="deleteCurrencyAction(item.id)" x-small color="red">delete</v-btn></td>
+                
               </tr>
             </tbody>
           </template>
@@ -79,6 +85,17 @@ export default {
   },
   mounted () {
     this.$getCurrencies().then(r => this.currencies = r.data.rates)
+  },
+  methods: {
+    deleteCurrencyAction(id){
+      this.$deleteCurrency(id).then(r => {
+        this.$router.go()
+      })
+    },
+    updateCurrencyAction(currency){
+      this.$updateCurrency(currency).then(r => console.log(r))
+    }
   }
+
 };
 </script>
