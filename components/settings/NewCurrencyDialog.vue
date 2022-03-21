@@ -27,7 +27,6 @@
       <v-btn block color="blue" @click="createCurrency()">Save</v-btn>
     </v-card-actions>
 
-    <v-card-text> Data: </v-card-text>
   </v-card>
 </template>
 
@@ -64,7 +63,7 @@ export default {
       md.code = +this.currency.code;
       md.name = this.currency.name.toUpperCase();
       md.rate = +this.currency.rate;
-      md.type = this.currency.type ? 1 : 0;
+      md.type = this.currency.type ? 0 : 1;
       return md;
     },
   },
