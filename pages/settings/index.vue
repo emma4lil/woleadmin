@@ -22,10 +22,7 @@
               Minimum Withdrawal amount
             </v-expansion-panel-header>
             <v-expansion-panel-content>
-              Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-              Voluptatibus, blanditiis. Qui enim quisquam sit, fuga hic dolores
-              rerum dignissimos perferendis consectetur libero. Similique
-              repudiandae iure aliquam, veniam tempora illo minus.
+             <set-minimal-withdraw />
             </v-expansion-panel-content>
           </v-expansion-panel>
         </v-expansion-panels>
@@ -35,8 +32,9 @@
 </template>
 
 <script>
+import SetMinimalWithdraw from '~/components/settings/SetMinimalWithdraw.vue';
 import SupportedCurrency from "~/components/settings/SupportedCurrency.vue";
 export default {
-  components: { SupportedCurrency },
+  components: { SupportedCurrency, SetMinimalWithdraw },
 };
 </script>
