@@ -22,7 +22,15 @@
               Minimum Withdrawal amount
             </v-expansion-panel-header>
             <v-expansion-panel-content>
-             <set-minimal-withdraw />
+              <set-minimal-withdraw />
+            </v-expansion-panel-content>
+          </v-expansion-panel>
+          <v-expansion-panel>
+            <v-expansion-panel-header>
+              System properties
+            </v-expansion-panel-header>
+            <v-expansion-panel-content>
+              <dynamic-settings :settings="configs"/>
             </v-expansion-panel-content>
           </v-expansion-panel>
         </v-expansion-panels>
@@ -32,9 +40,18 @@
 </template>
 
 <script>
-import SetMinimalWithdraw from '~/components/settings/SetMinimalWithdraw.vue';
+import DynamicSettings from "~/components/settings/DynamicSettings.vue";
+import SetMinimalWithdraw from "~/components/settings/SetMinimalWithdraw.vue";
 import SupportedCurrency from "~/components/settings/SupportedCurrency.vue";
 export default {
-  components: { SupportedCurrency, SetMinimalWithdraw },
+  components: { SupportedCurrency, SetMinimalWithdraw, DynamicSettings },
+  data() {
+    return {
+      configs: {}
+    };
+  },
+  mounted() {
+    this.$getConfigList().then((d) => (this.configs = d));
+  },
 };
 </script>

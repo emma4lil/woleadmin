@@ -95,6 +95,15 @@ class AdminServices {
       const res = await this.axios.$put("/api/Admin/update-currency/", currency)
       return res
    }
+
+   async getConfigList() {
+      const res = await this.axios.$get("/api/Admin/config-list/")
+      return res
+   }
+   async updateConfigProp(config) {
+      const res = await this.axios.$post("/api/Admin/config-update/", config)
+      return res
+   }
 }
 
 export default ({ app, $axios }, inject) => {
@@ -120,5 +129,8 @@ export default ({ app, $axios }, inject) => {
    inject("getCurrencies", () => admin.getCurrencies())
    inject("updateCurrency", (currency) => admin.updateCurrency(currency))
    inject("deleteCurrency", (id) => admin.deleteCurrency(id))
+   //Configuration
+   inject("getConfigList", () => admin.getConfigList())
+   inject("updateConfigProp", (config) => admin.updateConfigProp(config))
 
 }
