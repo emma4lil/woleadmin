@@ -104,6 +104,11 @@ class AdminServices {
       const res = await this.axios.$post("/api/Admin/config-update/", config)
       return res
    }
+
+   async getAllUsers(){
+      const res = await this.axios.$get("/api/Admin/all-users/")
+      return res
+   }
 }
 
 export default ({ app, $axios }, inject) => {
@@ -132,5 +137,7 @@ export default ({ app, $axios }, inject) => {
    //Configuration
    inject("getConfigList", () => admin.getConfigList())
    inject("updateConfigProp", (config) => admin.updateConfigProp(config))
+   //User manage
+   inject("getAllUsers", () => admin.getAllUsers())
 
 }
