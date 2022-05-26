@@ -4,9 +4,9 @@
       <div>Trade Dispute Resolution</div>
       <!-- {{ getChatsForTrade }} -->
     </v-col>
-    <v-col class="lighten-4" cols="6">
+    <v-col class="lighten-4" cols="4">
       <v-row>
-        <v-col cols="4" v-for="(ticket, i) in tickets" :key="i">
+        <v-col cols="" v-for="(ticket, i) in tickets" :key="i">
           <ticket
             v-on:moderate="setTicket(ticket)"
             :index="i"
@@ -15,10 +15,11 @@
         </v-col>
       </v-row>
     </v-col>
-    <v-col class="parent" cols="6">
+    <v-col class="parent" cols="8">
       <chatbox v-if="currentTicket" :ticket="currentTicket" :chats="getChatsForTrade" class="sticky" />
     </v-col>
     <!-- {{ currentTicket }} -->
+    {{getChatsForTrade}}
   </v-row>
 </template>
 
@@ -50,7 +51,7 @@ export default {
       if (this.currentTicket != null) {
         id = this.currentTicket.tradeId;
       }
-      const filtered = chats.filter((el) => el.TradeId == id);
+      let filtered = chats.filter((el) => el.id == id);
       return filtered;
     },
   },
