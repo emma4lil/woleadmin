@@ -2,7 +2,10 @@
   <div>
     <v-data-table :headers="headers" :items="users">
       <template v-slot:item.isActive="{ item }">
-        <v-btn small text color="success">{{ item.isActive ? "Deactivate" : "Activate" }}</v-btn>
+        <v-btn @click="toggleUserActiveState(item.id)" small text color="success">{{
+          item.isActive ? "Deactivate" : "Activate"
+        }}</v-btn>
+        <v-btn text small color="yellow">Edit Role</v-btn>
       </template>
     </v-data-table>
   </div>
@@ -38,14 +41,17 @@ export default {
           align: "start",
         },
         {
-          text: "ACtivate / Deactivate",
+          text: "Activate or deactivate a user",
           value: "isActive",
           align: "start",
         },
-       
       ],
     };
   },
-  methods: {},
+  methods: {
+    toggleUserActiveState(userId) {
+      this.$toggleUserStatebyId(userId).then((d) => alert(d));
+    },
+  },
 };
 </script>
