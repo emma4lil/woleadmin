@@ -2,7 +2,6 @@
   <v-card height="" width="">
     <v-card-title class="mx-0">Resolve dispute for: {{ ticket.flyerOwner }} vs {{ ticket.consumer }}</v-card-title>
     <v-card-text class="mx-0">
-      {{ participants }}
     </v-card-text>
     <v-divider></v-divider>
     <v-row>
@@ -89,8 +88,8 @@ export default {
     return {
       result: "" ,
       isResolving_btn: false,
-      selected_resolvee_price: { user: this.ticket.flyerOwner, Id: 11 },
-      selected_resolvee_dfee: { user: this.ticket.consumer, Id: 12 },
+      selected_resolvee_price: {},
+      selected_resolvee_dfee: {},
       status: "timeline",
       loading_modbtn: false,
       msg: "",
@@ -147,11 +146,11 @@ export default {
       this.$resolveDisputeFor(user_ids)
         .then((r) => {
           this.isResolving_btn = false
-          this.result = "Dispute Resolved!"
+          this.result = r.message
         })
         .catch((e) => {
           this.isResolving_btn = false
-          this.result = "Failed to resolve dispute!"
+          this.result = "Other Errors!"
         })
     }
   },
@@ -160,7 +159,7 @@ export default {
       let externalmsg = this.chats;
     },
     participants () {
-      return [{ user: this.ticket.flyerOwner, Id: this.ticket.flyerOwner.Id }, { user: this.ticket.consumer, Id:  this.ticket.consumer.id }]
+      return [{ user: this.ticket.flyerOwner, Id: this.ticket.flyerOwnerId }, { user: this.ticket.consumer, Id:  this.ticket.consumerId }]
     }
   },
 };
