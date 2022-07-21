@@ -20,7 +20,7 @@
           </template>
 
           <template v-slot:item.action = "{item}">
-            <v-btn to="`/flyers/${item.flyerId}`" x-small color="blue">flyer</v-btn>
+            <v-btn to="`/flyers/${item.flyerId}`" x-small color="blue">Link To Flyer</v-btn>
             <v-btn v-if="item.TradeStatus === 6" x-small color="blue">Dispute</v-btn>
           </template>
            <template v-slot:item.statusDesc = "{item}">
