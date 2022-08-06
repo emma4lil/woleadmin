@@ -23,6 +23,7 @@
         class="sticky"
       />
     </v-col>
+    <!-- {{$store.state.chat.chats}} -->
   </v-row>
 </template>
 
@@ -54,8 +55,8 @@ export default {
       if (this.currentTicket != null) {
         id = this.currentTicket.tradeId;
       }
-      let filtered = chats.filter((el) => el.tradeId == id);
-      console.log(id);
+      let filtered = chats.filter((el) => el.TradeId == id);
+      console.log(this.currentTicket);
       return filtered;
     },
   },

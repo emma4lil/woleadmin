@@ -36,12 +36,13 @@
               v-for="(chat, idx) in chats"
               :key="idx"
             >
-              <h5 class="subtitle">{{ chat.senderEmail }}</h5>
+
+              <h5 class="subtitle">{{ chat.SenderEmail }}</h5>
               <p>
-                {{ chat.message }}
+                {{ chat.Message }}
               </p>
               <div class="d-flex justify-space-between grey--text">
-                <h6>{{ new Date(chat.createdAt).toLocaleString() }}</h6>
+                <h6>{{ new Date(chat.CreatedAt).toLocaleString() }}</h6>
                 <h6>sent</h6>
               </div>
             </v-sheet>
@@ -56,7 +57,7 @@
               @click:append-outer="send"
               outlined
               filled
-              label="Send a message"
+              :label="inputBar.title"
               v-model="msg"
             ></v-text-field>
           </v-card-actions>
@@ -97,26 +98,28 @@ export default {
   methods: {
     send() {
       this.status = "sending";
+      this.inputBar.title = "Sending message..."
       const mybox = this.$refs.box;
       mybox.scrollTop = mybox.scrollHeight + 100;
 
       let chat = {};
-      chat.message = this.msg;
-      chat.senderEmail = "You";
-      chat.secieverEmail = "";
-      chat.tradeId = this.ticket.tradeId;
-      chat.inDispute = true;
-      chat.isMedia = false;
-      chat.createdAt = new Date();
+      chat.Message = this.msg;
+      chat.SenderEmail = "Aje";
+      chat.RecieverEmail = "";
+      chat.TradeId = this.ticket.tradeId;
+      chat.InDispute = true;
+      chat.IsMedia = false;
+      chat.CreatedAt = new Date();
 
-      this.messages.push(chat);
+      //this.messages.push(chat);
       this.$store.commit("chat/push_chat", chat);
       this.$sendChat(this.ticket.tradeId, this.msg)
         .then((d) => {
-          this.status = "sent";
+          this.inputBar.title = "Sent";
+          this.msg = ""
         })
         .catch((e) => {
-          this.status = "retry";
+          this.inputBar.title = "retry";
         });
     },
     setModerator() {
