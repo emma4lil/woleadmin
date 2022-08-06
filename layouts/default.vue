@@ -1,23 +1,9 @@
 <template>
-  <v-app id="wole-app">
-    <v-navigation-drawer
-      app
-      bottom
-      expand-on-hover
-      mini-variant
-      mini-variant-width="50"
-      color="deep-purple accent-3"
-      clipped
-      floating
-      permanent
-    >
+  <v-app class="white--text" id="wole-app">
+    <v-navigation-drawer app bottom expand-on-hover mini-variant mini-variant-width="50" color="deep-purple accent-3"
+      clipped floating permanent>
       <v-list>
-        <v-list-item
-          :to="link"
-          v-for="([icon, text, link], i) in items"
-          :key="i"
-          link
-        >
+        <v-list-item :to="link" v-for="([icon, text, link], i) in items" :key="i" link>
           <v-list-item-icon>
             <v-icon>{{ icon }}</v-icon>
           </v-list-item-icon>
@@ -36,9 +22,8 @@
       </template>
     </v-navigation-drawer>
     <v-app-bar app clipped-left flat color="deep-purple accent-4">
-      <v-toolbar-title>
-        Wole<span class="yellow--text">Dash </span
-        ><span class="caption">v1.2.12</span>
+      <v-toolbar-title class="white--text">
+        Aje-<span class="yellow--text">Dash </span><span class="caption">v1.2.12</span>
       </v-toolbar-title>
       <v-spacer />
       <nav-bar />

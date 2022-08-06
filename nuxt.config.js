@@ -34,7 +34,8 @@ export default {
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
     "~/services/auth.js",
-    "~/services/admin_repo.js"
+    "~/services/admin_repo.js",
+    "~/services/persist.js"
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -87,7 +88,7 @@ export default {
   },
 
   env: {
-   // baseUrl: "https://wole-app.herokuapp.com"
+    // baseUrl: "https://wole-app.herokuapp.com"
     baseUrl: process.env.NODE_ENV == "production" ? "https://wole-api.herokuapp.com" : "https://localhost:44366"
   },
 
