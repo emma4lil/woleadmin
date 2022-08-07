@@ -75,7 +75,34 @@
       <!-- Action Center -->
       <v-col cols="12" md="6">
         <v-card outlined class="">
-          <v-card-text> </v-card-text>
+          <div class="blue pa-4 white--text mb-4">Resolve Dispute Actions</div>
+          <v-card-text>
+            <v-select
+              outlined
+              :items="participants"
+              item-text="user"
+              item-value="Id"
+              v-model="selected_resolvee_price"
+              label="Who gets the trade cost?"
+            ></v-select>
+            <v-select
+              outlined
+              :items="participants"
+              item-text="user"
+              item-value="Id"
+              v-model="selected_resolvee_dfee"
+              label="Who gets the delivery fee?"
+            ></v-select>
+            <v-btn
+              :loading="isResolving_btn"
+              @click="resolve"
+              elevation="0"
+              block
+              color="blue"
+              dark
+              >Resolve</v-btn
+            >
+          </v-card-text>
         </v-card>
       </v-col>
     </v-row>
@@ -85,7 +112,7 @@
       @timeout="3000"
       v-model="snackBar.showSnackBar"
     >
-      {{snackBar.message}}
+      {{ snackBar.message }}
     </v-snackbar>
   </v-card>
 </template>
@@ -107,8 +134,8 @@ export default {
 
       result: "",
       isResolving_btn: false,
-      selected_resolvee_price: {},
-      selected_resolvee_dfee: {},
+      selected_resolvee_price: "",
+      selected_resolvee_dfee: "",
       status: "timeline",
       loading_modbtn: false,
       msg: "",
@@ -164,19 +191,29 @@ export default {
       this.isResolving_btn = true;
       this.result = "resolving...";
       let user_ids = {
-        user_price: this.selected_resolvee_price.Id,
-        user_dfee: this.selected_resolvee_dfee.Id,
+        user_price: this.selected_resolvee_price,
+        user_dfee: this.selected_resolvee_dfee,
         disputeId: this.ticket.id,
       };
 
       this.$resolveDisputeFor(user_ids)
         .then((r) => {
+          this.snackBar = {
+            message: r.message,
+            color: "blue",
+            showSnackBar: true,
+          };
           this.isResolving_btn = false;
           this.result = r.message;
         })
         .catch((e) => {
           this.isResolving_btn = false;
           this.result = "Other Errors!";
+          this.snackBar = {
+            message: e.message,
+            color: "red",
+            showSnackBar: true,
+          };
         });
     },
   },
