@@ -19,7 +19,7 @@
             <info-card :count="233.94" postfix="$" title="Balance in USD" />
           </div>
           <div class="my-2 ml-2">
-            <info-card :count="233.94" postfix="$" title="Tele Ingress" />
+            <info-card :count="stats.dailyProfit" postfix="$" title="Tele Ingress" />
           </div>
           <div class="my-2 ml-2">
             <info-card :count="193.94" postfix="$" title="Tele Egress" />
@@ -29,18 +29,15 @@
     </v-col>
     <!-- Payment Table -->
     <v-col>
-     <v-card class="elevation-0 grey lighten-5">
-       <v-card-title primary-title class="grey--text">
-         Payment History
-       </v-card-title>
-       <v-data-table
-        :headers="headers"
-        :items="payments"
-        :items-per-page="5"
-        class="elevation-15 mx-2"
-      ></v-data-table>
-     </v-card>
-      
+      <v-card class="elevation-0 grey lighten-5">
+        <v-card-title primary-title class="grey--text">
+          Payment History
+        </v-card-title>
+        <v-data-table :headers="headers" :items="payments" :items-per-page="5" class="elevation-15 mx-2"></v-data-table>
+
+        {{payments}}
+      </v-card>
+
     </v-col>
   </v-row>
 </template>
@@ -52,7 +49,8 @@ export default {
   components: { infoCard },
   mounted() {
     this.$getAllPayments().then((d) => {
-      this.payments = d.data.Payments
+      this.payments = d.data.payments,
+      this.stats = d.data.getStats
     });
   },
   data() {
@@ -73,7 +71,8 @@ export default {
         { text: "Action", value: "" },
       ],
       payments: [],
-      
+      stats: {}
+
     };
   },
 };

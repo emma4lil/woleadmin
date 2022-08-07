@@ -16,10 +16,14 @@
       </v-row>
     </v-col>
     <v-col class="parent" cols="8">
-      <chatbox v-if="currentTicket" :ticket="currentTicket" :chats="getChatsForTrade" class="sticky" />
+      <chatbox
+        v-if="currentTicket"
+        :ticket="currentTicket"
+        :chats="getChatsForTrade"
+        class="sticky"
+      />
     </v-col>
-    <!-- {{ currentTicket }} -->
-    {{getChatsForTrade}}
+    <!-- {{$store.state.chat.chats}} -->
   </v-row>
 </template>
 
@@ -47,11 +51,12 @@ export default {
   computed: {
     getChatsForTrade() {
       const chats = this.$store.state.chat.chats;
-      let id = ""
+      let id = "";
       if (this.currentTicket != null) {
         id = this.currentTicket.tradeId;
       }
-      let filtered = chats.filter((el) => el.id == id);
+      let filtered = chats.filter((el) => el.TradeId == id);
+      console.log(this.currentTicket);
       return filtered;
     },
   },

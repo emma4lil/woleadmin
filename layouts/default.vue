@@ -1,5 +1,5 @@
 <template>
-  <v-app id="wole-app">
+  <v-app class="white--text" id="wole-app">
     <v-navigation-drawer
       app
       bottom
@@ -36,8 +36,8 @@
       </template>
     </v-navigation-drawer>
     <v-app-bar app clipped-left flat color="deep-purple accent-4">
-      <v-toolbar-title>
-        Wole<span class="yellow--text">Dash </span
+      <v-toolbar-title class="white--text">
+        Aje-<span class="yellow--text">Dash </span
         ><span class="caption">v1.2.12</span>
       </v-toolbar-title>
       <v-spacer />
@@ -45,16 +45,16 @@
     </v-app-bar>
     <v-main>
       <v-container fluid>
-        <!-- <div class="d-flex justify-end">
+        <div class="d-flex justify-end">
           <v-card width="230" class="elevation-0 grey lighten-5">
             <div class="mx-3 py-2">SignalR Server: {{ status }}</div>
-            <v-divider></v-divider>
-            <v-card-text>
-              <div>API: {{ serverUrl }}</div>
-              <div>User: {{ rtuser }}</div>
-            </v-card-text>
           </v-card>
-        </div> -->
+        </div>
+        <v-snackbar top transition="slide-y-transition" v-model="notify" timeout="3000">
+          {{ notifMsg }}
+
+
+        </v-snackbar>
 
         <Nuxt />
       </v-container>
@@ -124,9 +124,13 @@ export default {
       alert(user + "logged in");
     },
     offlineChatHandler(payload) {
+      this.notify = true;
+      this.notifMsg = "Offline Messages Retrieved";
       this.$store.commit("chat/push_chats", JSON.parse(payload));
     },
     newChatHandler(payload) {
+      this.notify = true;
+      this.notifMsg = "New chat mmessage.";
       this.$store.commit("chat/push_chat", JSON.parse(payload));
     },
     userProfileHandler(payload) {
@@ -151,6 +155,8 @@ export default {
     chathist: [],
     status: "",
     serverUrl: process.env.baseUrl,
+    notify: false,
+    notifMsg: "",
   }),
 };
 </script>
