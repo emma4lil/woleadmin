@@ -53,6 +53,7 @@
         <v-snackbar top transition="slide-y-transition" v-model="notify" timeout="3000">
           {{ notifMsg }}
 
+
         </v-snackbar>
 
         <Nuxt />

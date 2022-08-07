@@ -14,7 +14,17 @@
             }}</v-chip>
           </div>
           <p class="px-4 pt-3 caption grey--text">{{ ticket.tradeId }}</p>
-          <v-card-text> trade discription goes here </v-card-text>
+          <v-card-text>
+            <v-btn
+              :loading="loading_modbtn"
+              @click="setModerator"
+              elevation="0"
+              block
+              color="primary"
+              dark
+              >Moderate this</v-btn
+            >
+          </v-card-text>
         </v-card>
       </div>
     </div>
@@ -36,7 +46,6 @@
               v-for="(chat, idx) in chats"
               :key="idx"
             >
-
               <h5 class="subtitle">{{ chat.SenderEmail }}</h5>
               <p>
                 {{ chat.Message }}
@@ -66,11 +75,18 @@
       <!-- Action Center -->
       <v-col cols="12" md="6">
         <v-card outlined class="">
-          <v-card-text> lorem </v-card-text>
+          <v-card-text> </v-card-text>
         </v-card>
       </v-col>
     </v-row>
     <!-- {{ chats }} -->
+    <v-snackbar
+      :color="snackBar.color"
+      @timeout="3000"
+      v-model="snackBar.showSnackBar"
+    >
+      {{snackBar.message}}
+    </v-snackbar>
   </v-card>
 </template>
 
@@ -82,6 +98,11 @@ export default {
       inputBar: {
         title: "Sending...",
         text: "",
+      },
+      snackBar: {
+        message: "",
+        showSnackBar: false,
+        color: "info",
       },
 
       result: "",
@@ -98,7 +119,7 @@ export default {
   methods: {
     send() {
       this.status = "sending";
-      this.inputBar.title = "Sending message..."
+      this.inputBar.title = "Sending message...";
       const mybox = this.$refs.box;
       mybox.scrollTop = mybox.scrollHeight + 100;
 
@@ -116,18 +137,23 @@ export default {
       this.$sendChat(this.ticket.tradeId, this.msg)
         .then((d) => {
           this.inputBar.title = "Sent";
-          this.msg = ""
+          this.msg = "";
         })
         .catch((e) => {
           this.inputBar.title = "retry";
         });
     },
-    setModerator() {
+    async setModerator() {
       this.loading_modbtn = true;
       this.$setModerator(this.ticket.tradeId)
         .then((d) => {
           this.loading_modbtn = false;
-          alert(d.success);
+          this.snackBar = {
+            message: d.message,
+            color: "purple",
+            showSnackBar: true,
+          };
+          //this.$router.go()
         })
         .catch((e) => {
           this.loading_modbtn = false;
