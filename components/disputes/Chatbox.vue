@@ -37,6 +37,7 @@
           outlined
           class="d-flex flex-column justify-end"
         >
+
           <v-card-text ref="box" class="ma-2 overflow-x-auto">
             <v-sheet
               outlined
@@ -46,12 +47,13 @@
               v-for="(chat, idx) in chats"
               :key="idx"
             >
-              <h5 class="subtitle">{{ chat.SenderEmail }}</h5>
+              <h5 v-if="!chat.isAdminChat" class="subtitle">{{ chat.senderEmail }}</h5>
+              <h5 v-else class="font-weight-bold blue--text">Aje</h5>
               <p>
-                {{ chat.Message }}
+                {{ chat.message }}
               </p>
               <div class="d-flex justify-space-between grey--text">
-                <h6>{{ new Date(chat.CreatedAt).toLocaleString() }}</h6>
+                <h6>{{ new Date(chat.createdAt).toLocaleString() }}</h6>
                 <h6>sent</h6>
               </div>
             </v-sheet>
@@ -150,19 +152,15 @@ export default {
       const mybox = this.$refs.box;
       mybox.scrollTop = mybox.scrollHeight + 100;
 
-      let chat = {};
-      chat.Message = this.msg;
-      chat.SenderEmail = "Aje";
-      chat.RecieverEmail = "";
-      chat.TradeId = this.ticket.tradeId;
-      chat.InDispute = true;
-      chat.IsMedia = false;
-      chat.CreatedAt = new Date();
+      let chat = {}
+      chat.message = this.msg
+      chat.isAdminChat = true
+      chat.createdAt = new Date().toLocaleString()
 
-      //this.messages.push(chat);
-      this.$store.commit("chat/push_chat", chat);
+
       this.$sendChat(this.ticket.tradeId, this.msg)
         .then((d) => {
+          this.chats.push(chat)
           this.inputBar.title = "Sent";
           this.msg = "";
         })
