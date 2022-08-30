@@ -7,22 +7,14 @@
     <v-col class="lighten-4" cols="4">
       <v-row>
         <v-col cols="" v-for="(ticket, i) in tickets" :key="i">
-          <ticket
-            v-on:moderate="setTicket(ticket)"
-            :index="i"
-            :ticket="ticket"
-          />
+          <ticket v-on:moderate="setTicket(ticket)" :index="i" :ticket="ticket" />
         </v-col>
       </v-row>
     </v-col>
     <v-col class="parent" cols="8">
-      <chatbox
-        v-if="currentTicket"
-        :ticket="currentTicket"
-        :chats="getChatsForTrade"
-        class="sticky"
-      />
+      <chatbox v-if="currentTicket" :ticket="currentTicket" :chats="chats" class="sticky" />
     </v-col>
+
     <!-- {{$store.state.chat.chats}} -->
   </v-row>
 </template>
@@ -35,6 +27,7 @@ export default {
     return {
       tickets: [],
       currentTicket: null,
+      chats: []
     };
   },
   components: { Ticket, Chatbox },
@@ -47,6 +40,15 @@ export default {
     setTicket(ticket) {
       this.currentTicket = ticket;
     },
+    async getChatsForTradeV2() {
+      let chats = []
+      if (this.currentTicket != null) {
+        this.$getChatsForTradeV2(this.currentTicket.tradeId).then(r => {
+          this.chats = r.data
+        })
+      }
+
+    }
   },
   computed: {
     getChatsForTrade() {
@@ -59,8 +61,16 @@ export default {
       console.log(this.currentTicket);
       return filtered;
     },
+
   },
-};
+  watch: {
+    currentTicket(nv, ov) {
+
+      this.getChatsForTradeV2()
+
+    }
+  }
+}
 </script>
 <style>
 .parent {
