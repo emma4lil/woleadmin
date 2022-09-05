@@ -11,16 +11,16 @@
     <v-col cols="12" lg="6">
       <v-row class="d-flex justify-start">
         <v-col cols="6" lg="4">
-          <info-card title="Users" :count="metrics.noOfUsers" />
+          <info-card to="/users" title="Users" :count="metrics.noOfUsers" />
         </v-col>
         <v-col cols="6" lg="4">
-          <info-card title="Flyers" :count="metrics.noOfFlyers" />
+          <info-card to="/flyers" title="Flyers" :count="metrics.noOfFlyers" />
         </v-col>
         <v-col cols="6" lg="4">
-          <info-card title="Trades" :count="metrics.noOfTrades" />
+          <info-card to="/trades" title="Trades" :count="metrics.noOfTrades" />
         </v-col>
         <v-col cols="6" lg="4">
-          <info-card title="Daily Trades" :count="metrics.noOfNewTrades" />
+          <info-card to="/trades" title="Daily Trades" :count="metrics.noOfNewTrades" />
         </v-col>
         <v-col cols="6" lg="4">
           <info-card
@@ -34,7 +34,7 @@
       </v-row>
     </v-col>
     <br />
-    
+
   </v-row>
 </template>
 

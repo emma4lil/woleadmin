@@ -19,10 +19,10 @@
           link
         >
           <v-list-item-icon>
-            <v-icon>{{ icon }}</v-icon>
+            <v-icon color="white">{{ icon }}</v-icon>
           </v-list-item-icon>
           <v-list-item-content>
-            <v-list-item-title>{{ text }}</v-list-item-title>
+            <v-list-item-title class="white--text">{{ text }}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
       </v-list>

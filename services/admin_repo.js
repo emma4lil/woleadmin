@@ -119,6 +119,11 @@ class AdminServices {
     const res = await this.axios.$get("api/trade/v2/get-chats/" + tradeId)
     return res
   }
+
+  async getTradeMetrics() {
+    const res = await this.axios.$get("api/trade/v2/get-trademetrics")
+    return res
+  }
 }
 export default ({ app, $axios }, inject) => {
   var admin = new AdminServices($axios);
@@ -151,5 +156,6 @@ export default ({ app, $axios }, inject) => {
   //Dispute Management
   inject("resolveDisputeFor", (price, dfee) => admin.resolveForDispute(price, dfee))
   inject("getChatsForTradeV2", (tradeId) => admin.getChatsForTradeV2(tradeId))
-
+  //Statistics Management
+  inject("getTradeMetrics", () => admin.getTradeMetrics())
 }

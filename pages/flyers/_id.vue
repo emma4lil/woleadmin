@@ -1,8 +1,8 @@
 <template>
   <v-row>
     <v-col cols="12">
-      <div class="text-h2">Flyers Management</div>
-      {{$route.params}}
+      <div class="text-h4">Flyers Management</div>
+
     </v-col>
     <v-col cols="12" lg="12">
       <v-card>
@@ -11,48 +11,24 @@
             <v-col class="" cols="12">
               <v-card elevation="0">
                 <v-card-title>
-                  <div class="text-h3 grey--text">
-                    <span>{{ flyers.length }}</span> - flyer(s)
-                  </div>
+
+
+                  <v-text-field v-model="search" append-icon="mdi-magnify" label="Search by email,date,id" single-line
+                    hide-details></v-text-field>
                   <v-spacer></v-spacer>
-                  <v-text-field
-                    v-model="search"
-                    append-icon="mdi-magnify"
-                    label="Search by email,date,id"
-                    single-line
-                    hide-details
-                  ></v-text-field>
                 </v-card-title>
-                <v-data-table
-                  dense
-                  class="mt-8"
-                  :headers="headers"
-                  :items="flyers"
-                  :search="search"
-                  @click:row="rowClicked"
-                >
+                <v-data-table dense class="mt-8" :headers="headers" :items="flyers" :search="search"
+                  @click:row="rowClicked">
+                  <template v-slot:item.created="{item}">
+                    {{new Date(item.created).toLocaleString()}}
+                  </template>
+
                   <template v-slot:item.action="{ item }">
-                    <v-btn @click="seeFlyerDetail()" text x-small color="yellow"
-                      >see more</v-btn
-                    >
-                    <v-btn
-                      :loading="loading"
-                      v-if="item.isPublished"
-                      @click="toggleFlyerAction(item.id)"
-                      text
-                      x-small
-                      color="red"
-                      >Hide/Remove</v-btn
-                    >
-                    <v-btn
-                      :loading="loading"
-                      v-if="!item.isPublished"
-                      @click="toggleFlyerAction(item.id)"
-                      text
-                      x-small
-                      color="green"
-                      >Show</v-btn
-                    >
+                    <v-btn @click="seeFlyerDetail()" text x-small color="blue">see more</v-btn>
+                    <v-btn :loading="loading" v-if="item.isPublished" @click="toggleFlyerAction(item.id)" text x-small
+                      color="red">Hide/Remove</v-btn>
+                    <v-btn :loading="loading" v-if="!item.isPublished" @click="toggleFlyerAction(item.id)" text x-small
+                      color="green">Show</v-btn>
                   </template>
                 </v-data-table>
               </v-card>
@@ -63,31 +39,16 @@
     </v-col>
     <!-- Dialog 2-->
     <v-col cols="12" lg="6">
-      <v-dialog
-        v-model="dialog2"
-        scrollable
-        :overlay="false"
-        max-width="800px"
-        transition="dialog-transition"
-      >
+      <v-dialog v-model="dialog2" scrollable :overlay="false" max-width="800px" transition="dialog-transition">
         <v-card>
           <v-card-title primary-title> Flyer Information </v-card-title>
           <v-card-text>
             <v-row>
               <v-col cols="12">
                 <!-- Carousel -->
-                <v-carousel
-                  height="250"
-                  hide-delimiter-background
-                  hide-delimiters
-                >
-                  <v-carousel-item
-                    v-for="(item, i) in info.images"
-                    :key="render + i"
-                    :src="item.url"
-                    reverse-transition="fade-transition"
-                    transition="fade-transition"
-                  ></v-carousel-item>
+                <v-carousel height="250" hide-delimiter-background hide-delimiters>
+                  <v-carousel-item v-for="(item, i) in info.images" :key="render + i" :src="item.url"
+                    reverse-transition="fade-transition" transition="fade-transition"></v-carousel-item>
                 </v-carousel>
               </v-col>
               <v-col cols="">
@@ -199,13 +160,7 @@
 
     <!-- Dialog -->
     <v-col cols="12">
-      <v-dialog
-        v-model="dialog"
-        scrollable
-        :overlay="false"
-        max-width="500px"
-        transition="dialog-transition"
-      >
+      <v-dialog v-model="dialog" scrollable :overlay="false" max-width="500px" transition="dialog-transition">
         <v-card>
           <v-card-title primary-title> Flyer Trades list </v-card-title>
 

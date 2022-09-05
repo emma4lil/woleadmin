@@ -1,12 +1,12 @@
 <template>
-  <v-card min-width="150" height="" class="mb-2 blue lighten-4 elevation-15">
+  <v-card :to="to" min-width="150" height="" class="white--text  mb-2 blue elevation-15">
     <v-card-title class="text-h6 font-weight-thin grey-text">
       {{ title }}
     </v-card-title>
     <v-card-text>
-      <div class="text-h4">
+      <div class="text-h4 white-text">
         <span>{{ prefix }}</span>
-        {{ count }}
+        <span class="white--text">{{ count }}</span>
         <span class="caption">{{ postfix }}</span>
       </div>
     </v-card-text>
@@ -16,6 +16,6 @@
 <script>
 export default {
   name: "Info-Card",
-  props: ["count", "title","prefix","postfix"],
+  props: ["count", "title","prefix","postfix" , "to"],
 };
 </script>
