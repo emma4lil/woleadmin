@@ -3,45 +3,66 @@
     <v-row>
       <v-col>
         <!-- {{trades}} -->
-        <v-card flat class="transparent">
-          <v-card-title primary-title> Trade overview </v-card-title>
+        <v-card class="pa-4">
+          <div class="text-h4 mb-3 font-weight-thin">Trade Statistics</div>
+          <v-divider></v-divider>
+          <v-card-text v-if="tradeStats != null">
+            <div class="d-flex">
+              <div class="font-weight-bold ml-3 indigo grey--text lighten-5 pa-4 rounded-lg">Total Trades: <span
+                  class="font-weight-bold black--text">{{tradeStats.totalTrades}}</span></div>
+              <div class="font-weight-bold ml-3 indigo grey--text lighten-5 pa-4 rounded-lg">Disputed Trades:
+                <span class="font-weight-bold black--text">{{tradeStats.inDisputeCount}}</span>
+              </div>
+              <div class="font-weight-bold ml-3 indigo grey--text lighten-5 pa-4 rounded-lg">Successful Trades:
+                <span class="font-weight-bold black--text">{{tradeStats.successfulCount}}</span>
+              </div>
+              <!-- <div class="font-weight-bold ml-3 indigo grey--text lighten-5 pa-4 rounded-lg">Trades in Progress:
+                <span class="font-weight-bold black--text">{{tradeStats.inProgress}}</span>
+              </div> -->
+              <v-spacer></v-spacer>
+              <div class="font-weight-bold ml-3 green white--text lighten-1 pa-4 rounded-lg">Trades in Progress:
+                <span class="font-weight-bold white--text">{{tradeStats.inProgress}}</span>
+              </div>
+            </div>
+          </v-card-text>
+              <!-- {{tradeStats}} -->
+          <v-card-text>
+            <div class="d-flex">
+              <div class="font-weight-thin  ml-3 indigo lighten-5 pa-4 rounded-lg">Delivery Fees<br><span
+                  class="font-weight-bold black--text"><span>{{tradeStats.dailyDeliveryPrice}}</span> / {{tradeStats.deliveryPrice}} TELE</span></div>
+              <div class="font-weight-thin  ml-3 indigo grey--text lighten-5 pa-4 rounded-lg">Agreed Price <br>
+                <span class="font-weight-bold black--text"><span>{{tradeStats.dailyPrice}} </span> / {{tradeStats.price}} TELE</span>
+              </div>
+              <div class="font-weight-thin  ml-3 indigo  lighten-5 pa-4 rounded-lg">Transaction Fees <br>
+                <span class="font-weight-bold black--text"><span>{{tradeStats.dailyTransactionFees}} / </span>{{tradeStats.transactionFees}} TELE</span>
+              </div>
 
-          <v-row class="mb-4">
-            <v-col v-for="i in infoCard" :key="i">
-              <v-card height="100" class="pa-2 mb-4" flat color="blue">
-                <span class="subtitle-1">{{ i }}</span>
-                <div>45</div>
-              </v-card>
-            </v-col>
-          </v-row>
+              <v-spacer></v-spacer>
+              <!-- <div class="font-weight-bold ml-3 green white--text lighten-1 pa-4 rounded-lg">Trades in Progress:
+                <span class="font-weight-bold white--text">{{tradeStats.inProgress}}</span>
+              </div> -->
+            </div>
+          </v-card-text>
         </v-card>
       </v-col>
       <!-- Data Table -->
       <v-col cols="12">
-        <v-data-table
-          dense
-          :headers="headers"
-          :items="trades"
-          :search="search"
-          item-key="name"
-          class="elevation-1"
-          show-group-by
-          group-by="statusDesc"
-        >
+        <v-data-table dense :headers="headers" :items="trades" :search="search" item-key="name" class="elevation-3"
+          show-group-bys group-by="statusDesc">
           <template v-slot:top>
             <v-text-field v-model="search" label="Search trades" class="mx-4">
             </v-text-field>
           </template>
 
-          <template v-slot:item.action = "{item}">
-            <v-btn x-small color="blue">flyer</v-btn>
+          <template v-slot:item.action="{item}">
+
+            <v-btn :to="`/flyers/${item.flyerId}`" outlined x-small color="wheat">flyer</v-btn>
             <v-btn v-if="item.TradeStatus === 6" x-small color="blue">Dispute</v-btn>
           </template>
-           <template v-slot:item.statusDesc = "{item}">
+          <template v-slot:item.statusDesc="{item}">
             <v-chip small>{{item.statusDesc}}</v-chip>
           </template>
         </v-data-table>
-        <!-- {{ trades }} -->
       </v-col>
     </v-row>
   </v-container>
@@ -70,6 +91,7 @@ export default {
         { text: "Action", value: "action" },
       ],
       trades: [],
+      tradeStats: {},
       itemsPerPageArray: [4, 8, 12],
       search: "",
       filter: {},
@@ -126,7 +148,9 @@ export default {
   },
   async mounted() {
     const d = await this.$getTrades();
+    const t = await this.$getTradeMetrics();
     this.trades = d.data;
+    this.tradeStats = t;
   },
   computed: {
     numberOfPages() {
