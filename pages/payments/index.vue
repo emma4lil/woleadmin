@@ -15,7 +15,7 @@
             />
           </div>
           <div class="my-2 ml-2">
-            <info-card :count="394.67" postfix="Tele" title="Total Tx Charge" />
+            <info-card :count="stats.walletBalance" postfix="Tele" title="In Wallets" />
           </div>
           <div class="my-2 ml-2">
             <info-card
@@ -155,7 +155,7 @@
           class="elevation-15 mx-2"
         ></v-data-table>
 
-        {{ payments }}
+
       </v-card>
     </v-col>
   </v-row>

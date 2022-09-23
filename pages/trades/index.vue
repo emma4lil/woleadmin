@@ -116,8 +116,8 @@
                 class="font-weight-thin ml-3 indigo lighten-5 pa-4 rounded-lg"
               >
                 Delivery Fees<br /><span class="font-weight-bold black--text"
-                  ><span>{{ tradeStats.dailyDeliveryPrice }}</span> /
-                  {{ tradeStats.deliveryPrice }} TELE</span
+                  ><span>{{  parseFloat(tradeStats.dailyDeliveryPrice).toFixed(2) }}</span> /
+                  {{  parseFloat(tradeStats.deliveryPrice).toFixed(2) }} TELE</span
                 >
               </div>
               <div
@@ -133,8 +133,8 @@
               >
                 Agreed Price <br />
                 <span class="font-weight-bold black--text"
-                  ><span>{{ tradeStats.dailyPrice }} </span> /
-                  {{ tradeStats.price }} TELE</span
+                  ><span>{{  parseFloat(tradeStats.dailyPrice).toFixed(2) }} </span> /
+                  {{  parseFloat(tradeStats.price).toFixed(2)}} TELE</span
                 >
               </div>
               <div
@@ -142,8 +142,8 @@
               >
                 Transaction Fees <br />
                 <span class="font-weight-bold black--text"
-                  ><span>{{ tradeStats.dailyTransactionFees }} / </span
-                  >{{ tradeStats.transactionFees }} TELE</span
+                  ><span>{{  parseFloat(tradeStats.dailyTransactionFees).toFixed(2) }} / </span
+                  >{{  parseFloat(tradeStats.transactionFees).toFixed(2) }} TELE</span
                 >
               </div>
 
