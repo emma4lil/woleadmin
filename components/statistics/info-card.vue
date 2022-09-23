@@ -6,7 +6,7 @@
     <v-card-text>
       <div class="text-h4 white-text">
         <span>{{ prefix }}</span>
-        <span class="white--text">{{ count }}</span>
+        <span class="white--text">{{ parseFloat(count).toFixed(2) }}</span>
         <span class="caption">{{ postfix }}</span>
       </div>
     </v-card-text>
