@@ -71,6 +71,22 @@
                   tradeStats.successfulCount
                 }}</span>
               </div>
+              <div
+                class="
+                  font-weight-bold
+                  ml-3
+                  indigo
+                  grey--text
+                  lighten-5
+                  pa-4
+                  rounded-lg
+                "
+              >
+                Resolved Trades:
+                <span class="font-weight-bold black--text">{{
+                  tradeStats.tradeResolvedCount
+                }}</span>
+              </div>
               <!-- <div class="font-weight-bold ml-3 indigo grey--text lighten-5 pa-4 rounded-lg">Trades in Progress:
                 <span class="font-weight-bold black--text">{{tradeStats.inProgress}}</span>
               </div> -->
