@@ -49,45 +49,45 @@
         <div class="white mb-2 pa-2 rounded">
           <div class="h6">Daily Payments</div>
           <span class="text-caption"
-            >USD: <span>{{ tstats.dailyAmountInUSD }}</span></span
+            >USD: <span>{{  parseFloat(tstats.dailyAmountInUSD).toFixed(2) }}</span></span
           >
           &#124;
           <span class="text-caption"
-            >EURO: <span>{{ tstats.dailyAmountInEURO }}</span></span
+            >EURO: <span>{{ parseFloat(tstats.dailyAmountInEURO ).toFixed(2) }}</span></span
           >
           &#124;
           <span class="text-caption"
-            >NGN: <span>{{ tstats.dailyAmountInNGN }}</span></span
+            >NGN: <span>{{  parseFloat(tstats.dailyAmountInNGN).toFixed(2) }}</span></span
           >
           &#124;
           <span class="text-caption"
-            >LIRA: <span>{{ tstats.dailyAmountInTRY }}</span></span
+            >LIRA: <span>{{  parseFloat(tstats.dailyAmountInTRY).toFixed(2) }}</span></span
           >
           &#124;
           <span class="text-caption"
-            >USDT: <span>{{ tstats.dailyAmountInUSDT }}</span></span
+            >USDT: <span>{{ parseFloat(tstats.dailyAmountInUSDT ).toFixed(2) }}</span></span
           >
         </div>
         <div class="white pa-2 rounded">
           <div class="h6">Payments Summary</div>
           <span class="text-caption"
-            >USD: <span>{{ tstats.dailyAmountInUSD }}</span></span
+            >USD: <span>{{  parseFloat(tstats.amountInUSD).toFixed(2) }}</span></span
           >
           &#124;
           <span class="text-caption"
-            >EURO: <span>{{ tstats.dailyAmountInEURO }}</span></span
+            >EURO: <span>{{  parseFloat(tstats.amountInEURO).toFixed(2) }}</span></span
           >
           &#124;
           <span class="text-caption"
-            >NGN: <span>{{ tstats.dailyAmountInNGN }}</span></span
+            >NGN: <span>{{  parseFloat(tstats.amountInNGN).toFixed(2) }}</span></span
           >
           &#124;
           <span class="text-caption"
-            >LIRA: <span>{{ tstats.dailyAmountInTRY }}</span></span
+            >LIRA: <span>{{  parseFloat(tstats.amountInTRY).toFixed(2)}}</span></span
           >
           &#124;
           <span class="text-caption"
-            >USDT: <span>{{ tstats.dailyAmountInUSDT }}</span></span
+            >USDT: <span>{{  parseFloat(tstats.amountInUSDT).toFixed(2)}}</span></span
           >
         </div>
       </v-sheet>
@@ -98,45 +98,45 @@
         <div class="white mb-2 pa-2 rounded">
           <div class="h6">Daily Withrawals</div>
           <span class="text-caption"
-            >USD: <span>{{ tstats.withdrawDailyAmountInUSD }}</span></span
+            >USD: <span>{{  parseFloat(tstats.withdrawDailyAmountInUSD).toFixed(2) }}</span></span
           >
           &#124;
           <span class="text-caption"
-            >EURO: <span>{{ tstats.withdrawDailyAmountInEURO }}</span></span
+            >EURO: <span>{{  parseFloat(tstats.withdrawDailyAmountInEURO).toFixed(2)}}</span></span
           >
           &#124;
           <span class="text-caption"
-            >NGN: <span>{{ tstats.withdrawDailyAmountInNGN }}</span></span
+            >NGN: <span>{{  parseFloat(tstats.withdrawDailyAmountInNGN).toFixed(2)}}</span></span
           >
           &#124;
           <span class="text-caption"
-            >LIRA: <span>{{ tstats.withdrawDailyAmountInTRY }}</span></span
+            >LIRA: <span>{{  parseFloat(tstats.withdrawDailyAmountInTRY).toFixed(2)}}</span></span
           >
           &#124;
           <span class="text-caption"
-            >USDT: <span>{{ tstats.withdrawDailyAmountInUSDT }}</span></span
+            >USDT: <span>{{  parseFloat(tstats.withdrawDailyAmountInUSDT).toFixed(2)}}</span></span
           >
         </div>
         <div class="white pa-2 rounded">
           <div class="h6">Total Withrawals</div>
           <span class="text-caption"
-            >USD: <span>{{ tstats.amountWithdrawUSD }}</span></span
+            >USD: <span>{{  parseFloat(tstats.amountWithdrawUSD).toFixed(2)}}</span></span
           >
           &#124;
           <span class="text-caption"
-            >EURO: <span>{{ tstats.amountWithdrawEURO }}</span></span
+            >EURO: <span>{{ parseFloat(tstats.amountWithdrawEURO ).toFixed(2)}}</span></span
           >
           &#124;
           <span class="text-caption"
-            >NGN: <span>{{ tstats.amountWithdrawNGN }}</span></span
+            >NGN: <span>{{  parseFloat(tstats.amountWithdrawNGN).toFixed(2)}}</span></span
           >
           &#124;
           <span class="text-caption"
-            >LIRA: <span>{{ tstats.amountWithdrawTRY }}</span></span
+            >LIRA: <span>{{  parseFloat(tstats.amountWithdrawTRY).toFixed(2)}}</span></span
           >
           &#124;
           <span class="text-caption"
-            >USDT: <span>{{ tstats.amountWithdrawUSDT }}</span></span
+            >USDT: <span>{{ parseFloat( tstats.amountWithdrawUSDT).toFixed(2)}}</span></span
           >
         </div>
       </v-sheet>
