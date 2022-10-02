@@ -70,7 +70,7 @@ export default {
           // autoFetch: true
         },
         endpoints: {
-          login: { url: '/api/Auth/Login', method: 'post' },
+          login: { url: '/api/Auth/Login-roles', method: 'post' },
           logout: { url: '/api/auth/logout', method: 'post' },
           user: { url: '/api/User/Me', method: 'get' }
         }

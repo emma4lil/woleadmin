@@ -133,7 +133,7 @@ class AdminServices {
 export default ({ app, $axios }, inject) => {
   var admin = new AdminServices($axios);
   inject('getMetrics', () => admin.getMetrics());
-  // flyers
+  // flyers+
   inject('getFlyers', () => admin.getFlyers())
   inject('toggleFlyerPublishState', (id) => admin.togglePublish(id))
   inject('getComplaints', () => admin.getComplaints())
