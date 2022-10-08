@@ -129,6 +129,16 @@ class AdminServices {
     const res = await this.axios.$get("api/admin/get-paystats")
     return res
   }
+
+  async toggleUserStatebyId(userId) {
+    const res = await this.axios.$put("api/admin/toggle-active/" , {userId: userId} )
+    return res
+  }
+
+  async changeUserRoleAsync(role, userId) {
+    const res = await this.axios.$put("api/admin/change-role/", {role: role, userId: userId})
+    return res
+  }
 }
 export default ({ app, $axios }, inject) => {
   var admin = new AdminServices($axios);
@@ -158,9 +168,12 @@ export default ({ app, $axios }, inject) => {
   inject("updateConfigProp", (config) => admin.updateConfigProp(config))
   //User manage
   inject("getAllUsers", () => admin.getAllUsers())
+  inject("toggleUserStatebyId", (id) => admin.toggleUserStatebyId(id))
+  inject("changeUserRoleAsync", (userId, role) => admin.changeUserRoleAsync(userId, role))
   //Dispute Management
   inject("resolveDisputeFor", (price, dfee) => admin.resolveForDispute(price, dfee))
   inject("getChatsForTradeV2", (tradeId) => admin.getChatsForTradeV2(tradeId))
+
   //Statistics Management
   inject("getTradeMetrics", () => admin.getTradeMetrics())
   inject("getTeleMetrics", () => admin.getTeleMetrics())
