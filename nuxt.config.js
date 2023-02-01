@@ -88,14 +88,14 @@ export default {
   },
 
   env: {
-    // baseUrl: "https://wole-app.herokuapp.com"
-    baseUrl: process.env.NODE_ENV == "production" ? "https://ajeappservice.azurewebsites.net" : "https://localhost:44366"
+    baseUrl: "https://ajeappservice.azurewebsites.net"
+    //baseUrl: process.env.NODE_ENV == "production" ? "https://ajeappservice.azurewebsites.net" : "https://localhost:44366"
   },
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
-    //baseUrl: "https://wole-app.herokuapp.com"
-    baseUrl: process.env.NODE_ENV == "production" ? "https://ajeappservice.azurewebsites.net" : "https://localhost:44366"
+    baseUrl: "https://ajeappservice.azurewebsites.net"
+    // baseUrl: process.env.NODE_ENV == "production" ? "https://ajeappservice.azurewebsites.net" : "https://localhost:44366"
   },
 
 
