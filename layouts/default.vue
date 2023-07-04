@@ -1,23 +1,9 @@
 <template>
   <v-app class="white--text" id="wole-app">
-    <v-navigation-drawer
-      app
-      bottom
-      expand-on-hover
-      mini-variant
-      mini-variant-width="50"
-      color="deep-purple accent-3"
-      clipped
-      floating
-      permanent
-    >
+    <v-navigation-drawer fixed app bottom expand-on-hover mini-variant mini-variant-width="50" color="deep-purple accent-3"
+      clipped permanent>
       <v-list>
-        <v-list-item
-          :to="link"
-          v-for="([icon, text, link], i) in items"
-          :key="i"
-          link
-        >
+        <v-list-item :to="link" v-for="([icon, text, link], i) in items" :key="i" link>
           <v-list-item-icon>
             <v-icon color="white">{{ icon }}</v-icon>
           </v-list-item-icon>
@@ -37,25 +23,22 @@
     </v-navigation-drawer>
     <v-app-bar app clipped-left flat color="deep-purple accent-4">
       <v-toolbar-title class="white--text">
-        Aje-<span class="yellow--text">Dash </span
-        ><span class="caption">v1.2.12</span>
+        Aje-<span class="yellow--text">portal </span><span class="caption">beta-v1.3</span>
       </v-toolbar-title>
       <v-spacer />
       <nav-bar />
     </v-app-bar>
     <v-main>
-      <v-container fluid>
+      <v-container>
         <div class="d-flex justify-end">
           <v-card width="230" class="elevation-0 grey lighten-5">
-            <div class="mx-3 py-2">SignalR Server: {{ status }}</div>
+            <div class="mx-3 py-2">signal server: <span class="green--text">{{ status }}</span></div>
+            <h6 class="mx-3 caption">{{ serverUrl }}</h6>
           </v-card>
         </div>
         <v-snackbar top transition="slide-y-transition" v-model="notify" timeout="3000">
-          {{ notifMsg }}
-
-
+      
         </v-snackbar>
-
         <Nuxt />
       </v-container>
     </v-main>
@@ -107,12 +90,12 @@ export default {
     },
     async start() {
       try {
-        this.status = "Attempting connection...";
+        this.status = "attempting connection...";
         await this.notifconn.start();
         await this.chatConn.start();
-        this.status = "Connected!";
+        this.status = "connected!";
       } catch (err) {
-        this.status = "Connection failed:" + err;
+        this.status = "connection failed:" + err;
         console.log(err);
       }
     },
@@ -145,6 +128,7 @@ export default {
       ["mdi-clock-end", "Dispute Resolutions", "/disputes"],
       ["mdi-message-alert", "Flyer Complaints", "/complaints"],
       ["mdi-wallet", "Withdraw Requests", "/withdraws"],
+      ["mdi-bank", "Deposit claims", "/bankaccount"],
       ["mdi-credit-card-marker-outline", "Payments", "/payments"],
       ["mdi-account-supervisor-circle", "Users", "/users"],
       ["mdi-toolbox", "Settings", "/settings"],
@@ -154,9 +138,12 @@ export default {
     notifhist: [],
     chathist: [],
     status: "",
-    serverUrl: process.env.baseUrl,
+    serverUrl: process.env.baseURL,
     notify: false,
     notifMsg: "",
   }),
+  publicRuntimeConfig: {
+    host: process.env.baseURL || 'hello world!',
+  },
 };
 </script>

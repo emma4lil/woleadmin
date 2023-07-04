@@ -124,6 +124,26 @@ class AdminServices {
     const res = await this.axios.$get("api/trade/v2/get-trademetrics")
     return res
   }
+  //
+  async postNewBankAccount(data) {
+    const res = await this.axios.$post("api/banking/create", data)
+    return res
+  }
+
+  async getAllBankAccounts() {
+    const res = await this.axios.$get("api/banking/list-accounts")
+    return res
+  }
+
+  async toggleActive(id) {
+    const res = await this.axios.$put("api/banking/toggle-account/" + id)
+    return res
+  }
+
+  async deleteAccount(id) {
+    const res = await this.axios.$delete("api/banking/delete/" + id)
+    return res
+  }
 }
 export default ({ app, $axios }, inject) => {
   var admin = new AdminServices($axios);
@@ -158,4 +178,9 @@ export default ({ app, $axios }, inject) => {
   inject("getChatsForTradeV2", (tradeId) => admin.getChatsForTradeV2(tradeId))
   //Statistics Management
   inject("getTradeMetrics", () => admin.getTradeMetrics())
+  //Bank Accounts and Deposits
+  inject("postNewBankAccount", (data) => admin.postNewBankAccount(data))
+  inject("getAllBankAccounts", () => admin.getAllBankAccounts())
+  inject("toggleActive", (id) => admin.toggleActive(id))
+  inject("deleteAccount", (id) => admin.deleteAccount(id))
 }
