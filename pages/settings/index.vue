@@ -7,10 +7,10 @@
     </v-row>
     <v-row>
       <v-col>
-        <v-expansion-panels class="elevation-0">
+        <v-expansion-panels accordion multiple class="elevation-0">
           <v-expansion-panel>
             <v-expansion-panel-header>
-              Supported Currencies
+              Manage Aje Currencies
             </v-expansion-panel-header>
             <v-expansion-panel-content>
               <supported-currency />
@@ -19,7 +19,7 @@
           <!-- Minimum Currency -->
           <v-expansion-panel>
             <v-expansion-panel-header>
-              Minimum Withdrawal amount
+               Withdrawal Settings
             </v-expansion-panel-header>
             <v-expansion-panel-content>
               <set-minimal-withdraw />
@@ -27,7 +27,15 @@
           </v-expansion-panel>
           <v-expansion-panel>
             <v-expansion-panel-header>
-              System properties
+              Deposit Settings
+            </v-expansion-panel-header>
+            <v-expansion-panel-content>
+              <deposit-settings />
+            </v-expansion-panel-content>
+          </v-expansion-panel>
+          <v-expansion-panel>
+            <v-expansion-panel-header>
+              System Configurations
             </v-expansion-panel-header>
             <v-expansion-panel-content>
               <dynamic-settings :settings="configs"/>
@@ -43,8 +51,9 @@
 import DynamicSettings from "~/components/settings/DynamicSettings.vue";
 import SetMinimalWithdraw from "~/components/settings/SetMinimalWithdraw.vue";
 import SupportedCurrency from "~/components/settings/SupportedCurrency.vue";
+import DepositSettings from "~/components/settings/DepositSettings.vue";  
 export default {
-  components: { SupportedCurrency, SetMinimalWithdraw, DynamicSettings },
+  components: { SupportedCurrency, SetMinimalWithdraw, DynamicSettings, DepositSettings },
   data() {
     return {
       configs: {}

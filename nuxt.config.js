@@ -88,14 +88,12 @@ export default {
   },
 
   env: {
-    baseUrl: "https://ajeappservice.azurewebsites.net"
-    //baseUrl: process.env.NODE_ENV == "production" ? "https://ajeappservice.azurewebsites.net" : "https://localhost:44366"
+    baseURL: process.env.NODE_ENV == "production" ? "https://ajebeta.azurewebsites.com" : "https://localhost:44366"
   },
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
-  axios: {
-    baseUrl: "https://ajeappservice.azurewebsites.net"
-    // baseUrl: process.env.NODE_ENV == "production" ? "https://ajeappservice.azurewebsites.net" : "https://localhost:44366"
+  axios: {   
+    baseUrl: process.env.NODE_ENV == "production" ? "https://ajebeta.azurewebsites.com" : "https://localhost:44366"
   },
 
 
