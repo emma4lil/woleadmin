@@ -70,7 +70,7 @@ export default {
           // autoFetch: true
         },
         endpoints: {
-          login: { url: '/api/Auth/Login', method: 'post' },
+          login: { url: '/api/Auth/Login-roles', method: 'post' },
           logout: { url: '/api/auth/logout', method: 'post' },
           user: { url: '/api/User/Me', method: 'get' }
         }
@@ -92,8 +92,7 @@ export default {
   },
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
-  axios: {
-   
+  axios: {   
     baseUrl: process.env.NODE_ENV == "production" ? "https://ajebeta.azurewebsites.com" : "https://localhost:44366"
   },
 

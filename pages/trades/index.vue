@@ -3,38 +3,148 @@
     <v-row>
       <v-col>
         <!-- {{trades}} -->
+
+        <v-card width="">
+          <v-sparkline
+            :value="tradeStats.values"
+            :labels="tradeStats.dates"
+            label-size="2"
+            line-width="1"
+            color="green"
+            padding="20"
+            stroke-linecap="round"
+
+          >
+          </v-sparkline>
+        </v-card>
+
         <v-card class="pa-4">
           <div class="text-h4 mb-3 font-weight-thin">Trade Statistics</div>
           <v-divider></v-divider>
           <v-card-text v-if="tradeStats != null">
             <div class="d-flex">
-              <div class="font-weight-bold ml-3 indigo grey--text lighten-5 pa-4 rounded-lg">Total Trades: <span
-                  class="font-weight-bold black--text">{{tradeStats.totalTrades}}</span></div>
-              <div class="font-weight-bold ml-3 indigo grey--text lighten-5 pa-4 rounded-lg">Disputed Trades:
-                <span class="font-weight-bold black--text">{{tradeStats.inDisputeCount}}</span>
+              <div
+                class="
+                  font-weight-bold
+                  ml-3
+                  indigo
+                  grey--text
+                  lighten-5
+                  pa-4
+                  rounded-lg
+                "
+              >
+                Total Trades:
+                <span class="font-weight-bold black--text">{{
+                  tradeStats.totalTrades
+                }}</span>
               </div>
-              <div class="font-weight-bold ml-3 indigo grey--text lighten-5 pa-4 rounded-lg">Successful Trades:
-                <span class="font-weight-bold black--text">{{tradeStats.successfulCount}}</span>
+              <div
+                class="
+                  font-weight-bold
+                  ml-3
+                  indigo
+                  grey--text
+                  lighten-5
+                  pa-4
+                  rounded-lg
+                "
+              >
+                Disputed Trades:
+                <span class="font-weight-bold black--text">{{
+                  tradeStats.inDisputeCount
+                }}</span>
+              </div>
+              <div
+                class="
+                  font-weight-bold
+                  ml-3
+                  indigo
+                  grey--text
+                  lighten-5
+                  pa-4
+                  rounded-lg
+                "
+              >
+                Successful Trades:
+                <span class="font-weight-bold black--text">{{
+                  tradeStats.successfulCount
+                }}</span>
+              </div>
+              <div
+                class="
+                  font-weight-bold
+                  ml-3
+                  indigo
+                  grey--text
+                  lighten-5
+                  pa-4
+                  rounded-lg
+                "
+              >
+                Resolved Trades:
+                <span class="font-weight-bold black--text">{{
+                  tradeStats.tradeResolvedCount
+                }}</span>
               </div>
               <!-- <div class="font-weight-bold ml-3 indigo grey--text lighten-5 pa-4 rounded-lg">Trades in Progress:
                 <span class="font-weight-bold black--text">{{tradeStats.inProgress}}</span>
               </div> -->
               <v-spacer></v-spacer>
-              <div class="font-weight-bold ml-3 green white--text lighten-1 pa-4 rounded-lg">Trades in Progress:
-                <span class="font-weight-bold white--text">{{tradeStats.inProgress}}</span>
+              <div
+                class="
+                  font-weight-bold
+                  ml-3
+                  green
+                  white--text
+                  lighten-1
+                  pa-4
+                  rounded-lg
+                "
+              >
+                Trades in Progress:
+                <span class="font-weight-bold white--text">{{
+                  tradeStats.inProgress
+                }}</span>
               </div>
             </div>
           </v-card-text>
-              <!-- {{tradeStats}} -->
+          <!-- {{tradeStats}} -->
           <v-card-text>
             <div class="d-flex">
-              <div class="font-weight-thin  ml-3 indigo lighten-5 pa-4 rounded-lg">Delivery Fees<br><span
-                  class="font-weight-bold black--text"><span>{{tradeStats.dailyDeliveryPrice}}</span> / {{tradeStats.deliveryPrice}} TELE</span></div>
-              <div class="font-weight-thin  ml-3 indigo grey--text lighten-5 pa-4 rounded-lg">Agreed Price <br>
-                <span class="font-weight-bold black--text"><span>{{tradeStats.dailyPrice}} </span> / {{tradeStats.price}} TELE</span>
+              <div
+                class="font-weight-thin ml-3 indigo lighten-5 pa-4 rounded-lg"
+              >
+                Delivery Fees<br /><span class="font-weight-bold black--text"
+                  ><span>{{  parseFloat(tradeStats.dailyDeliveryPrice).toFixed(2) }}</span> /
+                  {{  parseFloat(tradeStats.deliveryPrice).toFixed(2) }} TELE</span
+                >
               </div>
-              <div class="font-weight-thin  ml-3 indigo  lighten-5 pa-4 rounded-lg">Transaction Fees <br>
-                <span class="font-weight-bold black--text"><span>{{tradeStats.dailyTransactionFees}} / </span>{{tradeStats.transactionFees}} TELE</span>
+              <div
+                class="
+                  font-weight-thin
+                  ml-3
+                  indigo
+                  grey--text
+                  lighten-5
+                  pa-4
+                  rounded-lg
+                "
+              >
+                Agreed Price <br />
+                <span class="font-weight-bold black--text"
+                  ><span>{{  parseFloat(tradeStats.dailyPrice).toFixed(2) }} </span> /
+                  {{  parseFloat(tradeStats.price).toFixed(2)}} TELE</span
+                >
+              </div>
+              <div
+                class="font-weight-thin ml-3 indigo lighten-5 pa-4 rounded-lg"
+              >
+                Transaction Fees <br />
+                <span class="font-weight-bold black--text"
+                  ><span>{{  parseFloat(tradeStats.dailyTransactionFees).toFixed(2) }} / </span
+                  >{{  parseFloat(tradeStats.transactionFees).toFixed(2) }} TELE</span
+                >
               </div>
 
               <v-spacer></v-spacer>
@@ -47,20 +157,35 @@
       </v-col>
       <!-- Data Table -->
       <v-col cols="12">
-        <v-data-table dense :headers="headers" :items="trades" :search="search" item-key="name" class="elevation-3"
-          show-group-bys group-by="statusDesc">
+        <v-data-table
+          dense
+          :headers="headers"
+          :items="trades"
+          :search="search"
+          item-key="name"
+          class="elevation-3"
+          show-group-bys
+          group-by="statusDesc"
+        >
           <template v-slot:top>
             <v-text-field v-model="search" label="Search trades" class="mx-4">
             </v-text-field>
           </template>
 
-          <template v-slot:item.action="{item}">
-
-            <v-btn :to="`/flyers/${item.flyerId}`" outlined x-small color="wheat">flyer</v-btn>
-            <v-btn v-if="item.TradeStatus === 6" x-small color="blue">Dispute</v-btn>
+          <template v-slot:item.action="{ item }">
+            <v-btn
+              :to="`/flyers/${item.flyerId}`"
+              outlined
+              x-small
+              color="wheat"
+              >flyer</v-btn
+            >
+            <v-btn v-if="item.TradeStatus === 6" x-small color="blue"
+              >Dispute</v-btn
+            >
           </template>
-          <template v-slot:item.statusDesc="{item}">
-            <v-chip small>{{item.statusDesc}}</v-chip>
+          <template v-slot:item.statusDesc="{ item }">
+            <v-chip small>{{ item.statusDesc }}</v-chip>
           </template>
         </v-data-table>
       </v-col>
@@ -84,8 +209,9 @@ export default {
         { text: "Created", value: "created" },
         { text: "flyer owner", value: "producerEmail" },
         { text: "Consumer", value: "consumerEmail" },
-        { text: "Agreed Price (Tele)", value: "price" },
-        {text: "Escrow Status", value: "escrowStatus"},
+        { text: "Price (Tele)", value: "price" },
+        { text: "Delivery Fee", value: "deliveryFee" },
+        { text: "Escrow Status", value: "escrowStatus" },
         { text: "Quantity", value: "quantity" },
         { text: "Delivery Address", value: "deliveryAddress" },
         { text: "Action", value: "action" },
