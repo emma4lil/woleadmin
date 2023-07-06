@@ -124,7 +124,7 @@ class AdminServices {
     const res = await this.axios.$get("api/trade/v2/get-trademetrics")
     return res
   }
-  //
+
   async postNewBankAccount(data) {
     const res = await this.axios.$post("api/banking/create", data)
     return res
@@ -142,13 +142,27 @@ class AdminServices {
 
   async deleteAccount(id) {
     const res = await this.axios.$delete("api/banking/delete/" + id)
+
+  async getTeleMetrics() {
+    const res = await this.axios.$get("api/admin/get-paystats")
+    return res
+  }
+
+  async toggleUserStatebyId(userId) {
+    const res = await this.axios.$put("api/admin/toggle-active/" , {userId: userId} )
+    return res
+  }
+
+  async changeUserRoleAsync(role, userId) {
+    const res = await this.axios.$put("api/admin/change-role/", {role: role, userId: userId})
     return res
   }
 }
+ 
 export default ({ app, $axios }, inject) => {
   var admin = new AdminServices($axios);
   inject('getMetrics', () => admin.getMetrics());
-  // flyers
+  // flyers+
   inject('getFlyers', () => admin.getFlyers())
   inject('toggleFlyerPublishState', (id) => admin.togglePublish(id))
   inject('getComplaints', () => admin.getComplaints())
@@ -173,14 +187,19 @@ export default ({ app, $axios }, inject) => {
   inject("updateConfigProp", (config) => admin.updateConfigProp(config))
   //User manage
   inject("getAllUsers", () => admin.getAllUsers())
+  inject("toggleUserStatebyId", (id) => admin.toggleUserStatebyId(id))
+  inject("changeUserRoleAsync", (userId, role) => admin.changeUserRoleAsync(userId, role))
   //Dispute Management
   inject("resolveDisputeFor", (price, dfee) => admin.resolveForDispute(price, dfee))
   inject("getChatsForTradeV2", (tradeId) => admin.getChatsForTradeV2(tradeId))
+
   //Statistics Management
   inject("getTradeMetrics", () => admin.getTradeMetrics())
+
   //Bank Accounts and Deposits
   inject("postNewBankAccount", (data) => admin.postNewBankAccount(data))
   inject("getAllBankAccounts", () => admin.getAllBankAccounts())
   inject("toggleActive", (id) => admin.toggleActive(id))
   inject("deleteAccount", (id) => admin.deleteAccount(id))
+
 }
