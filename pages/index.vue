@@ -58,7 +58,7 @@ export default {
     r.then((d) => {
       this.metrics = d.data;
     });
-    var k = setInterval(() => this.refresh(), 10000)
+    var k = setInterval(() => this.refresh(), 100000)
   },
   methods: {
     refresh() {

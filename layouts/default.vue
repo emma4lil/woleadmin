@@ -57,6 +57,7 @@ export default {
       })
       .configureLogging(signalR.LogLevel.Information)
       .build();
+
     this.notifconn.on("notify", (message) => this.notificationHandler(message));
 
     this.chatConn = new signalR.HubConnectionBuilder()
