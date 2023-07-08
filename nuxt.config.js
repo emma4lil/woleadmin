@@ -1,6 +1,7 @@
 import colors from 'vuetify/es5/util/colors'
 
 export default {
+  target: "static",
   // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
   ssr: false,
   // Global page headers: https://go.nuxtjs.dev/config-head
@@ -47,6 +48,7 @@ export default {
     '@nuxtjs/stylelint-module',
     // https://go.nuxtjs.dev/vuetify
     '@nuxtjs/vuetify',
+    ['@edgio/nuxt/module', { edgioSourceMaps: true }]
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
@@ -88,14 +90,13 @@ export default {
   },
 
   env: {
-    baseUrl: "https://ajeappservice.azurewebsites.net"
-    //baseUrl: process.env.NODE_ENV == "production" ? "https://ajeappservice.azurewebsites.net" : "https://localhost:44366"
+    baseURL: process.env.NODE_ENV == "production" ? "https://ajebeta.azurewebsites.net" : "https://localhost:44366"
   },
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
-    baseUrl: "https://ajeappservice.azurewebsites.net"
-    // baseUrl: process.env.NODE_ENV == "production" ? "https://ajeappservice.azurewebsites.net" : "https://localhost:44366"
+   
+    baseUrl: process.env.NODE_ENV == "production" ? "https://ajebeta.azurewebsites.net" : "https://localhost:44366"
   },
 
 
