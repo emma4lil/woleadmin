@@ -1,0 +1,13 @@
+{
+  "location": "routes.js",
+  "info": [
+    {
+      "criteria": {
+        "method": "match",
+        "path": "/service-worker.js"
+      },
+      "line": 9,
+      "column": 3
+    }
+  ]
+}
