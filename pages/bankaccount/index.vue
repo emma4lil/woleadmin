@@ -9,55 +9,92 @@
                     <v-card-text class="pl-0" v-if="true">
                         <div class="d-flex">
                             <div class="font-weight-bold ml-3 indigo grey--text lighten-5 pa-4 rounded-lg">Total Claims:
-                                <span class="font-weight-bold black--text">10092</span>
+                                <span class="font-weight-bold black--text">{{ deposit_items?.items?.totalClaims }}</span>
                             </div>
 
                             <div class="font-weight-bold ml-3 indigo grey--text lighten-5 pa-4 rounded-lg">Pending
                                 Claims:
-                                <span class="font-weight-bold black--text">232</span>
+                                <span class="font-weight-bold black--text">{{ deposit_items?.items?.pendingClaims }}</span>
                             </div>
 
-                            <div class="font-weight-bold ml-3 indigo orange--text lighten-5 pa-4 rounded-lg">Disputed
+                            <div class="font-weight-bold ml-3 indigo orange--text lighten-5 pa-4 rounded-lg">Processing
                                 Claims:
-                                <span class="font-weight-bold orange--text">34</span>
+                                <span class="font-weight-bold orange--text">{{ deposit_items?.items?.proccessingClaims
+                                }}</span>
                             </div>
 
 
                             <div class="font-weight-bold ml-3 indigo red--text lighten-5 pa-4 rounded-lg">Rejected Claims:
-                                <span class="font-weight-bold red--text">98</span>
+                                <span class="font-weight-bold red--text">{{ deposit_items?.items?.rejectedClaims }}</span>
                             </div>
 
 
                             <v-spacer></v-spacer>
                             <div class="font-weight-bold ml-3 green white--text lighten-1 pa-4 rounded-lg">Paid Claims:
-                                <span class="font-weight-bold white--text">122</span>
+                                <span class="font-weight-bold white--text">{{ deposit_items?.items?.acceptedClaims }}</span>
                             </div>
                         </div>
                     </v-card-text>
 
                     <v-card-text class="pl-0">
                         <div class="d-flex flex-column">
-                            <div class="font-weight-bold  ml-3 indigo lighten-5 pa-4 rounded-lg">Deposits Statistics<br>
-                                <!-- <v-data-table headers="headers" items="items" hide-actions class="elevation-1" select-all
-                                    pagination.sync="pagination" item-key="id" loading="true" search="search">
+                            <v-card outlined class="font-weight-bold  ml-3 pa-4 rounded-lg">Deposit filter<br>
+                                <v-card-text>
+                                    <div class="d-flex justify-space-between">
+                                        <v-menu ref="menu1" v-model="menu1" :close-on-content-click="false"
+                                            transition="scale-transition" offset-y min-width="auto">
+                                            <template v-slot:activator="{ on, attrs }">
+                                                <v-text-field class="pr-2" dense outlined v-model="depositFilter.startdate"
+                                                    label="Start date" readonly v-bind="attrs" v-on="on"></v-text-field>
+                                            </template>
+                                            <v-date-picker v-model="depositFilter.startdate"
+                                                :max="(new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substring(0, 10)"
+                                                min="1950-01-01" @change="save1"></v-date-picker>
+                                        </v-menu>
 
-                                </v-data-table> -->
-                            </div>
+                                        <v-menu ref="menu2" v-model="menu2" :close-on-content-click="false"
+                                            transition="scale-transition" offset-y min-width="auto">
+                                            <template v-slot:activator="{ on, attrs }">
+                                                <v-text-field class="pr-2" dense outlined v-model="depositFilter.enddate"
+                                                    label="End date" readonly v-bind="attrs" v-on="on"></v-text-field>
+                                            </template>
+                                            <v-date-picker v-model="depositFilter.enddate"
+                                                :max="(new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substring(0, 10)"
+                                                min="1950-01-01" @change="save2"></v-date-picker>
+                                        </v-menu>
+                                        <v-select outlined class="pr-2" dense item-text="title" item-value="value"
+                                            :items="statusFilter" v-model="depositFilter.claimtype"
+                                            label="Claim type"></v-select>
+                                        <v-btn :loading="fetching_deposits" @click="getfilteredResults()" height="40"
+                                            color="primary">Filter</v-btn>
+
+                                    </div>
+
+                                </v-card-text>
+                            </v-card>
                         </div>
                     </v-card-text>
-                    <v-card-actions>
-                        <v-spacer></v-spacer>
-                        <v-btn elevation="0" small color="primary">Configure Deposits</v-btn>
-                    </v-card-actions>
+
                 </v-card>
             </v-col>
             <!-- Data Table -->
             <v-col cols="12">
-                <v-data-table dense :headers="headers" :items="trades" :search="search" item-key="name" class="elevation-10"
-                    show-group-bys group-by="statusDesc">
+                <v-data-table dense :headers="headers" :items="deposit_items?.items?.claims" :search="search"
+                    item-key="name" class="elevation-10" show-group-bys group-by="statusDesc">
                     <template v-slot:top>
                         <v-text-field outlined v-model="search" label="Search claims" class="mx-4 py-4">
                         </v-text-field>
+                    </template>
+
+                    <template v-slot:item.claimStatus="{ item }">
+                        <v-chip small class="rounded-sm" :color="getColor(item.claimStatus)">
+                            {{ item.claimStatus }}
+                        </v-chip>
+                    </template>
+
+                    <template v-slot:item.claim.attachmentUrl="{ item }">
+                        <v-img class="my-1 rounded-sm" lazy-src="https://picsum.photos/id/11/10/6" max-height="70" max-width="70"
+                            src="https://picsum.photos/id/11/500/300"></v-img>
                     </template>
 
                     <template v-slot:item.action="{ item }">
@@ -70,32 +107,64 @@
                 </v-data-table>
             </v-col>
         </v-row>
+        <!-- {{ deposit_items.items.claims }} -->
     </v-container>
 </template>
   
 <script>
 export default {
+    async mounted() {
+        this.$getDepositClaims(this.depositFilter).then(r => {
+            this.deposit_items.items = r.item2
+        });
+    },
     data() {
+        var current = new Date();
+        const prior = new Date().setDate(current.getDate() - 30);
         return {
+            menu1: false,
+            menu2: false,
+
             headers: [
                 {
                     text: "Email",
-                    value: "123"
+                    value: "email"
                 },
                 {
                     text: "Fullname",
-                    value: "123"
+                    value: "fullName"
                 },
                 {
-                    text: "Fullname",
-                    value: "123"
+                    text: "Bank Name",
+                    value: "claim.bankName"
                 },
                 {
-                    text: "Fullname",
-                    value: "123"
+                    text: "Account Number",
+                    value: "claim.accountNumber"
                 },
+                {
+                    text: "Amount",
+                    value: "claim.amount"
+                },
+                {
+                    text: "Status",
+                    value: "claimStatus"
+                },
+                {
+                    text: "Attachment",
+                    value: "claim.attachmentUrl"
+                },
+                {
+                    text: "Staff",
+                    value: "claimHandler"
+                },
+                {
+                    text: "Remarks",
+                    value: "claim.remark"
+                }
 
             ],
+            fetching_deposits: false,
             deposit_items: {
 
                 items: [
@@ -107,6 +176,21 @@ export default {
 
                 }
             },
+            depositFilter: {
+                startdate: this.parseDate(new Date(prior).toLocaleDateString()),
+                enddate: this.parseDate(new Date().toLocaleDateString()),
+                claimtype: 0
+            },
+            statusFilter: [
+                {
+                    title: "All",
+                    value: -1
+                },
+                {
+                    title: "Pending",
+                    value: 0
+                },
+            ],
             search: "",
             itemsPerPageArray: [4, 8, 12],
             search: "",
@@ -129,9 +213,6 @@ export default {
             ],
         };
     },
-    async mounted() {
-
-    },
     computed: {
         numberOfPages() {
             return Math.ceil(this.items.length / this.itemsPerPage);
@@ -141,6 +222,13 @@ export default {
         },
     },
     methods: {
+        async getfilteredResults() {
+            this.fetching_deposits = true
+            this.$getDepositClaims(this.depositFilter).then(r => {
+                this.deposit_items.items = r.item2
+                this.fetching_deposits = false
+            });
+        },
         nextPage() {
             if (this.page + 1 <= this.numberOfPages) this.page += 1;
         },
@@ -149,6 +237,23 @@ export default {
         },
         updateItemsPerPage(number) {
             this.itemsPerPage = number;
+        },
+        save1(date) {
+            this.$refs.menu1.save(date)
+        },
+        save2(date) {
+            this.$refs.menu2.save(date)
+        },
+        parseDate(date) {
+            if (!date) return null
+            const [month, day, year] = date.split('/')
+            return `${year}-${month}-${day}`
+        },
+        getColor(status) {
+            if (status == "Pending") return "orange lighthen-4"
+            if (status == "Success") return "green"
+            if (status == "Cancelled") return "Red"
+            if (status == "Processing") return "blue"
         },
     },
 };
