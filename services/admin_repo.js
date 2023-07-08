@@ -142,7 +142,9 @@ class AdminServices {
 
   async deleteAccount(id) {
     const res = await this.axios.$delete("api/banking/delete/" + id)
-
+    return res
+  }
+  
   async getTeleMetrics() {
     const res = await this.axios.$get("api/admin/get-paystats")
     return res
@@ -154,6 +156,11 @@ class AdminServices {
   }
 
   async changeUserRoleAsync(role, userId) {
+    const res = await this.axios.$put("api/admin/change-role/", {role: role, userId: userId})
+    return res
+  }
+
+  async filterDepositClaims(filter) {
     const res = await this.axios.$put("api/admin/change-role/", {role: role, userId: userId})
     return res
   }
@@ -201,5 +208,6 @@ export default ({ app, $axios }, inject) => {
   inject("getAllBankAccounts", () => admin.getAllBankAccounts())
   inject("toggleActive", (id) => admin.toggleActive(id))
   inject("deleteAccount", (id) => admin.deleteAccount(id))
+  inject("filterDepositClaims", (filter) => admin.filterDepositClaims(filter))
 
 }
