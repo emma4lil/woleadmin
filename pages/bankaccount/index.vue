@@ -79,8 +79,11 @@
             </v-col>
             <!-- Data Table -->
             <v-col cols="12">
-                <v-data-table dense :headers="headers" :items="deposit_items?.items?.claims" :search="search"
-                    item-key="name" class="elevation-10" show-group-bys group-by="statusDesc">
+
+
+                <v-data-table :expanded.sync="expanded" single-expand show-expand dense :headers="headers"
+                    :items="deposit_items?.items?.claims" :search="search" item-key="claim.id" class="elevation-10"
+                    show-group-bys group-by="statusDesc">
                     <template v-slot:top>
                         <v-text-field outlined v-model="search" label="Search claims" class="mx-4 py-4">
                         </v-text-field>
@@ -93,18 +96,59 @@
                     </template>
 
                     <template v-slot:item.claim.attachmentUrl="{ item }">
-                        <v-img class="my-1 rounded-sm" lazy-src="https://picsum.photos/id/11/10/6" max-height="70" max-width="70"
-                            src="https://picsum.photos/id/11/500/300"></v-img>
+                        <v-img class="my-1 rounded-sm" lazy-src="https://picsum.photos/id/11/10/6" max-height="70"
+                            max-width="70" :src="item.attachmentUrl"></v-img>
                     </template>
 
                     <template v-slot:item.action="{ item }">
                         <v-btn :to="`/flyers/${item.flyerId}`" outlined x-small color="wheat">flyer</v-btn>
                         <v-btn v-if="item.TradeStatus === 6" x-small color="blue">Dispute</v-btn>
                     </template>
+
+                    <template v-slot:expanded-item="{ headers, item }">
+                        <td :colspan="headers.length">
+                            <v-card outlined elevation="0" class="ma-2">
+                                <v-card-title primary-title>
+                                    Actions
+                                </v-card-title>
+                                <v-card-text>
+                                    <p>
+                                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Beatae ducimus blanditiis
+                                        inventore corrupti eligendi voluptatibus aperiam, dolorem laboriosam perferendis
+                                        iste autem rerum fugit ratione accusamus pariatur fuga laudantium suscipit officia.
+                                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Beatae ducimus blanditiis
+                                        inventore corrupti eligendi voluptatibus aperiam, dolorem laboriosam perferendis
+                                        iste autem rerum fugit ratione accusamus pariatur fuga laudantium suscipit officia.
+                                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Beatae ducimus blanditiis
+                                        inventore corrupti eligendi voluptatibus aperiam, dolorem laboriosam perferendis
+                                        iste autem rerum fugit ratione accusamus pariatur fuga laudantium suscipit officia.
+                                    </p>
+                                </v-card-text>
+                                <v-card-text>
+                                    <div class="d-flex justify-space-between">
+                                        <v-text-field class="ml-3" outlined label="Bank Name"
+                                            v-model="value"></v-text-field>
+                                        <v-text-field class="ml-3" outlined label="Bank Account"
+                                            v-model="value"></v-text-field>
+                                        <v-text-field class="ml-3" outlined label="Refrence" v-model="value"></v-text-field>
+                                        <v-select class="ml-3" outlined :items="[1, 2, 4]" v-model="value"
+                                            label="Change status"></v-select>
+                                    </div>
+                                    <v-spacer></v-spacer>
+                                    <v-btn block color="primary">Save</v-btn>
+                                </v-card-text>
+                            </v-card>
+                        </td>
+                    </template>
+
+
                     <template v-slot:item.statusDesc="{ item }">
                         <v-chip small>{{ item.statusDesc }}</v-chip>
                     </template>
                 </v-data-table>
+            </v-col>
+            <v-col>
+                <resolve-deposits-claim />
             </v-col>
         </v-row>
         <!-- {{ deposit_items.items.claims }} -->
@@ -112,7 +156,9 @@
 </template>
   
 <script>
+import ResolveDepositsClaim from '~/components/deposits/ResolveDepositsClaim.vue';
 export default {
+    components: { ResolveDepositsClaim },
     async mounted() {
         this.$getDepositClaims(this.depositFilter).then(r => {
             this.deposit_items.items = r.item2
@@ -124,7 +170,7 @@ export default {
         return {
             menu1: false,
             menu2: false,
-
+            expanded: [],
             headers: [
                 {
                     text: "Email",

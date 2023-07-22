@@ -1,6 +1,14 @@
  <template>
   <div>
-    <v-data-table dense :headers="headers" :items="users">
+    <v-card class="mb-5">
+      <v-card-text>
+        <v-text-field outlined box label="Search by column" v-model="search"></v-text-field>
+      </v-card-text>
+    </v-card>
+    <v-data-table :search="search" multi-sort dense :headers="headers" :items="users">
+      <template v-slot:item.fullName="{ item }">
+        <span class="black--text font-weight-medium">{{item.fullName}}</span>
+      </template>
       <template v-slot:item.isActive="{ item }">
         <div class="">
           <v-btn
@@ -12,8 +20,12 @@
           >
         </div>
       </template>
+      <template v-slot:item.createdAt="{ item }">
+          {{new Date(item.createdAt).toDateString()}}
+      </template>
+
       <template v-slot:item.action="{ item }">
-        <div class="mt-5" style="width: 120px;">
+        <div class="" style="width: 120px;">
           <v-select
             @change="changeUserRolesAsync($event, item.id)"
             dense
@@ -24,7 +36,6 @@
         </div>
       </template>
     </v-data-table>
-
   </div>
 </template>
 
@@ -43,32 +54,38 @@ export default {
       selectedRole: -1,
       isDeactivated: false,
       users: [],
-      search: "search something",
+      search: "",
       headers: [
+        {
+          text: "Joined At",
+          value: "createdAt",
+          sortable: true
+        },
         {
           text: "Email",
           value: "email",
           align: "start",
+          sortable: true
         },
         {
           text: "Fullname",
           value: "fullName",
-          align: "start",
+          align: "",
         },
         {
           text: "No of flyers",
           value: "noOfFlyers",
-          align: "start",
+
         },
         {
           text: "No of Trades",
           value: "noOfTrades",
-          align: "start",
+
         },
         {
           text: "User Role",
           value: "userRole",
-          align: "start",
+
         },
         {
           text: "Is Active",
@@ -78,7 +95,7 @@ export default {
         {
           text: "Change Role",
           value: "action",
-          align: "start",
+          align: "end",
         },
       ],
     };
