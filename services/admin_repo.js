@@ -149,7 +149,7 @@ class AdminServices {
     const res = await this.axios.$post("api/banking/filter-claims", filter)
     return res
   }
-  
+
   async getTeleMetrics() {
     const res = await this.axios.$get("api/admin/get-paystats")
     return res
@@ -165,9 +165,9 @@ class AdminServices {
     return res
   }
 
- 
+
 }
- 
+
 export default ({ app, $axios }, inject) => {
   var admin = new AdminServices($axios);
   inject('getMetrics', () => admin.getMetrics());
@@ -204,6 +204,7 @@ export default ({ app, $axios }, inject) => {
 
   //Statistics Management
   inject("getTradeMetrics", () => admin.getTradeMetrics())
+  inject("getTeleMetrics", () => admin.getTeleMetrics())
 
   //Bank Accounts and Deposits
   inject("postNewBankAccount", (data) => admin.postNewBankAccount(data))
