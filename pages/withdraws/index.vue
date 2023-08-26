@@ -2,7 +2,7 @@
   <v-row>
     <v-col cols="12">
       <div>Withdrawal Requests</div>
-          <!-- {{withdraws}} -->
+      <!-- {{withdraws}} -->
     </v-col>
     <v-col cols="12">
       <section class="loop">

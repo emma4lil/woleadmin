@@ -63,8 +63,13 @@ class AdminServices {
     return res
   }
 
-  async setWithdrawStatus(id, status) {
-    const res = await this.axios.$post("api/admin/set-withdrawals/" + id + "/" + status)
+  async setWithdrawStatus(id, status, reason) {
+    let data = {};
+    data.id = id;
+    data.status = status
+    data.reason = reason
+
+    const res = await this.axios.$post("api/admin/set-withdrawal", data)
     return res
   }
   async makeRefund(id) {
@@ -183,7 +188,7 @@ export default ({ app, $axios }, inject) => {
   inject("sendChat", (tradeId, message) => admin.sendChat(tradeId, message))
   //Wallet
   inject("getWithdraws", () => admin.getWithdraws())
-  inject("setWithdrawStatus", (id, status) => admin.setWithdrawStatus(id, status))
+  inject("setWithdrawStatus", (id, status, reason) => admin.setWithdrawStatus(id, status, reason))
   inject("makeRefund", (id) => admin.makeRefund(id))
   inject("getAllPayments", () => admin.getAllPayments())
   //Currency

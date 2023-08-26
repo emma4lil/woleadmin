@@ -17,14 +17,14 @@
             </v-expansion-panel-content>
           </v-expansion-panel>
           <!-- Minimum Currency -->
-          <v-expansion-panel>
+          <!-- <v-expansion-panel>
             <v-expansion-panel-header>
                Withdrawal Settings
             </v-expansion-panel-header>
             <v-expansion-panel-content>
               <set-minimal-withdraw />
             </v-expansion-panel-content>
-          </v-expansion-panel>
+          </v-expansion-panel> -->
           <v-expansion-panel>
             <v-expansion-panel-header>
               Deposit Settings
@@ -51,7 +51,7 @@
 import DynamicSettings from "~/components/settings/DynamicSettings.vue";
 import SetMinimalWithdraw from "~/components/settings/SetMinimalWithdraw.vue";
 import SupportedCurrency from "~/components/settings/SupportedCurrency.vue";
-import DepositSettings from "~/components/settings/DepositSettings.vue";  
+import DepositSettings from "~/components/settings/DepositSettings.vue";
 export default {
   components: { SupportedCurrency, SetMinimalWithdraw, DynamicSettings, DepositSettings },
   data() {

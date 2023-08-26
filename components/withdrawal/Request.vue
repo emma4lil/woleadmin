@@ -1,56 +1,57 @@
 <template>
   <v-card width="300">
     <div class="d-flex mx-3 py-2 justify-space-between">
-      <div>Request #1</div>
+      <div class="caption">
+        {{ new Date(withdraw.createdAt).toLocaleString() }}
+      </div>
       <div>
-        <v-chip small color="lime">{{ withdraw.status }}</v-chip>
-        <v-chip small color="orange">{{ withdraw.type }}</v-chip>
+        <v-chip class="rounded-sm" x-small color="lime">{{ withdraw.status }}</v-chip>
+        <v-chip class="rounded-sm" x-small color="primary"> {{withdraw.currency}}</v-chip>
       </div>
     </div>
     <v-divider></v-divider>
+
     <v-card-text>
       <div class="mb-2">
-        <div class="black--text">User Information</div>
-        <v-divider></v-divider>
         <div class="d-flex justify-space-between">
-          <span class="caption grey--text">Requestor:</span
-          ><span class="h6 black--text">{{ withdraw.requestor }}</span>
+          <span class="caption grey--text">User</span
+          ><span class="h6 black--text caption">{{ withdraw.requestor }}</span>
         </div>
         <div class="d-flex justify-space-between">
-          <span class="caption grey--text">Email:</span
-          ><span class="h6 black--text">{{ withdraw.email }}</span>
+          <span class="caption grey--text">Email</span
+          ><span class="h6 black--text caption">{{ withdraw.email }}</span>
         </div>
         <div class="d-flex justify-space-between">
-          <span class="caption grey--text">Country:</span
-          ><span class="h6 black--text">{{ withdraw.country }}</span>
+          <span class="caption grey--text">Country</span
+          ><span class="h6 black--text caption">{{ withdraw.country }}</span>
         </div>
       </div>
 
       <!-- Withdraw information -->
 
       <div class="mb-2">
-        <div class="black--text">Withdraw Information</div>
+
         <v-divider></v-divider>
-        <div class="d-flex justify-space-between">
-          <span class="caption grey--text">Amount (tele):</span
+        <div class="d-flex justify-space-between mt-2">
+          <span class="caption grey--text">Amount</span
           ><span class="h6 black--text"
-            ><v-btn flat class="elevation-0" x-small color="primary">{{
-              withdraw.amount
-            }}</v-btn></span
+            ><v-btn outlined flat class="elevation-0" x-small color="primary"
+              >{{ withdraw.amount }} TELE</v-btn
+            ></span
           >
         </div>
+
         <div class="d-flex justify-space-between">
-          <span class="caption grey--text">Currency:</span
-          ><span class="h6 black--text">{{ withdraw.currency }}</span>
+          <span class="caption grey--text">Local amount</span
+          ><span class="black--text caption">{{ withdraw.localAmount }} {{withdraw.currency}}</span>
         </div>
       </div>
 
-      <!-- Trade Information -->
+      <!-- Bank Information -->
       <div class="mb-2">
-        <div class="black--text">Bank Information</div>
         <v-divider></v-divider>
-        <div class="d-flex justify-space-between">
-          <span class="caption grey--text">Account Name:</span
+        <div class="d-flex justify-space-between mt-2">
+          <span class="caption grey--text">Account Name</span
           ><span class="h6 black--text"
             ><v-btn flat class="elevation-0" x-small color="primary">{{
               withdraw.accountName
@@ -58,16 +59,16 @@
           >
         </div>
         <div class="d-flex justify-space-between">
-          <span class="caption grey--text">Account #:</span
+          <span class="caption grey--text">Account ##</span
           ><span class="h6 black--text">{{ withdraw.account }}</span>
         </div>
         <div class="d-flex justify-space-between">
           <span class="caption grey--text">Bank Name:</span
-          ><span class="h6 black--text">{{ withdraw.bankName }}</span>
+          ><span class="h6 black--text caption">{{ withdraw.bankName }}</span>
         </div>
         <div class="d-flex justify-space-between">
-          <span class="caption grey--text">IBAN:</span
-          ><span class="h6 black--text">{{ withdraw.iban }}</span>
+          <span class="caption grey--text">Iban</span
+          ><span class="h6 black--text caption">{{ withdraw.iban === '' ? 'N/A' : withdraw.iban }}</span>
         </div>
       </div>
     </v-card-text>
@@ -78,8 +79,8 @@
       v
     >
       <v-sheet
-        class="d-flex flex-column justify-center pa-3 rounded-xl"
-        color="grey lighten-3"
+        class="d-flex flex-column justify-center pa-3 rounded-sm"
+        color="grey lighten-4"
       >
         <div class="caption">Confirmation Code: {{ otp }}</div>
         <v-progress-linear
@@ -111,29 +112,29 @@
         v-if="select == 4"
         outlined
         :items="reasons"
-        label="Reasons"
+        label="Select rejection reason?"
+        v-model="reason"
       ></v-select>
     </v-card-text>
-
     <v-card-actions v-if="revealActions">
       <v-btn
+      block
         class="elevation-0"
         @click="Save()"
         :loading="loading"
         v-if="select !== 0"
-        small
-        color="blue"
+        color="primary"
         >Save status</v-btn
       >
       <v-spacer></v-spacer>
-      <v-btn
+      <!-- <v-btn
         @click="Refund()"
         class="elevation-0"
         v-if="select === 4"
         small
         color="yellow"
         >Make Refund</v-btn
-      >
+      > -->
     </v-card-actions>
   </v-card>
 </template>
@@ -166,12 +167,13 @@ export default {
           text: "Refunded",
           key: 4,
         },
-        
       ],
+      reason: "",
       reasons: [
-        "Invalid account details",
-        "Account Name Mismatch",
-        "Invalid Wallet Address",
+        "Payment did not go through",
+        "Invalid account details was provided.",
+        "The provided account details does not match.",
+        "Invalid wallet address was provided.",
       ],
     };
   },
@@ -204,7 +206,7 @@ export default {
   methods: {
     Save() {
       this.loading = true;
-      this.$setWithdrawStatus(this.withdraw.id, this.select)
+      this.$setWithdrawStatus(this.withdraw.id, this.select, this.reason)
         .then((d) => {
           this.loading = false;
           this.withdraw.status = this.status[this.select].text;
