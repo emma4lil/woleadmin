@@ -37,7 +37,7 @@
           </v-card>
         </div>
         <v-snackbar top transition="slide-y-transition" v-model="notify" timeout="3000">
-      
+
         </v-snackbar>
         <Nuxt />
       </v-container>
@@ -129,7 +129,7 @@ export default {
       ["mdi-clock-end", "Dispute Resolutions", "/disputes"],
       ["mdi-message-alert", "Flyer Complaints", "/complaints"],
       ["mdi-wallet", "Withdraw Requests", "/withdraws"],
-      ["mdi-bank", "Deposit claims", "/bankaccount"],
+      ["mdi-bank", "Deposit claims", "/deposits"],
       ["mdi-credit-card-marker-outline", "Payments", "/payments"],
       ["mdi-account-supervisor-circle", "Users", "/users"],
       ["mdi-toolbox", "Settings", "/settings"],

@@ -166,11 +166,11 @@
           show-group-bys
           group-by="statusDesc"
         >
-        <template v-slot:item.claim.createdAt = "{item}">
-          <div class="primary--text">
-            {{new Date(item.claim.createdAt).toLocaleString()}}
-          </div>
-        </template>
+          <template v-slot:item.claim.createdAt="{ item }">
+            <div class="primary--text">
+              {{ new Date(item.claim.createdAt).toLocaleString() }}
+            </div>
+          </template>
           <template v-slot:top>
             <v-text-field
               outlined
@@ -233,21 +233,47 @@
                         </tr>
                         <tr>
                           <td>Claim Status</td>
-                          <td><v-chip color="yellow" x-small>{{ item.claimStatus }}</v-chip></td>
+                          <td>
+                            <v-chip color="yellow" x-small>{{
+                              item.claimStatus
+                            }}</v-chip>
+                          </td>
                         </tr>
                         <tr>
                           <td>Handler</td>
-                          <td>Aje</td>
+                          <td>{{ item.claim.adminId }}</td>
+                        </tr>
+                        <tr>
+                          <td>Tele</td>
+                          <td>
+                            {{ item.claim.amountInTeleEarned }}
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>Tele Rate</td>
+                          <td>
+                            {{ item.claim.teleRate }}
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>Currency</td>
+                          <td>
+                            {{ item.Currency }}
+                          </td>
                         </tr>
                         <tr>
                           <td>Created</td>
-                          <td>{{new Date(item.claim.createdAt).toLocaleString()}}</td>
+                          <td>
+                            {{
+                              new Date(item.claim.createdAt).toLocaleString()
+                            }}
+                          </td>
                         </tr>
                       </tbody>
                     </template>
                   </v-simple-table>
                 </v-card>
-                {{item}}
+
                 <v-card-text>
                   <div class="d-flex justify-space-between">
                     <v-text-field
@@ -268,6 +294,13 @@
                       label="Refrence"
                       v-model="item.claim.referenceId"
                     ></v-text-field>
+                    <v-select
+                      class="ml-3"
+                      outlined
+                      :items="currencies"
+                      v-model="item.claim.paidInCurrency"
+                      label="Paid In Currency"
+                    ></v-select>
                     <v-select
                       class="ml-3"
                       outlined
@@ -337,8 +370,8 @@ export default {
       expanded: [],
       headers: [
         {
-            text: "Requested On",
-            value: "claim.createdAt"
+          text: "Requested On",
+          value: "claim.createdAt",
         },
         {
           text: "Email",
@@ -359,7 +392,7 @@ export default {
         {
           text: "Attachment",
           value: "claim.attachmentUrl",
-        }
+        },
       ],
       fetching_deposits: false,
       deposit_items: {
@@ -377,14 +410,40 @@ export default {
         refrence: "",
         status: 0,
       },
+      currencies: [
+        {
+          text: "NGN",
+          value: 222,
+        },
+        {
+          text: "USD",
+          value: 111,
+        },
+        {
+          text: "EURO",
+          value: 444,
+        },
+      ],
       claimStatus: [
         {
           text: "Pending",
           value: 0,
         },
         {
+          text: "Processing",
+          value: 1,
+        },
+        {
           text: "Success",
           value: 2,
+        },
+        {
+          text: "Rejected",
+          value: 3,
+        },
+        {
+          text: "Refunded",
+          value: 4,
         },
       ],
       statusFilter: [
@@ -397,8 +456,20 @@ export default {
           value: 0,
         },
         {
+          text: "Processing",
+          value: 1,
+        },
+        {
           text: "Success",
           value: 2,
+        },
+        {
+          text: "Rejected",
+          value: 3,
+        },
+        {
+          text: "Refunded",
+          value: 4,
         },
       ],
       search: "",
@@ -439,8 +510,14 @@ export default {
         this.fetching_deposits = false;
       });
     },
-    setClaimInfo(x) {
-      alert(x);
+
+    async setClaimInfo(claim) {
+      this.$processDeposit(claim).then((r) => {
+        alert(r.item2)
+        this.$getDepositClaims(this.depositFilter).then((r) => {
+          this.deposit_items.items = r.item2;
+        });
+      });
     },
 
     showImage(link) {
