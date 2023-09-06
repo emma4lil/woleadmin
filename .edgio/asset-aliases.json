@@ -1,8 +1,8 @@
 {
   "dist": "dist/index.html",
   "dist/": "dist/index.html",
-  "dist/bankaccount": "dist/bankaccount/index.html",
   "dist/complaints": "dist/complaints/index.html",
+  "dist/deposits": "dist/deposits/index.html",
   "dist/disputes": "dist/disputes/index.html",
   "dist/payments": "dist/payments/index.html",
   "dist/settings": "dist/settings/index.html",
