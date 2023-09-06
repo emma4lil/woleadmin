@@ -161,12 +161,17 @@ class AdminServices {
   }
 
   async toggleUserStatebyId(userId) {
-    const res = await this.axios.$put("api/admin/toggle-active/" , {userId: userId} )
+    const res = await this.axios.$put("api/admin/toggle-active/", { userId: userId })
     return res
   }
 
   async changeUserRoleAsync(role, userId) {
-    const res = await this.axios.$put("api/admin/change-role/", {role: role, userId: userId})
+    const res = await this.axios.$put("api/admin/change-role/", { role: role, userId: userId })
+    return res
+  }
+
+  async ProcessDeposit(claim) {
+    const res = await this.axios.$post("api/banking/process-claim/", claim)
     return res
   }
 
@@ -217,5 +222,6 @@ export default ({ app, $axios }, inject) => {
   inject("toggleActive", (id) => admin.toggleActive(id))
   inject("deleteAccount", (id) => admin.deleteAccount(id))
   inject("getDepositClaims", (filter) => admin.getDepositClaims(filter))
+  inject("processDeposit", (claim) => admin.ProcessDeposit(claim))
 
 }
