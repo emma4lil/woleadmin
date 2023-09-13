@@ -175,6 +175,17 @@ class AdminServices {
     return res
   }
 
+  // Parameters
+  async getParameters() {
+    const res = await this.axios.$get("api/config/get-parameters")
+    return res
+  }
+
+  async updateParameters(parameters) {
+    const res = await this.axios.$put("api/config/update-parameters", parameters)
+    return res
+  }
+
 
 }
 
@@ -223,5 +234,10 @@ export default ({ app, $axios }, inject) => {
   inject("deleteAccount", (id) => admin.deleteAccount(id))
   inject("getDepositClaims", (filter) => admin.getDepositClaims(filter))
   inject("processDeposit", (claim) => admin.ProcessDeposit(claim))
+
+
+  // Parameters
+  inject("getParameters", () => admin.getParameters())
+  inject("updateParameters", (parameters) => admin.updateParameters(parameters))
 
 }
