@@ -156,9 +156,9 @@ class AdminServices {
   }
 
   async getTeleMetrics() {
-    const res = await this.axios.$get("api/admin/get-paystats")
-    return res
-  }
+      const res = await this.axios.$get("api/admin/get-paystats")
+      return res
+    }
 
   async toggleUserStatebyId(userId) {
     const res = await this.axios.$put("api/admin/toggle-active/", { userId: userId })
