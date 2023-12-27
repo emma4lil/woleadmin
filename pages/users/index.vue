@@ -8,6 +8,12 @@
       <template v-slot:item.fullName="{ item }">
         <span class="blue--text font-weight-medium">{{ item.fullName }}</span>
       </template>
+      <template v-slot:item.inviteStatuses="{ item }">
+        <v-chip x-small class="purple--text">{{ item.inviteStatusesDescription }}</v-chip>
+      </template>
+      <template v-slot:item.lastSeen="{ item }">
+        <div x-small class="blue--text text-caption">{{ getLastSeenString(item.lastSeen) }}</div>
+      </template>
 
       <template v-slot:item.isActive="{ item }">
         <div class="">
@@ -28,30 +34,41 @@
     </v-data-table>
 
     <v-dialog v-model="openMenu" scrollable :overlay="false" max-width="500px" transition="dialog-transition">
-      <v-card class="mx-auto">
-        <v-list-item three-line>
-          <v-list-item-content>
-            <div class="overline mb-4">{{ currentUser.userRole }}</div>
-            <v-list-item-title class="headline mb-1">{{ currentUser.fullName }}</v-list-item-title>
-            <v-list-item-subtitle>{{ currentUser.email }}</v-list-item-subtitle>
-          </v-list-item-content>
-
-          <v-list-item-avatar tile size="80" color="grey">
-            <v-img src="https://cdn.vuetifyjs.com/images/john.jpg"></v-img>
-          </v-list-item-avatar>
-        </v-list-item>
-
+      <v-card>
+        <!-- <v-card-title primary-title>
+          Profile information
+        </v-card-title> -->
+        <v-card-text class="my-4">
+          <!-- Basic information -->
+          <div class=" d-flex justify-space-between">
+            <div style="width: 100%;" class="">
+              <div class="mx-auto d-flex justify-space-between">
+                <div class="overline">{{ currentUser.userRole }}</div>
+                <div class="text-caption mr-2 mt-1">last seen: {{ getLastSeenString(currentUser.lastSeen) }}</div>
+              </div>
+              <h5 class="text-h6">{{ currentUser.fullName }}</h5>
+            </div>
+            <div>
+              <v-img width="120" :src="currentUser.avatarUrl"></v-img>
+            </div>
+          </div>
+        </v-card-text>
+        <!-- Property Table -->
         <v-card-text>
-          <v-simple-table>
+          <v-simple-table v-if="currentUser" dense>
             <template v-slot:default>
               <tbody>
                 <tr>
                   <td>ID</td>
-                  <td class="caption">{{ currentUser.id }}</td>
+                  <td class="text-caption">{{ currentUser.id }}</td>
+                </tr>
+                <tr>
+                  <td>Joined</td>
+                  <td>{{ new Date(currentUser.createdAt).toLocaleDateString() }}</td>
                 </tr>
                 <tr>
                   <td>Active</td>
-                  <td>{{ currentUser.isActive }}</td>
+                  <td> <v-btn x-small color="blue">{{ currentUser.isActive }}</v-btn></td>
                 </tr>
                 <tr>
                   <td>Number of Flyers</td>
@@ -63,48 +80,42 @@
                 </tr>
                 <tr>
                   <td>Confirmed</td>
-                  <td>{{ currentUser.isConfirmed }}</td>
+                  <td>{{ currentUser.isConfirmed ? "Confirmed" : "Not Confirmed" }} </td>
                 </tr>
-                <tr>
-                  <td>Created At</td>
-                  <td>{{ currentUser.createdAt }}</td>
-                </tr>
+
                 <tr>
                   <td>Phone Number</td>
-                  <td>{{ currentUser.phoneNumber }}</td>
+                  <td>{{ currentUser.phoneNumber ?? "Not specified" }}</td>
                 </tr>
-                <tr>
-                  <td>Invite Rate</td>
-                  <td>{{ currentUser.inviteRate }}</td>
-                </tr>
-                <tr>
-                  <td>Can Invite</td>
-                  <td>{{ currentUser.canInvite }}</td>
-                </tr>
-                <tr>
+
+                <tr class="blue lighten-5">
                   <td>Invite Count</td>
-                  <td>{{ currentUser.inviteCount }}</td>
+                  <td>{{ currentUser.inviteCount }} Users</td>
                 </tr>
-                <tr>
-                  <td>Invite Earned</td>
-                  <td>{{ currentUser.inviteEarned }}</td>
+                <tr class="blue lighten-5">
+                  <td>Bonus Earned</td>
+                  <td>{{ currentUser.inviteEarned }} Tele</td>
                 </tr>
-                <tr>
-                  <td>Requesting For Referral</td>
-                  <td>{{ currentUser.isRequestingForReferral }}</td>
+                <tr class="blue lighten-5">
+                  <td>Invite Rate</td>
+                  <td>
+                    <v-text-field suffix="Tele" class="mt-3" dense outlined name="rate" label=""
+                      v-model="currentUser.inviteRate" single-line></v-text-field>
+                  </td>
+                </tr>
+                <tr class="blue lighten-5">
+                  <td>Current Invite Status</td>
+                  <td><v-select class="mt-3" outlined dense :items="inviteStatusItem"
+                      v-model="currentUser.inviteStatuses"></v-select></td>
+
                 </tr>
               </tbody>
             </template>
           </v-simple-table>
         </v-card-text>
-
         <v-card-actions>
-          <v-btn text color="deep-purple accent-4">Block</v-btn>
-          <v-btn text color="deep-purple accent-4">Allow Invites</v-btn>
           <v-spacer></v-spacer>
-          <v-btn icon color="deep-purple accent-4">
-            <v-icon>mdi-heart</v-icon>
-          </v-btn>
+          <v-btn :loading="postingData" @click="postChanges()" class="white--text" small color="blue">Save changes</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -122,6 +133,25 @@ export default {
   },
   data() {
     return {
+      postingData: false,
+      inviteStatusItem: [
+        {
+          text: "Normal",
+          value: 0
+        },
+        {
+          text: "Requesting",
+          value: 1
+        },
+        {
+          text: "Rejected",
+          value: 2
+        },
+        {
+          text: "Accepted",
+          value: 3
+        },
+      ],
       currentUser: {},
       statusLoading: false,
       openMenu: false,
@@ -162,8 +192,17 @@ export default {
 
         },
         {
+          text: "Invite Status",
+          value: "inviteStatuses",
+
+        },
+        {
           text: "Status",
           value: "isActive",
+        },
+        {
+          text: "Last Seen",
+          value: "lastSeen",
         },
         {
           text: "More",
@@ -186,7 +225,15 @@ export default {
       this.currentUser = current
       this.openMenu = true
     },
-    postChanges() { },
+    postChanges() {
+      this.postingData = true
+      this.$updateUserInfo(this.currentUser).then(d => {
+        this.postingData = false
+        if(d.item1){
+          alert(d.item2)
+        }
+      })
+    },
     changeUserRolesAsync(role, userId) {
       this.$changeUserRoleAsync(role, userId).then((d) => {
         if (d.success) {
@@ -195,6 +242,38 @@ export default {
       }
       );
     },
+    // The function that takes a datetime and returns a last seen string
+    getLastSeenString(date) {
+      // Get the current datetime
+      let now = new Date();
+
+      // Get the time span between the date and the current datetime in milliseconds
+      let diff = now - new Date(date);
+
+      // Check the difference and return the appropriate string
+      if (diff < 60000) {
+        // Less than a minute
+        return "Just now";
+      } else if (diff < 3600000) {
+        // Less than an hour
+        return Math.floor(diff / 60000) + " minutes ago";
+      } else if (diff < 86400000) {
+        // Less than a day
+        return Math.floor(diff / 3600000) + " hours ago";
+      } else if (diff < 172800000) {
+        // Less than two days
+        return "Yesterday";
+      } else if (diff < 2592000000) {
+        // Less than a month
+        return Math.floor(diff / 86400000) + " days ago";
+      } else if (diff < 31536000000) {
+        // Less than a year
+        return "Last month";
+      } else {
+        // More than a year
+        return "😶‍🌫️";
+      }
+    }
   },
 };
 </script>
