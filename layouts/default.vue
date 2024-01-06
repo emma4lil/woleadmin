@@ -1,7 +1,7 @@
 <template>
   <v-app class="white--text" id="wole-app">
-    <v-navigation-drawer fixed app bottom expand-on-hover mini-variant mini-variant-width="50" color="deep-purple accent-3"
-      clipped permanent>
+    <v-navigation-drawer app expand-on-hover mini-variant mini-variant-width="50"
+      color="deep-purple accent-3" clipped permanent>
       <v-list>
         <v-list-item :to="link" v-for="([icon, text, link], i) in items" :key="i" link>
           <v-list-item-icon>
@@ -13,32 +13,40 @@
         </v-list-item>
       </v-list>
 
-      <template v-slot:append>
+      <!-- <template v-slot:append>
         <div class="pa-2">
           <v-btn :icon="true" @click="logout">
             <v-icon>mdi-logout</v-icon>
           </v-btn>
         </div>
-      </template>
+      </template> -->
     </v-navigation-drawer>
     <v-app-bar app clipped-left flat color="deep-purple accent-4">
       <v-toolbar-title class="white--text">
-        Aje-<span class="yellow--text">portal </span><span class="caption">beta-v1.3</span>
+        Aje-<span class="yellow--text">portal </span><span class="caption">beta-v1.4</span>
       </v-toolbar-title>
       <v-spacer />
+      <!-- Quick Notifications -->
+      <div class="mx-3">
+        <v-icon color="white">
+          mdi-bell
+        </v-icon><span class="white--text">3</span>
+      </div>
+      <!-- Realtime Widget -->
+      <div class="d-flex justify-end">
+        <v-card height="" width="165" class="elevation-0 accent-2 white">
+          <div class="mx-3 py-2 text-caption">Realtime service <v-icon color="blue">{{ status == 'connected!' ?
+            "mdi-signal-cellular-3"
+            : "mdi-signal-off" }}</v-icon> {{ connectionAttempts }}</div>
+          <h6 class="mx-3 text-caption">{{ serverUrl }}</h6>
+        </v-card>
+      </div>
+      <!-- Profile Widgets -->
       <nav-bar />
     </v-app-bar>
-    <v-main>
-      <v-container>
-        <div class="d-flex justify-end">
-          <v-card width="230" class="elevation-0 grey lighten-5">
-            <div class="mx-3 py-2">signal server: <span class="green--text">{{ status }}</span></div>
-            <h6 class="mx-3 caption">{{ serverUrl }}</h6>
-          </v-card>
-        </div>
-        <v-snackbar top transition="slide-y-transition" v-model="notify" timeout="3000">
-
-        </v-snackbar>
+    <v-main app>
+      <v-container fluid>
+        <!-- {{ $auth.user }} -->
         <Nuxt />
       </v-container>
     </v-main>
@@ -71,8 +79,15 @@ export default {
     );
     this.chatConn.on("new-chat-msg", (msg) => this.newChatHandler(msg));
     this.chatConn.on("user-data", (msg) => this.userProfileHandler(msg));
+
     this.notifconn.onclose(async () => {
-      this.status = "disconnected!";
+      while (this.connectionAttempts != 0) {
+        await this.start()
+        this.connectionAttempts--
+        // if(this.status == 'connected!'){
+        //   this.connectionAttempts == 15
+        // }
+      }
     });
 
     await this.start();
@@ -91,13 +106,12 @@ export default {
     },
     async start() {
       try {
-        this.status = "attempting connection...";
+        this.status = "connecting...";
         await this.notifconn.start();
         await this.chatConn.start();
         this.status = "connected!";
       } catch (err) {
-        this.status = "connection failed:" + err;
-        console.log(err);
+        this.status = "connection failed:";
       }
     },
     notificationHandler(payload) {
@@ -123,7 +137,7 @@ export default {
   },
   data: () => ({
     items: [
-      ["mdi-chart-areaspline", "Metrics", "/"],
+      ["mdi-chart-areaspline", "Dashboard", "/"],
       ["mdi-wallet-giftcard", "Flyers Management", "/flyers"],
       ["mdi-alpha-t-box", "Trade Management", "/trades"],
       ["mdi-clock-end", "Dispute Resolutions", "/disputes"],
@@ -142,6 +156,7 @@ export default {
     serverUrl: process.env.baseURL,
     notify: false,
     notifMsg: "",
+    connectionAttempts: 15
   }),
   publicRuntimeConfig: {
     host: process.env.baseURL || 'hello world!',
