@@ -1,40 +1,32 @@
 <template>
-  <v-app class="white--text" id="wole-app">
+  <v-app class="" id="wole-app">
     <v-navigation-drawer app expand-on-hover mini-variant mini-variant-width="50"
-      color="deep-purple accent-3" clipped permanent>
+      color="" clipped permanent>
       <v-list>
         <v-list-item :to="link" v-for="([icon, text, link], i) in items" :key="i" link>
           <v-list-item-icon>
-            <v-icon color="white">{{ icon }}</v-icon>
+            <v-icon color="">{{ icon }}</v-icon>
           </v-list-item-icon>
           <v-list-item-content>
-            <v-list-item-title class="white--text">{{ text }}</v-list-item-title>
+            <v-list-item-title class="">{{ text }}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
       </v-list>
-
-      <!-- <template v-slot:append>
-        <div class="pa-2">
-          <v-btn :icon="true" @click="logout">
-            <v-icon>mdi-logout</v-icon>
-          </v-btn>
-        </div>
-      </template> -->
     </v-navigation-drawer>
-    <v-app-bar app clipped-left flat color="deep-purple accent-4">
-      <v-toolbar-title class="white--text">
+    <v-app-bar app clipped-left flat>
+      <v-toolbar-title class="">
         Aje-<span class="yellow--text">portal </span><span class="caption">beta-v1.4</span>
       </v-toolbar-title>
       <v-spacer />
       <!-- Quick Notifications -->
       <div class="mx-3">
-        <v-icon color="white">
+        <v-icon color="orange">
           mdi-bell
         </v-icon><span class="white--text">3</span>
       </div>
       <!-- Realtime Widget -->
       <div class="d-flex justify-end">
-        <v-card height="" width="165" class="elevation-0 accent-2 white">
+        <v-card height="" width="165" class="elevation-0 accent-2">
           <div class="mx-3 py-2 text-caption">Realtime service <v-icon color="blue">{{ status == 'connected!' ?
             "mdi-signal-cellular-3"
             : "mdi-signal-off" }}</v-icon> {{ connectionAttempts }}</div>

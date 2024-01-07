@@ -1,21 +1,16 @@
 <template>
   <v-row>
     <v-col cols="9">
-      <DashboardStats :data="metrics" />
+      <DashboardStats class="mt-1" :data="metrics" />
       <v-row>
-        <v-col>
-          <SalesChart />
+        <v-col  cols="6">
+          <SalesChart :data="ChartData?.users" />
         </v-col>
-        <v-col>
-          <SalesChart />
+        <v-col cols="6">
+          <SalesChart :data="ChartData?.trades" />
         </v-col>
-      </v-row>
-      <v-row>
-        <v-col>
-          <SalesChart />
-        </v-col>
-        <v-col>
-          <SalesChart />
+        <v-col cols="6">
+          <SalesChart :data="ChartData?.fliers" />
         </v-col>
       </v-row>
     </v-col>
@@ -39,7 +34,11 @@ export default {
       metrics: {
         noOfUsers: "wait...",
       },
-      refreshing: false
+      refreshing: false,
+      ChartData: {
+        users: {},
+        trades: {}
+      }
     };
   },
   mounted() {
@@ -48,6 +47,13 @@ export default {
       this.metrics = d.data;
     });
     var k = setInterval(() => this.refresh(), 20000)
+
+    // Trend data
+
+    var t = this.$getChartTrends();
+    t.then(d => {
+      this.ChartData = d
+    })
   },
   methods: {
     refresh() {
