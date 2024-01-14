@@ -130,6 +130,7 @@ export default {
   data: () => ({
     items: [
       ["mdi-chart-areaspline", "Dashboard", "/"],
+      ["mdi-note-plus", "Activity Logs", "/activity"],
       ["mdi-wallet-giftcard", "Flyers Management", "/flyers"],
       ["mdi-alpha-t-box", "Trade Management", "/trades"],
       ["mdi-clock-end", "Dispute Resolutions", "/disputes"],

@@ -1,6 +1,6 @@
 <template>
   <v-row>
-    <v-col cols="9">
+    <v-col cols="8">
       <DashboardStats class="mt-1" :data="metrics" />
       <v-row>
         <v-col  cols="6">
@@ -14,7 +14,7 @@
         </v-col>
       </v-row>
     </v-col>
-    <v-col cols="3">
+    <v-col cols="4">
       <ActivityTimeline />
     </v-col>
   </v-row>
