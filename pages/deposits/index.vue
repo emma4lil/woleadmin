@@ -3,41 +3,34 @@
     <v-row>
       <v-col>
         <!-- {{Claims}} -->
+
         <v-card elevation="10" class="pa-4 outlined flat">
           <v-card-title class="font-weight-bold">Deposit claims</v-card-title>
 
           <v-card-text class="pl-0" v-if="true">
             <div class="d-flex">
-              <div
-                class="font-weight-bold ml-3 indigo grey--text lighten-5 pa-4 rounded-lg"
-              >
+              <div class="font-weight-bold ml-3 indigo grey--text lighten-5 pa-4 rounded-lg">
                 Total Claims:
                 <span class="font-weight-bold black--text">{{
                   deposit_items?.items?.totalClaims
                 }}</span>
               </div>
 
-              <div
-                class="font-weight-bold ml-3 indigo grey--text lighten-5 pa-4 rounded-lg"
-              >
+              <div class="font-weight-bold ml-3 indigo grey--text lighten-5 pa-4 rounded-lg">
                 Pending Claims:
                 <span class="font-weight-bold black--text">{{
                   deposit_items?.items?.pendingClaims
                 }}</span>
               </div>
 
-              <div
-                class="font-weight-bold ml-3 indigo orange--text lighten-5 pa-4 rounded-lg"
-              >
+              <div class="font-weight-bold ml-3 indigo orange--text lighten-5 pa-4 rounded-lg">
                 Processing Claims:
                 <span class="font-weight-bold orange--text">{{
                   deposit_items?.items?.proccessingClaims
                 }}</span>
               </div>
 
-              <div
-                class="font-weight-bold ml-3 indigo red--text lighten-5 pa-4 rounded-lg"
-              >
+              <div class="font-weight-bold ml-3 indigo red--text lighten-5 pa-4 rounded-lg">
                 Rejected Claims:
                 <span class="font-weight-bold red--text">{{
                   deposit_items?.items?.rejectedClaims
@@ -45,9 +38,7 @@
               </div>
 
               <v-spacer></v-spacer>
-              <div
-                class="font-weight-bold ml-3 green white--text lighten-1 pa-4 rounded-lg"
-              >
+              <div class="font-weight-bold ml-3 green white--text lighten-1 pa-4 rounded-lg">
                 Paid Claims:
                 <span class="font-weight-bold white--text">{{
                   deposit_items?.items?.acceptedClaims
@@ -58,92 +49,40 @@
 
           <v-card-text class="pl-0">
             <div class="d-flex flex-column">
-              <v-card outlined class="font-weight-bold ml-3 pa-4 rounded-lg"
-                >Deposit filter<br />
+              <v-card outlined class="font-weight-bold ml-3 pa-4 rounded-lg">Deposit filter<br />
                 <v-card-text>
                   <div class="d-flex justify-space-between">
-                    <v-menu
-                      ref="menu1"
-                      v-model="menu1"
-                      :close-on-content-click="false"
-                      transition="scale-transition"
-                      offset-y
-                      min-width="auto"
-                    >
+                    <v-menu ref="menu1" v-model="menu1" :close-on-content-click="false" transition="scale-transition"
+                      offset-y min-width="auto">
                       <template v-slot:activator="{ on, attrs }">
-                        <v-text-field
-                          class="pr-2"
-                          dense
-                          outlined
-                          v-model="depositFilter.startdate"
-                          label="Start date"
-                          readonly
-                          v-bind="attrs"
-                          v-on="on"
-                        ></v-text-field>
+                        <v-text-field class="pr-2" dense outlined v-model="depositFilter.startDate" label="Start date"
+                          readonly v-bind="attrs" v-on="on"></v-text-field>
                       </template>
-                      <v-date-picker
-                        v-model="depositFilter.startdate"
-                        :max="
-                          new Date(
-                            Date.now() - new Date().getTimezoneOffset() * 60000
-                          )
-                            .toISOString()
-                            .substring(0, 10)
-                        "
-                        min="1950-01-01"
-                        @change="save1"
-                      ></v-date-picker>
+                      <v-date-picker v-model="depositFilter.startDate" :max="new Date(
+                        Date.now() - new Date().getTimezoneOffset() * 60000
+                      )
+                          .toISOString()
+                          .substring(0, 10)
+                        " min="1950-01-01" @change="save1"></v-date-picker>
                     </v-menu>
 
-                    <v-menu
-                      ref="menu2"
-                      v-model="menu2"
-                      :close-on-content-click="false"
-                      transition="scale-transition"
-                      offset-y
-                      min-width="auto"
-                    >
+                    <v-menu ref="menu2" v-model="menu2" :close-on-content-click="false" transition="scale-transition"
+                      offset-y min-width="auto">
                       <template v-slot:activator="{ on, attrs }">
-                        <v-text-field
-                          class="pr-2"
-                          dense
-                          outlined
-                          v-model="depositFilter.enddate"
-                          label="End date"
-                          readonly
-                          v-bind="attrs"
-                          v-on="on"
-                        ></v-text-field>
+                        <v-text-field class="pr-2" dense outlined v-model="depositFilter.endDate" label="End date"
+                          readonly v-bind="attrs" v-on="on"></v-text-field>
                       </template>
-                      <v-date-picker
-                        v-model="depositFilter.enddate"
-                        :max="
-                          new Date(
-                            Date.now() - new Date().getTimezoneOffset() * 60000
-                          )
-                            .toISOString()
-                            .substring(0, 10)
-                        "
-                        min="1950-01-01"
-                        @change="save2"
-                      ></v-date-picker>
+                      <v-date-picker v-model="depositFilter.endDate" :max="new Date(
+                        Date.now() - new Date().getTimezoneOffset() * 60000
+                      )
+                          .toISOString()
+                          .substring(0, 10)
+                        " min="1950-01-01" @change="save2"></v-date-picker>
                     </v-menu>
-                    <v-select
-                      outlined
-                      class="pr-2"
-                      dense
-                      :items="statusFilter"
-                      v-model="depositFilter.claimtype"
-                      label="Claim type"
-                    ></v-select>
-                    <v-btn
-                      :loading="fetching_deposits"
-                      @click="getfilteredResults()"
-                      height="40"
-                      color="primary"
-                      >Filter</v-btn
-                    >
+                    <v-select outlined class="pr-2" dense :items="statusFilter" v-model="depositFilter.claimType"
+                      label="Claim type"></v-select>
+                    <v-btn :loading="fetching_deposits" @click="getfilteredResults()" height="40"
+                      color="primary">Filter</v-btn>
                   </div>
                 </v-card-text>
               </v-card>
@@ -153,66 +92,34 @@
       </v-col>
       <!-- Data Table -->
       <v-col cols="12">
-        <v-data-table
-          :expanded.sync="expanded"
-          single-expand
-          show-expand
-          dense
-          :headers="headers"
-          :items="deposit_items?.items?.claims"
-          :search="search"
-          item-key="claim.id"
-          class="elevation-10"
-          show-group-bys
-          group-by="statusDesc"
-        >
+        <v-data-table :expanded.sync="expanded" single-expand show-expand dense :headers="headers"
+          :items="deposit_items?.items?.claims" :search="search" item-key="claim.id" class="elevation-10" show-group-bys
+          group-by="statusDesc">
           <template v-slot:item.claim.createdAt="{ item }">
             <div class="primary--text">
               {{ new Date(item.claim.createdAt).toLocaleString() }}
             </div>
           </template>
           <template v-slot:top>
-            <v-text-field
-              outlined
-              v-model="search"
-              label="Search claims"
-              class="mx-4 py-4"
-            >
+            <v-text-field outlined v-model="search" label="Search claims" class="mx-4 py-4">
             </v-text-field>
           </template>
 
           <template v-slot:item.claimStatus="{ item }">
-            <v-chip
-              small
-              class="rounded-sm"
-              :color="getColor(item.claimStatus)"
-            >
+            <v-chip small class="rounded-sm" :color="getColor(item.claimStatus)">
               {{ item.claimStatus }}
             </v-chip>
           </template>
 
           <template v-slot:item.claim.attachmentUrl="{ item }">
-            <v-img
-              @click="showImage(item.attachmentUrl)"
-              class="my-1 rounded-sm"
-              lazy-src="https://picsum.photos/id/11/10/6"
-              max-height="40"
-              max-width="40"
-              :src="item.attachmentUrl"
-            ></v-img>
+            <v-img @click="showImage(item.attachmentUrl)" class="my-1 rounded-sm"
+              lazy-src="https://picsum.photos/id/11/10/6" max-height="40" max-width="40"
+              :src="item.attachmentUrl"></v-img>
           </template>
 
           <template v-slot:item.action="{ item }">
-            <v-btn
-              :to="`/flyers/${item.flyerId}`"
-              outlined
-              x-small
-              color="wheat"
-              >flyer</v-btn
-            >
-            <v-btn v-if="item.TradeStatus === 6" x-small color="blue"
-              >Dispute</v-btn
-            >
+            <v-btn :to="`/flyers/${item.flyerId}`" outlined x-small color="wheat">flyer</v-btn>
+            <v-btn v-if="item.TradeStatus === 6" x-small color="blue">Dispute</v-btn>
           </template>
 
           <template v-slot:expanded-item="{ headers, item }">
@@ -276,43 +183,17 @@
 
                 <v-card-text>
                   <div class="d-flex justify-space-between">
-                    <v-text-field
-                      class="ml-3"
-                      outlined
-                      label="Bank Name"
-                      v-model="item.claim.bankName"
-                    ></v-text-field>
-                    <v-text-field
-                      class="ml-3"
-                      outlined
-                      label="Bank Account"
-                      v-model="item.claim.accountNumber"
-                    ></v-text-field>
-                    <v-text-field
-                      class="ml-3"
-                      outlined
-                      label="Refrence"
-                      v-model="item.claim.referenceId"
-                    ></v-text-field>
-                    <v-select
-                      class="ml-3"
-                      outlined
-                      :items="currencies"
-                      v-model="item.claim.paidInCurrency"
-                      label="Paid In Currency"
-                    ></v-select>
-                    <v-select
-                      class="ml-3"
-                      outlined
-                      :items="claimStatus"
-                      v-model="item.claim.status"
-                      label="Change status"
-                    ></v-select>
+                    <v-text-field class="ml-3" outlined label="Bank Name" v-model="item.claim.bankName"></v-text-field>
+                    <v-text-field class="ml-3" outlined label="Bank Account"
+                      v-model="item.claim.accountNumber"></v-text-field>
+                    <v-text-field class="ml-3" outlined label="Refrence" v-model="item.claim.referenceId"></v-text-field>
+                    <v-select class="ml-3" outlined :items="currencies" v-model="item.claim.paidInCurrency"
+                      label="Paid In Currency"></v-select>
+                    <v-select class="ml-3" outlined :items="claimStatus" v-model="item.claim.status"
+                      label="Change status"></v-select>
                   </div>
                   <v-spacer></v-spacer>
-                  <v-btn @click="setClaimInfo(item)" block color="primary"
-                    >Save</v-btn
-                  >
+                  <v-btn @click="setClaimInfo(item)" block color="primary">Save</v-btn>
                 </v-card-text>
               </v-card>
             </td>
@@ -327,20 +208,11 @@
         <resolve-deposits-claim />
       </v-col>
     </v-row>
-    <v-dialog
-      v-model="imageDialog.show"
-      :overlay="false"
-      scrollable
-      transition="dialog-transition"
-    >
+    <v-dialog v-model="imageDialog.show" :overlay="false" scrollable transition="dialog-transition">
       <v-card>
         <v-card-title primary-title> Attachment viewer </v-card-title>
         <v-card-text>
-          <v-img
-            aspect-ratio="16/9"
-            min-height="800"
-            :src="imageDialog.srcLink"
-          ></v-img>
+          <v-img aspect-ratio="16/9" min-height="800" :src="imageDialog.srcLink"></v-img>
         </v-card-text>
       </v-card>
     </v-dialog>
@@ -400,8 +272,8 @@ export default {
         statistics: {},
       },
       depositFilter: {
-        startDate: this.parseDate(new Date(prior).toLocaleDateString()),
-        endDate: this.parseDate(new Date().toLocaleDateString()),
+        startDate: new Date(prior).toLocaleDateString(),
+        endDate: new Date().toLocaleDateString(),
         claimType: 0,
       },
       claimInfo: {

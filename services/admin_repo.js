@@ -115,6 +115,11 @@ class AdminServices {
     return res
   }
 
+  async updateUserInfo(userInfo) {
+    const res = await this.axios.$post("/api/user/update-user/", userInfo)
+    return res
+  }
+
   async resolveForDispute(user_ids) {
     const res = await this.axios.$post("/api/Admin/resolve-dispute", user_ids)
     return res
@@ -156,9 +161,9 @@ class AdminServices {
   }
 
   async getTeleMetrics() {
-    const res = await this.axios.$get("api/admin/get-paystats")
-    return res
-  }
+      const res = await this.axios.$get("api/admin/get-paystats")
+      return res
+    }
 
   async toggleUserStatebyId(userId) {
     const res = await this.axios.$put("api/admin/toggle-active/", { userId: userId })
@@ -219,6 +224,7 @@ export default ({ app, $axios }, inject) => {
   inject("getAllUsers", () => admin.getAllUsers())
   inject("toggleUserStatebyId", (id) => admin.toggleUserStatebyId(id))
   inject("changeUserRoleAsync", (userId, role) => admin.changeUserRoleAsync(userId, role))
+  inject("updateUserInfo", (userInfo) => admin.updateUserInfo(userInfo))
   //Dispute Management
   inject("resolveDisputeFor", (price, dfee) => admin.resolveForDispute(price, dfee))
   inject("getChatsForTradeV2", (tradeId) => admin.getChatsForTradeV2(tradeId))

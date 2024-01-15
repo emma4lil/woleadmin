@@ -36,7 +36,8 @@ export default {
   plugins: [
     "~/services/auth.js",
     "~/services/admin_repo.js",
-    "~/services/persist.js"
+    "~/services/persist.js",
+    "~/services/dashboard.js"
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -105,7 +106,7 @@ export default {
   vuetify: {
     customVariables: ['~/assets/variables.scss'],
     theme: {
-      dark: false,
+      dark: true,
       themes: {
         dark: {
           primary: colors.blue.darken2,
