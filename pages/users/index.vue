@@ -9,10 +9,10 @@
         <span class="blue--text font-weight-medium">{{ item.fullName }}</span>
       </template>
       <template v-slot:item.inviteStatuses="{ item }">
-        <v-chip x-small class="purple--text">{{ item.inviteStatusesDescription }}</v-chip>
+        <v-chip small class="orange--text">{{ item.inviteStatusesDescription }}</v-chip>
       </template>
       <template v-slot:item.lastSeen="{ item }">
-        <div x-small class="blue--text text-caption">{{ getLastSeenString(item.lastSeen) }}</div>
+        <div x-small class="text-caption">{{ getLastSeenString(item.lastSeen) }}</div>
       </template>
 
       <template v-slot:item.isActive="{ item }">
@@ -68,7 +68,7 @@
                 </tr>
                 <tr>
                   <td>Active</td>
-                  <td> <v-btn x-small color="blue">{{ currentUser.isActive }}</v-btn></td>
+                  <td> <v-btn x-small color="">{{ currentUser.isActive }}</v-btn></td>
                 </tr>
                 <tr>
                   <td>Number of Flyers</td>
@@ -88,22 +88,22 @@
                   <td>{{ currentUser.phoneNumber ?? "Not specified" }}</td>
                 </tr>
 
-                <tr class="blue lighten-5">
+                <tr class="">
                   <td>Invite Count</td>
                   <td>{{ currentUser.inviteCount }} Users</td>
                 </tr>
-                <tr class="blue lighten-5">
+                <tr class="">
                   <td>Bonus Earned</td>
                   <td>{{ currentUser.inviteEarned }} Tele</td>
                 </tr>
-                <tr class="blue lighten-5">
+                <tr class="">
                   <td>Invite Rate</td>
                   <td>
                     <v-text-field suffix="Tele" class="mt-3" dense outlined name="rate" label=""
                       v-model="currentUser.inviteRate" single-line></v-text-field>
                   </td>
                 </tr>
-                <tr class="blue lighten-5">
+                <tr class="">
                   <td>Current Invite Status</td>
                   <td><v-select class="mt-3" outlined dense :items="inviteStatusItem"
                       v-model="currentUser.inviteStatuses"></v-select></td>

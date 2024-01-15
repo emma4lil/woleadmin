@@ -55,7 +55,6 @@
                     </v-list-item>
                 </v-list>
             </v-card-text>
-            {{ show }}
         </v-card>
     </v-container>
 </template>
