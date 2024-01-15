@@ -1,0 +1,14 @@
+{
+  "dist": "dist/index.html",
+  "dist/": "dist/index.html",
+  "dist/complaints": "dist/complaints/index.html",
+  "dist/deposits": "dist/deposits/index.html",
+  "dist/disputes": "dist/disputes/index.html",
+  "dist/payments": "dist/payments/index.html",
+  "dist/settings": "dist/settings/index.html",
+  "dist/trades": "dist/trades/index.html",
+  "dist/users": "dist/users/index.html",
+  "dist/withdraws": "dist/withdraws/index.html",
+  "dist/auth/login": "dist/auth/login/index.html",
+  "dist/auth/register": "dist/auth/register/index.html"
+}
