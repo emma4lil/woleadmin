@@ -1,13 +1,169 @@
 {
-  "location": "routes.js",
+  "location": "lambda\\internal\\routes.cjs",
   "info": [
+    {
+      "criteria": {},
+      "line": 275,
+      "column": 50
+    },
+    {
+      "criteria": {},
+      "line": 1067,
+      "column": 40
+    },
+    {
+      "criteria": {
+        "method": "match",
+        "path": "/(.*)"
+      },
+      "line": 1206,
+      "column": 15
+    },
+    {
+      "criteria": {
+        "method": "post",
+        "path": "/__edgio__/caching"
+      },
+      "line": 1213,
+      "column": 11
+    },
+    {
+      "criteria": {
+        "method": "get",
+        "path": "/__edgio__/caching"
+      },
+      "line": 1211,
+      "column": 15
+    },
+    {
+      "criteria": {
+        "method": "match",
+        "path": "/:path*"
+      },
+      "line": 1239,
+      "column": 9
+    },
+    {
+      "criteria": {
+        "method": "get",
+        "path": "/__edgio__/devtools/disable"
+      },
+      "line": 1232,
+      "column": 9
+    },
+    {
+      "criteria": {
+        "method": "get",
+        "path": "/__edgio__/devtools/enable"
+      },
+      "line": 1225,
+      "column": 9
+    },
+    {
+      "criteria": {
+        "method": "match",
+        "path": "/__edgio__/devtools/:path*"
+      },
+      "line": 1222,
+      "column": 13
+    },
+    {
+      "criteria": {},
+      "line": 1342,
+      "column": 32
+    },
+    {
+      "criteria": {},
+      "line": 1482,
+      "column": 37
+    },
+    {
+      "criteria": {},
+      "line": 1748,
+      "column": 34
+    },
+    {
+      "criteria": {
+        "method": "match"
+      },
+      "line": 4889,
+      "column": 22
+    },
+    {
+      "criteria": {
+        "method": "match"
+      },
+      "line": 4897,
+      "column": 20
+    },
+    {
+      "criteria": {
+        "method": "match",
+        "path": "/:path*"
+      },
+      "line": 5202,
+      "column": 69
+    },
+    {
+      "criteria": {
+        "method": "match",
+        "path": "/:path*"
+      },
+      "line": 5204,
+      "column": 69
+    },
     {
       "criteria": {
         "method": "match",
         "path": "/service-worker.js"
       },
-      "line": 9,
-      "column": 3
+      "line": 5221,
+      "column": 69
+    },
+    {
+      "criteria": {
+        "method": "match",
+        "path": "/_nuxt/:path*"
+      },
+      "line": 5224,
+      "column": 69
+    },
+    {
+      "criteria": {
+        "method": "match",
+        "path": "/__webpack_hmr/:path*"
+      },
+      "line": 5230,
+      "column": 69
+    },
+    {
+      "criteria": {
+        "method": "match",
+        "path": "/_nuxt/:hash.hot-update.json"
+      },
+      "line": 5231,
+      "column": 69
+    },
+    {
+      "criteria": {
+        "method": "match",
+        "path": "/_loading/:path*"
+      },
+      "line": 5232,
+      "column": 69
+    },
+    {
+      "criteria": {},
+      "line": 5280,
+      "column": 38
+    },
+    {
+      "criteria": {
+        "method": "match",
+        "path": "/service-worker.js"
+      },
+      "line": 5360,
+      "column": 30
     }
   ]
 }

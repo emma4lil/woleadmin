@@ -1,6 +1,7 @@
 {
   "dist": "dist/index.html",
   "dist/": "dist/index.html",
+  "dist/activity": "dist/activity/index.html",
   "dist/complaints": "dist/complaints/index.html",
   "dist/deposits": "dist/deposits/index.html",
   "dist/disputes": "dist/disputes/index.html",
