@@ -43,12 +43,22 @@
                 <!-- Activity Logs List -->
                 <v-list>
                     <v-list-item-group v-if="logs.length">
-                        <v-list-item v-for="(log, index) in logs" :key="index">
-                            <v-list-item-content>
-                                <v-list-item-title>{{ log.description }}</v-list-item-title>
-                                <v-list-item-subtitle>{{ log.timestamp }}</v-list-item-subtitle>
-                            </v-list-item-content>
+
+                        <v-list-item outlined v-for="(log, index) in logs" :key="index" class="outlined">
+                            <v-card min-width="100%" class="pa-2"
+                                v-bind:class="[log.domain == 1 ? 'red' : '', 'ma-1', log.domain == 3 ? 'pink' : '']">
+                                <v-list-item-content>
+
+                                    <v-list-item-title class="text-caption">{{ log.userId }}</v-list-item-title>
+                                    <v-list-item-title>{{ log.description }}</v-list-item-title>
+                                    <v-list-item-subtitle>{{ new Date(log.timestamp).toLocaleString()
+                                    }}</v-list-item-subtitle>
+                                </v-list-item-content>
+                            </v-card>
+
                         </v-list-item>
+
+
                     </v-list-item-group>
                     <v-list-item v-else>
                         <v-list-item-content class="text--center">No activity logs available.</v-list-item-content>

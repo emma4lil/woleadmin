@@ -35,16 +35,25 @@
           </div>
           <div class="d-flex">
             <v-sheet color="" width="120" class="d-flex pa-2">
-              <div class="mr-3"><v-icon color="primary" size="40">mdi-clipboard-arrow-down</v-icon></div>
+              <div class="mr-3"><v-icon color="primary" size="40">mdi-gavel</v-icon></div>
               <div class="d-flex flex-column">
                 <div>{{ data.noOfDisputes }}</div>
                 <div class="text-caption">Disputes</div>
               </div>
             </v-sheet>
-
+            <hr>
           </div>
 
+          <div class="d-flex">
+            <v-sheet color="" width="120" class="d-flex pa-2">
+              <div class="mr-3"><v-icon color="primary" size="40">mdi-share-circle</v-icon></div>
+              <div class="d-flex flex-column">
+                <div>{{ data.pendingInvites }}</div>
+                <div class="text-caption">Pending Invites</div>
+              </div>
+            </v-sheet>
 
+          </div>
         </v-card-text>
       </v-card>
     </v-col>
@@ -64,7 +73,7 @@ hr {
   margin-left: 20px;
   margin-right: 20px;
   width: 0.5px;
-  height: 52px;
+  height: 70px;
   border: none;
   background-color: rgb(147, 147, 147);
   transform: rotate(0deg);

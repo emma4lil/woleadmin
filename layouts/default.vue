@@ -5,7 +5,7 @@
       <v-list>
         <v-list-item :to="link" v-for="([icon, text, link], i) in items" :key="i" link>
           <v-list-item-icon>
-            <v-icon color="">{{ icon }}</v-icon>
+            <v-icon color="blue">{{ icon }}</v-icon>
           </v-list-item-icon>
           <v-list-item-content>
             <v-list-item-title class="">{{ text }}</v-list-item-title>
@@ -133,7 +133,7 @@ export default {
       ["mdi-note-plus", "Activity Logs", "/activity"],
       ["mdi-wallet-giftcard", "Flyers Management", "/flyers"],
       ["mdi-alpha-t-box", "Trade Management", "/trades"],
-      ["mdi-clock-end", "Dispute Resolutions", "/disputes"],
+      ["mdi-gavel", "Dispute Resolutions", "/disputes"],
       ["mdi-message-alert", "Flyer Complaints", "/complaints"],
       ["mdi-wallet", "Withdraw Requests", "/withdraws"],
       ["mdi-bank", "Deposit claims", "/deposits"],
