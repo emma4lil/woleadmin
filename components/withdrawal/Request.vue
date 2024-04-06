@@ -1,5 +1,5 @@
 <template>
-  <v-card width="300">
+  <v-card>
     <div class="d-flex mx-3 py-2 justify-space-between">
       <div class="caption">
         {{ new Date(withdraw.createdAt).toLocaleString() }}

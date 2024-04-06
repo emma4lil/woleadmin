@@ -2,6 +2,7 @@ import colors from 'vuetify/es5/util/colors'
 
 let localHost = "https://localhost:44366"
 let betaServer = "https://ajebeta.azurewebsites.net"
+let prodServer =  "https://ajeappservice.azurewebsites.net"
 
 export default {
   target: "static",
