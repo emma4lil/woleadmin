@@ -180,6 +180,11 @@ class AdminServices {
     return res
   }
 
+  async getUserDeepInfo(id){
+    const res = await this.axios.$get("api/user/deep-copy/" + id)
+    return res
+  }
+
   // Parameters
   async getParameters() {
     const res = await this.axios.$get("api/config/get-parameters")
@@ -212,6 +217,7 @@ export default ({ app, $axios }, inject) => {
   inject("setWithdrawStatus", (id, status, reason) => admin.setWithdrawStatus(id, status, reason))
   inject("makeRefund", (id) => admin.makeRefund(id))
   inject("getAllPayments", () => admin.getAllPayments())
+  inject("getUserDeepInfo", (id) => admin.getUserDeepInfo(id))
   //Currency
   inject("addCurrency", (currency) => admin.createCurrency(currency))
   inject("getCurrencies", () => admin.getCurrencies())

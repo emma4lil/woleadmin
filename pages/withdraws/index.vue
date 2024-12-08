@@ -10,19 +10,19 @@
             <tbody>
               <tr class="blue--text">
                 <td>Total withdrawal requests</td>
-                <td>{{ metrics?.totalRequestCount.toLocaleString('en-US') }}</td>
+                <td>{{ metrics?.totalRequestCount?.toLocaleString('en-US') }}</td>
               </tr>
               <tr class="yellow--text">
                 <td>Pending withdrawals</td>
-                <td>{{ metrics?.pendingRequests.toLocaleString('en-US') }}</td>
+                <td>{{ metrics?.pendingRequests?.toLocaleString('en-US') }}</td>
               </tr>
               <tr class="green--text">
                 <td>Successful withdrawals</td>
-                <td>{{ metrics?.successfulRequests.toLocaleString('en-US') }}</td>
+                <td>{{ metrics?.successfulRequests?.toLocaleString('en-US') }}</td>
               </tr>
               <tr class="red--text">
                 <td>Rejected withdrawals</td>
-                <td>{{ metrics?.rejectedRequest.toLocaleString('en-US') }}</td>
+                <td>{{ metrics?.rejectedRequest?.toLocaleString('en-US') }}</td>
               </tr>
             </tbody>
           </template>
@@ -39,33 +39,33 @@
             <tbody>
               <tr class="font-weight-bold">
                 <td>Net pending requests</td>
-                <td>{{ metrics?.pendingRequests.toLocaleString('en-US') }}</td>
-                <td>{{ metrics?.pendingRequestsTotal.toLocaleString('en-US') }} NGN</td>
+                <td>{{ metrics?.pendingRequests?.toLocaleString('en-US') }}</td>
+                <td>{{ metrics?.pendingRequestsTotal?.toLocaleString('en-US') }} NGN</td>
               </tr>
               <tr v-if="metrics?.pendingCountInNaira">
                 <td>NGN</td>
-                <td>{{ metrics?.pendingCountInNaira.toLocaleString('en-US') }}</td>
-                <td>{{ metrics?.pendingInNaira.toLocaleString('en-US') }} NGN</td>
+                <td>{{ metrics?.pendingCountInNaira?.toLocaleString('en-US') }}</td>
+                <td>{{ metrics?.pendingInNaira?.toLocaleString('en-US') }} NGN</td>
               </tr>
               <tr v-if="metrics?.pendingCountInUsd">
                 <td>USD</td>
-                <td>{{ metrics?.pendingCountInUsd.toLocaleString('en-US') }}</td>
-                <td>{{ metrics?.pendingInUsd.toLocaleString('en-US') }} USD</td>
+                <td>{{ metrics?.pendingCountInUsd?.toLocaleString('en-US') }}</td>
+                <td>{{ metrics?.pendingInUsd?.toLocaleString('en-US') }} USD</td>
               </tr>
               <tr v-if="metrics?.pendingCountInEuro">
                 <td>Euro</td>
-                <td>{{ metrics?.pendingCountInEuro.toLocaleString('en-US') }}</td>
-                <td>{{ metrics?.pendingInEuro.toLocaleString('en-US') }} EURO</td>
+                <td>{{ metrics?.pendingCountInEuro?.toLocaleString('en-US') }}</td>
+                <td>{{ metrics?.pendingInEuro?.toLocaleString('en-US') }} EURO</td>
               </tr>
               <tr v-if="metrics?.pendingCountInLira">
                 <td>Turkish Lira</td>
-                <td>{{ metrics?.pendingCountInLira.toLocaleString('en-US') }}</td>
-                <td>{{ metrics?.pendingInLira.toLocaleString('en-US') }} LIRA</td>
+                <td>{{ metrics?.pendingCountInLira?.toLocaleString('en-US') }}</td>
+                <td>{{ metrics?.pendingInLira?.toLocaleString('en-US') }} LIRA</td>
               </tr>
               <tr v-if="metrics?.pendingCountInUsdt">
                 <td>USDT</td>
-                <td>{{ metrics?.pendingCountInUsdt.toLocaleString('en-US') }}</td>
-                <td>{{ metrics?.pendingInUsdt.toLocaleString('en-US') }} USDT</td>
+                <td>{{ metrics?.pendingCountInUsdt?.toLocaleString('en-US') }}</td>
+                <td>{{ metrics?.pendingInUsdt?.toLocaleString('en-US') }} USDT</td>
               </tr>
 
             </tbody>
@@ -83,23 +83,23 @@
             <tbody>
               <tr>
                 <td>Total Withrawals</td>
-                <td>{{ metrics?.totalRequestTele.toLocaleString('en-US') }} Tele</td>
-                <td>{{ metrics?.totalRequest.toLocaleString('en-US') }} NGN</td>
+                <td>{{ metrics?.totalRequestTele?.toLocaleString('en-US') }} Tele</td>
+                <td>{{ metrics?.totalRequest?.toLocaleString('en-US') }} NGN</td>
               </tr>
               <tr>
                 <td>Pending withdrawals</td>
-                <td>{{ metrics?.pendingRequestsTele.toLocaleString('en-US') }} Tele</td>
-                <td>{{ metrics?.pendingRequestsTotal.toLocaleString('en-US') }} NGN</td>
+                <td>{{ metrics?.pendingRequestsTele?.toLocaleString('en-US') }} Tele</td>
+                <td>{{ metrics?.pendingRequestsTotal?.toLocaleString('en-US') }} NGN</td>
               </tr>
               <tr>
                 <td>Successful withdrawals</td>
-                <td>{{ metrics?.successfulRequestsTele.toLocaleString('en-US') }} Tele</td>
-                <td>{{ metrics?.successfulRequestsTotal.toLocaleString('en-US') }} NGN</td>
+                <td>{{ metrics?.successfulRequestsTele?.toLocaleString('en-US') }} Tele</td>
+                <td>{{ metrics?.successfulRequestsTotal?.toLocaleString('en-US') }} NGN</td>
               </tr>
               <tr>
                 <td>Rejected withdrawals</td>
-                <td>{{ metrics?.rejectedRequestTele.toLocaleString('en-US') }} Tele</td>
-                <td>{{ metrics?.rejectedRequestTotal.toLocaleString('en-US') }} NGN</td>
+                <td>{{ metrics?.rejectedRequestTele?.toLocaleString('en-US') }} Tele</td>
+                <td>{{ metrics?.rejectedRequestTotal?.toLocaleString('en-US') }} NGN</td>
               </tr>
 
             </tbody>

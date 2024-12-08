@@ -7,6 +7,7 @@
       <div>
         <v-chip class="rounded-sm" x-small color="orange">{{ withdraw.status }}</v-chip>
         <v-chip class="rounded-sm" x-small color="primary"> {{ withdraw.currency }}</v-chip>
+        <v-btn @click="showProfileReport = true" x-small text color="success">history</v-btn>
       </div>
     </div>
     <v-divider></v-divider>
@@ -21,7 +22,7 @@
         </div>
         <div class="d-flex justify-space-between">
           <span class="caption grey--text">Country</span><span class=" caption">{{ withdraw.country
-          }}</span>
+            }}</span>
         </div>
       </div>
 
@@ -31,8 +32,8 @@
 
         <v-divider></v-divider>
         <div class="d-flex justify-space-between mt-2">
-          <span class="caption grey--text">Amount</span><span class="h6 "><v-btn outlined flat class="elevation-0" x-small
-              color="primary">{{ withdraw.amount }} TELE</v-btn></span>
+          <span class="caption grey--text">Amount</span><span class="h6 "><v-btn outlined flat class="elevation-0"
+              x-small color="primary">{{ withdraw.amount }} TELE</v-btn></span>
         </div>
 
         <div class="d-flex justify-space-between">
@@ -47,19 +48,19 @@
         <div class="d-flex justify-space-between mt-2">
           <span class="caption grey--text">Account Name</span><span class="h6 "><v-btn flat class="elevation-0" x-small
               color="primary">{{
-                withdraw.accountName
-              }}</v-btn></span>
+          withdraw.accountName
+        }}</v-btn></span>
         </div>
         <div class="d-flex justify-space-between">
           <span class="caption grey--text">Account ##</span><span class="h6 ">{{ withdraw.account }}</span>
         </div>
         <div class="d-flex justify-space-between">
           <span class="caption grey--text">Bank Name:</span><span class="h6  caption">{{ withdraw.bankName
-          }}</span>
+            }}</span>
         </div>
         <div class="d-flex justify-space-between">
           <span class="caption grey--text">Iban</span><span class="h6  caption">{{ withdraw.iban === '' ? 'N/A'
-            : withdraw.iban }}</span>
+          : withdraw.iban }}</span>
         </div>
       </div>
     </v-card-text>
@@ -75,29 +76,30 @@
       <v-divider></v-divider>
       <v-select outlined :items="status" item-text="text" item-value="key" v-model="select"
         label="Select payment status"></v-select>
-      <v-select v-if="select == 4" outlined :items="reasons" label="Select rejection reason?" v-model="reason"></v-select>
+      <v-select v-if="select == 4" outlined :items="reasons" label="Select rejection reason?"
+        v-model="reason"></v-select>
     </v-card-text>
     <v-card-actions v-if="revealActions">
       <v-btn block class="elevation-0" @click="Save()" :loading="loading" v-if="select !== 0" color="primary">Save
         status</v-btn>
       <v-spacer></v-spacer>
-      <!-- <v-btn
-        @click="Refund()"
-        class="elevation-0"
-        v-if="select === 4"
-        small
-        color="yellow"
-        >Make Refund</v-btn
-      > -->
     </v-card-actions>
+    <v-dialog v-model="showProfileReport" :overlay="false" max-width="900px"
+      transition="dialog-transition">
+      <ProfileReport :ownerId="withdraw.ownerId"/>
+    </v-dialog>
   </v-card>
 </template>
 
 <script>
+import ProfileReport from "~/components/shared/ProfileReport.vue"
+
 export default {
   props: ["withdraw"],
+  components: { ProfileReport },
   data() {
     return {
+      showProfileReport: false,
       timeout: 90000,
       progress: 0,
       otp: Math.floor(Math.random() * 1000),

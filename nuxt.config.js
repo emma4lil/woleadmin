@@ -95,13 +95,13 @@ export default {
   },
 
   env: {
-    baseURL: process.env.NODE_ENV == "production" ? betaServer : localHost
+    baseURL: process.env.NODE_ENV == "production" ? prodServer : localHost
   },
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
    
-    baseUrl: process.env.NODE_ENV == "production" ? betaServer : localHost
+    baseUrl: process.env.NODE_ENV == "production" ? prodServer : localHost
   },
 
 
