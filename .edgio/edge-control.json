@@ -1,0 +1,453 @@
+{
+  "name": "AjeProd",
+  "origins": [],
+  "rules": [
+    {
+      "if": [
+        {
+          "==": [
+            {
+              "request": "path"
+            },
+            "/service-worker.js"
+          ]
+        },
+        {
+          "caching": {
+            "max_age": {
+              "200": "1y"
+            },
+            "bypass_client_cache": true
+          },
+          "origin": {
+            "set_origin": "edgio_static"
+          },
+          "url": {
+            "url_rewrite": [
+              {
+                "source": "/service-worker.js:optionalSlash(\\/?)?:optionalQuery(\\?.*)?",
+                "syntax": "path-to-regexp",
+                "destination": "/.nuxt/dist/client/service-worker.js:optionalQuery"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "if": [
+        {
+          "==": [
+            {
+              "request": "path"
+            },
+            "/:path*"
+          ]
+        },
+        {
+          "caching": {
+            "max_age": {
+              "200": "1y"
+            }
+          },
+          "origin": {
+            "set_origin": "edgio_static"
+          },
+          "url": {
+            "url_rewrite": [
+              {
+                "source": "/:path*:optionalSlash(\\/?)?:optionalQuery(\\?.*)?",
+                "syntax": "path-to-regexp",
+                "destination": "/dist\\200.html:optionalQuery"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "if": [
+        {
+          "in": [
+            {
+              "request": "path"
+            },
+            [
+              "/200.html",
+              "/favicon.ico",
+              "/",
+              "/routes.json",
+              "/v.png",
+              "/vuetify-logo.svg",
+              "/activity/",
+              "/activity",
+              "/complaints/",
+              "/complaints",
+              "/deposits/",
+              "/deposits",
+              "/disputes/",
+              "/disputes",
+              "/payments/",
+              "/payments",
+              "/settings/",
+              "/settings",
+              "/trades/",
+              "/trades",
+              "/users/",
+              "/users",
+              "/withdraws/",
+              "/withdraws",
+              "/_nuxt/0781b63.js",
+              "/_nuxt/0ca4f65.js",
+              "/_nuxt/0cd1a1a.js",
+              "/_nuxt/0ec1df6.js",
+              "/_nuxt/15acd28.js",
+              "/_nuxt/1b9fdb3.js",
+              "/_nuxt/1d02eae.js",
+              "/_nuxt/1e61d11.js",
+              "/_nuxt/1f5b366.js",
+              "/_nuxt/2238c52.js",
+              "/_nuxt/2ae7cf1.js",
+              "/_nuxt/2eb72bc.js",
+              "/_nuxt/38c7b29.js",
+              "/_nuxt/3ced11a.js",
+              "/_nuxt/4241aae.js",
+              "/_nuxt/451703d.js",
+              "/_nuxt/5c96a5a.js",
+              "/_nuxt/5cc7a08.js",
+              "/_nuxt/5d54e22.js",
+              "/_nuxt/5e2e459.js",
+              "/_nuxt/61478be.js",
+              "/_nuxt/6244a91.js",
+              "/_nuxt/6951633.js",
+              "/_nuxt/6defbd8.js",
+              "/_nuxt/72e31a3.js",
+              "/_nuxt/73b02ef.js",
+              "/_nuxt/73ecac0.js",
+              "/_nuxt/7e40f69.js",
+              "/_nuxt/93a9655.js",
+              "/_nuxt/964d9ef.js",
+              "/_nuxt/9929f8e.js",
+              "/_nuxt/a254b50.js",
+              "/_nuxt/a2e724c.js",
+              "/_nuxt/a6b24c5.js",
+              "/_nuxt/acd8edb.js",
+              "/_nuxt/b13f78c.js",
+              "/_nuxt/b4db4af.js",
+              "/_nuxt/ba7c0a2.js",
+              "/_nuxt/c148ed6.js",
+              "/_nuxt/ca2f5bf.js",
+              "/_nuxt/d12bac2.js",
+              "/_nuxt/d4a2836.js",
+              "/_nuxt/d5440e5.js",
+              "/_nuxt/de31fa8.js",
+              "/_nuxt/e0a68df.js",
+              "/_nuxt/e68e22b.js",
+              "/_nuxt/e902a30.js",
+              "/_nuxt/e9a65e1.js",
+              "/_nuxt/ef8d775.js",
+              "/_nuxt/f63be22.js",
+              "/_nuxt/f759cad.js",
+              "/_nuxt/fa01cb0.js",
+              "/_nuxt/fa2a526.js",
+              "/_nuxt/fe8ed66.js",
+              "/_nuxt/LICENSES",
+              "/_nuxt/service-worker.js",
+              "/auth/login/",
+              "/auth/login",
+              "/auth/register/",
+              "/auth/register"
+            ]
+          ]
+        },
+        {
+          "caching": {
+            "max_age": {
+              "200": "1y"
+            }
+          },
+          "origin": {
+            "set_origin": "edgio_static"
+          },
+          "url": {
+            "url_rewrite": [
+              {
+                "source": "/:path*:optionalSlash(\\/?)?:optionalQuery(\\?.*)?",
+                "syntax": "path-to-regexp",
+                "destination": "/dist/:path*:optionalQuery"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "if": [
+        {
+          "in": [
+            {
+              "request": "path"
+            },
+            [
+              "/favicon.ico",
+              "/routes.json",
+              "/v.png",
+              "/vuetify-logo.svg"
+            ]
+          ]
+        },
+        {
+          "caching": {
+            "max_age": {
+              "200": "1y"
+            }
+          },
+          "origin": {
+            "set_origin": "edgio_static"
+          },
+          "url": {
+            "url_rewrite": [
+              {
+                "source": "/:path*:optionalSlash(\\/?)?:optionalQuery(\\?.*)?",
+                "syntax": "path-to-regexp",
+                "destination": "/static/:path*:optionalQuery"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "if": [
+        {
+          "==": [
+            {
+              "request": "path"
+            },
+            "/service-worker.js"
+          ]
+        },
+        {
+          "caching": {
+            "max_age": {
+              "200": "1y"
+            },
+            "bypass_client_cache": true
+          },
+          "origin": {
+            "set_origin": "edgio_static"
+          },
+          "url": {
+            "url_rewrite": [
+              {
+                "source": "/service-worker.js:optionalSlash(\\/?)?:optionalQuery(\\?.*)?",
+                "syntax": "path-to-regexp",
+                "destination": "/dist\\_nuxt\\service-worker.js:optionalQuery"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "if": [
+        {
+          "==": [
+            {
+              "request": "path"
+            },
+            "/_nuxt/:path*"
+          ]
+        },
+        {
+          "caching": {
+            "max_age": {
+              "200": "10y"
+            },
+            "client_max_age": "10y"
+          },
+          "origin": {
+            "set_origin": "edgio_static"
+          },
+          "url": {
+            "url_rewrite": [
+              {
+                "source": "/_nuxt/:path*:optionalSlash(\\/?)?:optionalQuery(\\?.*)?",
+                "syntax": "path-to-regexp",
+                "destination": "/dist\\_nuxt\\:path*:optionalQuery"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "if": [
+        {
+          "==": [
+            {
+              "request": "path"
+            },
+            "/__edgio__/devtools/:path*"
+          ]
+        },
+        {
+          "caching": {
+            "max_age": {
+              "200": "1y"
+            },
+            "bypass_client_cache": true
+          },
+          "origin": {
+            "set_origin": "edgio_static"
+          },
+          "url": {
+            "url_rewrite": [
+              {
+                "source": "/__edgio__/devtools/:path*:optionalSlash(\\/?)?:optionalQuery(\\?.*)?",
+                "syntax": "path-to-regexp",
+                "destination": "/node_modules\\@edgio\\devtools\\widget\\:path*:optionalQuery"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "if": [
+        {
+          "and": [
+            {
+              "==": [
+                {
+                  "request": "path"
+                },
+                "/__edgio__/devtools/enable"
+              ]
+            },
+            {
+              "===": [
+                {
+                  "request": "method"
+                },
+                "GET"
+              ]
+            }
+          ]
+        },
+        {
+          "headers": {
+            "add_response_headers": {
+              "set-cookie": "edgio_devtools_enabled=true; Path=/"
+            }
+          },
+          "caching": {
+            "bypass_cache": true,
+            "bypass_client_cache": true
+          },
+          "url": {
+            "url_rewrite": [
+              {
+                "source": "/:path*:optionalSlash(\\/?)?:optionalQuery(\\?.*)?",
+                "syntax": "path-to-regexp",
+                "destination": "/:path*:optionalSlash:optionalQuery"
+              }
+            ],
+            "url_redirect": {
+              "code": 302,
+              "source": "/__edgio__/devtools/enable:optionalSlash(\\/?)?:optionalQuery(\\?.*)?",
+              "syntax": "path-to-regexp",
+              "destination": "/:optionalSlash"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "if": [
+        {
+          "and": [
+            {
+              "==": [
+                {
+                  "request": "path"
+                },
+                "/__edgio__/devtools/disable"
+              ]
+            },
+            {
+              "===": [
+                {
+                  "request": "method"
+                },
+                "GET"
+              ]
+            }
+          ]
+        },
+        {
+          "headers": {
+            "add_response_headers": {
+              "set-cookie": "edgio_devtools_enabled=false; Path=/"
+            }
+          },
+          "caching": {
+            "bypass_cache": true,
+            "bypass_client_cache": true
+          },
+          "url": {
+            "url_rewrite": [
+              {
+                "source": "/:path*:optionalSlash(\\/?)?:optionalQuery(\\?.*)?",
+                "syntax": "path-to-regexp",
+                "destination": "/:path*:optionalSlash:optionalQuery"
+              }
+            ],
+            "url_redirect": {
+              "code": 302,
+              "source": "/__edgio__/devtools/disable:optionalSlash(\\/?)?:optionalQuery(\\?.*)?",
+              "syntax": "path-to-regexp",
+              "destination": "/:optionalSlash"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "if": [
+        {
+          "==": [
+            {
+              "request": "path"
+            },
+            "/:path*"
+          ]
+        },
+        {
+          "headers": {
+            "debug_header": true
+          }
+        }
+      ]
+    },
+    {
+      "if": [
+        {
+          "=~": [
+            {
+              "request.header": "host"
+            },
+            "\\.edgio\\.link|\\.edgio-perma\\.link"
+          ]
+        },
+        {
+          "headers": {
+            "add_response_headers": {
+              "x-robots-tag": "nofollow, noindex"
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
