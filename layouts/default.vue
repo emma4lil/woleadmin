@@ -37,7 +37,7 @@
       <nav-bar />
     </v-app-bar>
     <v-main app>
-      <v-container fluid>
+      <v-container>
         <!-- {{ $auth.user }} -->
         <Nuxt />
       </v-container>

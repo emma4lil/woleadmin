@@ -1,25 +1,27 @@
 <template>
   <div>
     <div class="text-h6">Manage users</div>
-    <v-text-field class="mt-5" outlined box label="Search by email, name, date, etc..." v-model="search"></v-text-field>
+    <v-text-field v-model="search" box class="mt-5" label="Search by email, name, date, etc..." outlined></v-text-field>
 
-    <v-data-table :search="search" multi-sort dense :headers="headers" :items="users">
+    <v-data-table :headers="headers" :items="users" :search="search" dense multi-sort>
 
       <template v-slot:item.fullName="{ item }">
         <span class="blue--text font-weight-medium">{{ item.fullName }}</span>
       </template>
       <template v-slot:item.inviteStatuses="{ item }">
-        <v-chip small class="orange--text">{{ item.inviteStatusesDescription }}</v-chip>
+        <v-chip class="orange--text" small>{{ item.inviteStatusesDescription }}</v-chip>
       </template>
       <template v-slot:item.lastSeen="{ item }">
-        <div x-small class="text-caption">{{ getLastSeenString(item.lastSeen) }}</div>
+        <div class="text-caption" x-small>{{ getLastSeenString(item.lastSeen) }}</div>
       </template>
 
       <template v-slot:item.isActive="{ item }">
         <div class="">
-          <v-btn :loading="statusLoading" outlined @click="toggleUserActiveState(item)" x-small text color="success">{{
-            item.isActive ? "Blocked" :
-            "Active" }}</v-btn>
+          <v-btn :loading="statusLoading" color="success" outlined text x-small @click="toggleUserActiveState(item)">{{
+              item.isActive ? "Blocked" :
+                "Active"
+            }}
+          </v-btn>
         </div>
       </template>
 
@@ -29,11 +31,13 @@
 
       <!-- Menu Dialog -->
       <template v-slot:item.action="{ item }">
-        <v-btn @click="menuClicked(item)" x-small icon color="blue"><v-icon>mdi-menu</v-icon></v-btn>
+        <v-btn color="blue" icon x-small @click="menuClicked(item)">
+          <v-icon>mdi-menu</v-icon>
+        </v-btn>
       </template>
     </v-data-table>
 
-    <v-dialog v-model="openMenu" scrollable :overlay="false" max-width="500px" transition="dialog-transition">
+    <v-dialog v-model="openMenu" :overlay="false" max-width="500px" scrollable transition="dialog-transition">
       <v-card>
         <!-- <v-card-title primary-title>
           Profile information
@@ -41,7 +45,7 @@
         <v-card-text class="my-4">
           <!-- Basic information -->
           <div class=" d-flex justify-space-between">
-            <div style="width: 100%;" class="">
+            <div class="" style="width: 100%;">
               <div class="mx-auto d-flex justify-space-between">
                 <div class="overline">{{ currentUser.userRole }}</div>
                 <div class="text-caption mr-2 mt-1">last seen: {{ getLastSeenString(currentUser.lastSeen) }}</div>
@@ -49,7 +53,7 @@
               <h5 class="text-h6">{{ currentUser.fullName }}</h5>
             </div>
             <div>
-              <v-img width="120" :src="currentUser.avatarUrl"></v-img>
+              <v-img :src="currentUser.avatarUrl" width="120"></v-img>
             </div>
           </div>
         </v-card-text>
@@ -58,64 +62,69 @@
           <v-simple-table v-if="currentUser" dense>
             <template v-slot:default>
               <tbody>
-                <tr>
-                  <td>ID</td>
-                  <td class="text-caption">{{ currentUser.id }}</td>
-                </tr>
-                <tr>
-                  <td>Joined</td>
-                  <td>{{ new Date(currentUser.createdAt).toLocaleDateString() }}</td>
-                </tr>
-                <tr>
-                  <td>Active</td>
-                  <td> <v-btn x-small color="">{{ currentUser.isActive }}</v-btn></td>
-                </tr>
-                <tr>
-                  <td>Number of Flyers</td>
-                  <td>{{ currentUser.noOfFlyers }}</td>
-                </tr>
-                <tr>
-                  <td>Number of Trades</td>
-                  <td>{{ currentUser.noOfTrades }}</td>
-                </tr>
-                <tr>
-                  <td>Confirmed</td>
-                  <td>{{ currentUser.isConfirmed ? "Confirmed" : "Not Confirmed" }} </td>
-                </tr>
+              <tr>
+                <td>ID</td>
+                <td class="text-caption">{{ currentUser.id }}</td>
+              </tr>
+              <tr>
+                <td>Joined</td>
+                <td>{{ new Date(currentUser.createdAt).toLocaleDateString() }}</td>
+              </tr>
+              <tr>
+                <td>Active</td>
+                <td>
+                  <v-btn color="" x-small>{{ currentUser.isActive }}</v-btn>
+                </td>
+              </tr>
+              <tr>
+                <td>Number of Flyers</td>
+                <td>{{ currentUser.noOfFlyers }}</td>
+              </tr>
+              <tr>
+                <td>Number of Trades</td>
+                <td>{{ currentUser.noOfTrades }}</td>
+              </tr>
+              <tr>
+                <td>Confirmed</td>
+                <td>{{ currentUser.isConfirmed ? "Confirmed" : "Not Confirmed" }}</td>
+              </tr>
 
-                <tr>
-                  <td>Phone Number</td>
-                  <td>{{ currentUser.phoneNumber ?? "Not specified" }}</td>
-                </tr>
+              <tr>
+                <td>Phone Number</td>
+                <td>{{ currentUser.phoneNumber ?? "Not specified" }}</td>
+              </tr>
 
-                <tr class="">
-                  <td>Invite Count</td>
-                  <td>{{ currentUser.inviteCount }} Users</td>
-                </tr>
-                <tr class="">
-                  <td>Bonus Earned</td>
-                  <td>{{ currentUser.inviteEarned }} Tele</td>
-                </tr>
-                <tr class="">
-                  <td>Invite Rate</td>
-                  <td>
-                    <v-text-field suffix="Tele" class="mt-3" dense outlined name="rate" label=""
-                      v-model="currentUser.inviteRate" single-line></v-text-field>
-                  </td>
-                </tr>
-                <tr class="">
-                  <td>Current Invite Status</td>
-                  <td><v-select class="mt-3" outlined dense :items="inviteStatusItem"
-                      v-model="currentUser.inviteStatuses"></v-select></td>
+              <tr class="">
+                <td>Invite Count</td>
+                <td>{{ currentUser.inviteCount }} Users</td>
+              </tr>
+              <tr class="">
+                <td>Bonus Earned</td>
+                <td>{{ currentUser.inviteEarned }} Tele</td>
+              </tr>
+              <tr class="">
+                <td>Invite Rate</td>
+                <td>
+                  <v-text-field v-model="currentUser.inviteRate" class="mt-3" dense label="" name="rate" outlined
+                                single-line suffix="Tele"></v-text-field>
+                </td>
+              </tr>
+              <tr class="">
+                <td>Current Invite Status</td>
+                <td>
+                  <v-select v-model="currentUser.inviteStatuses" :items="inviteStatusItem" class="mt-3" dense
+                            outlined></v-select>
+                </td>
 
-                </tr>
+              </tr>
               </tbody>
             </template>
           </v-simple-table>
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn :loading="postingData" @click="postChanges()" class="white--text" small color="blue">Save changes</v-btn>
+          <v-btn :loading="postingData" class="white--text" color="blue" small @click="postChanges()">Save changes
+          </v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -133,33 +142,7 @@ export default {
   },
   data() {
     return {
-      postingData: false,
-      inviteStatusItem: [
-        {
-          text: "Normal",
-          value: 0
-        },
-        {
-          text: "Requesting",
-          value: 1
-        },
-        {
-          text: "Rejected",
-          value: 2
-        },
-        {
-          text: "Accepted",
-          value: 3
-        },
-      ],
       currentUser: {},
-      statusLoading: false,
-      openMenu: false,
-      roles: ["Regular", "Staff", "Admin"],
-      selectedRole: -1,
-      isDeactivated: false,
-      users: [],
-      search: "",
       headers: [
         {
           text: "Joined",
@@ -209,6 +192,32 @@ export default {
           value: "action"
         },
       ],
+      inviteStatusItem: [
+        {
+          text: "Normal",
+          value: 0
+        },
+        {
+          text: "Requesting",
+          value: 1
+        },
+        {
+          text: "Rejected",
+          value: 2
+        },
+        {
+          text: "Accepted",
+          value: 3
+        },
+      ],
+      isDeactivated: false,
+      openMenu: false,
+      postingData: false,
+      roles: ["Regular", "Staff", "Admin"],
+      search: "",
+      selectedRole: -1,
+      statusLoading: false,
+      users: [],
     };
   },
   methods: {
@@ -229,17 +238,17 @@ export default {
       this.postingData = true
       this.$updateUserInfo(this.currentUser).then(d => {
         this.postingData = false
-        if(d.item1){
+        if (d.item1) {
           alert(d.item2)
         }
       })
     },
     changeUserRolesAsync(role, userId) {
       this.$changeUserRoleAsync(role, userId).then((d) => {
-        if (d.success) {
-          this.$router.go()
+          if (d.success) {
+            this.$router.go()
+          }
         }
-      }
       );
     },
     // The function that takes a datetime and returns a last seen string

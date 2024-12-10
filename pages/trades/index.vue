@@ -21,7 +21,7 @@
         <v-card class="pa-4">
           <div class="text-h4 mb-3 font-weight-thin">Trade Statistics</div>
           <v-divider></v-divider>
-          <v-card-text v-if="tradeStats != null">
+          <v-card-text v-if="tradeStats">
             <div class="d-flex">
               <div
                 class="

@@ -1,15 +1,12 @@
 <template>
-  <div>
-    <v-card class="elevation-0">
-      <v-card-text>
-        <v-row>
-          <v-col>
-            <v-btn @click="newcurrencydiag = true" color="blue"
-              >New Currency</v-btn
-            >
-          </v-col>
-        </v-row>
-      </v-card-text>
+  <v-container>
+    <v-card outlined class="elevation-0">
+      <div class="d-flex justify-space-between pa-4">
+        <div class="pa-0 text-h6">Supported Currencies</div>
+        <v-btn outlined icon elevation="0" @click="newcurrencydiag = true" class="mx-2" color="primary">
+          <v-icon>mdi-plus</v-icon>
+        </v-btn>
+      </div>
       <v-card-text>
         <v-simple-table dense>
           <template v-slot:default>
@@ -86,7 +83,7 @@
     >
       <update-currency-dialog :currency="currentcurrency"/>
     </v-dialog>
-  </div>
+  </v-container>
 </template>
 
 <script>
@@ -130,7 +127,7 @@ export default {
     updateCurrencyAction(currency) {
       this.updatecurrencydiag = true;
       this.currentcurrency = currency;
-      
+
     },
   },
 };

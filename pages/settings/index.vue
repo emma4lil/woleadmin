@@ -1,11 +1,14 @@
 <template>
-  <div>
+  <v-container fluid>
     <v-row>
       <v-col class="d-flex justify-space-between mt-15">
-        <h1>System Settings</h1>
-        <v-btn text :loading="loading" @click="updateSettings()" color="primary"
-          >Save</v-btn
-        >
+        <h1>System Configurations</h1>
+        <div>
+          <v-switch dense inset ripple  label="Auto Save" />
+        </div>
+      </v-col>
+      <v-col cols="12">
+        <parameter-section Header="General" :Parameters="getGeneralParameters" />
       </v-col>
       <v-col cols="12">
         <parameter-section Header="Trades" :Parameters="getTradeParameters" />
@@ -16,20 +19,12 @@
       <v-col cols="12">
         <supported-currency />
       </v-col>
-      <v-col>
+      <v-col cols="12">
         <deposit-settings />
       </v-col>
-      <v-col class="d-flex justify-end mt-15">
-        <v-btn
-          width="200"
-          :loading="loading"
-          @click="updateSettings()"
-          color="primary"
-          >Save</v-btn
-        >
-      </v-col>
     </v-row>
-  </div>
+
+  </v-container>
 </template>
 
 <script>
@@ -47,6 +42,7 @@ export default {
   data() {
     return {
       parameters: [],
+      parametersToUpdate: [],
       loading: false,
     };
   },
@@ -55,19 +51,21 @@ export default {
       this.loading = true;
       this.$updateParameters(this.parameters).then((r) => {
         this.loading = false;
-        alert("Updated!");
       });
     },
   },
   mounted() {
-    this.$getParameters().then((d) => (this.parameters = d?.result));
+    this.$getParameters().then((d) => (this.parameters = d));
   },
   computed: {
-    getWalletParameters() {
-      return this.parameters.filter((param) => param.tags == 3);
+    getGeneralParameters() {
+      return this.parameters.filter((param) => param.tags == 0);
     },
     getTradeParameters() {
       return this.parameters.filter((param) => param.tags == 1);
+    },
+    getWalletParameters() {
+      return this.parameters.filter((param) => param.tags == 3);
     },
   },
 };
