@@ -2,15 +2,6 @@
   <div>
     <v-card class="elevation-0">
       <v-card-text>
-        <v-row>
-          <v-col>
-            <v-btn @click="newcurrencydiag = true" color="blue"
-              >New Currency</v-btn
-            >
-          </v-col>
-        </v-row>
-      </v-card-text>
-      <v-card-text>
         <v-simple-table dense>
           <template v-slot:default>
             <thead>
@@ -48,8 +39,8 @@
                     x-small
                     color="info"
                     >update</v-btn
-                  >
-                </td>
+                    >
+                  </td>
                 <td>
                   <v-btn
                     text
@@ -64,8 +55,17 @@
           </template>
         </v-simple-table>
       </v-card-text>
+      <v-card-text>
+        <v-row>
+          <v-col>
+            <v-btn @click="newcurrencydiag = true" color="blue"
+              >New Currency</v-btn
+            >
+          </v-col>
+        </v-row>
+      </v-card-text>
     </v-card>
-
+    
     <!--New Currency Dialog -->
     <v-dialog
       v-model="newcurrencydiag"
@@ -73,10 +73,10 @@
       :overlay="false"
       max-width="500px"
       transition="dialog-transition"
-    >
+      >
       <new-currency-dialog @xncdiag="newcurrencydiag = false" />
     </v-dialog>
-
+    
     <v-dialog
       v-model="updatecurrencydiag"
       scrollable

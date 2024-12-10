@@ -1,9 +1,7 @@
 <template>
     <v-card elevation="0">
         <v-row>
-            <v-col cols="12">
-                <v-btn elevation="0" @click="dialog = true" class="mx-2" color="primary">Add Account</v-btn>
-            </v-col>
+
             <v-col class="wheat">
                 <div class="d-flex flex-wrap">
                     <div v-for="(item, index) in  accounts" :key="index">
@@ -19,7 +17,8 @@
 
                             <v-card-actions>
                                 <v-spacer></v-spacer>
-                                <v-btn @click="toggleActive(item.id)" text small color="primary">{{ item.isActive ? "Disable" : "Enable" }}</v-btn>
+                                <v-btn @click="toggleActive(item.id)" text small color="primary">{{ item.isActive ?
+                        "Disable" : "Enable" }}</v-btn>
                                 <v-btn @click="deleteAccount(item.id)" icon text small color="primary">
                                     <v-icon small color="red">mdi-delete</v-icon>
                                 </v-btn>
@@ -28,6 +27,9 @@
 
                     </div>
                 </div>
+            </v-col>
+            <v-col cols="12">
+                <v-btn elevation="0" @click="dialog = true" class="mx-2" color="primary">Add Account</v-btn>
             </v-col>
 
         </v-row>
@@ -39,10 +41,11 @@
                 </v-card-title>
                 <v-card-text class="mt-2">
                     <v-text-field v-model="payload.bank" outlined name="name" label="Bank" id="id"></v-text-field>
-                    <v-text-field v-model="payload.name" outlined name="name" label="Account name" id="id"></v-text-field>
+                    <v-text-field v-model="payload.name" outlined name="name" label="Account name"
+                        id="id"></v-text-field>
                     <v-text-field v-model="payload.number" outlined name="name" label="Number" id="id"></v-text-field>
-                    <v-select item-text="title" item-value="value" outlined :items="currencyMap" v-model="payload.currency"
-                        label="Select currency"></v-select>
+                    <v-select item-text="title" item-value="value" outlined :items="currencyMap"
+                        v-model="payload.currency" label="Select currency"></v-select>
                 </v-card-text>
                 <v-card-actions>
                     <v-spacer></v-spacer>

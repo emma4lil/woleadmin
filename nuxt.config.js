@@ -1,5 +1,9 @@
 import colors from 'vuetify/es5/util/colors'
 
+let localHost = "https://localhost:44366"
+let betaServer = "https://ajebeta.azurewebsites.net"
+let prodServer =  "https://ajeappservice.azurewebsites.net"
+
 export default {
   target: "static",
   // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
@@ -91,13 +95,16 @@ export default {
   },
 
   env: {
+
     baseURL: process.env.NODE_ENV == "production" ? "https://ajeappservice.azurewebsites.net" : "https://localhost:44366"
+
   },
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
    
     baseUrl: process.env.NODE_ENV == "production" ? "https://ajeappservice.azurewebsites.net" : "https://localhost:44366"
+
   },
 
 

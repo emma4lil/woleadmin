@@ -1,17 +1,20 @@
 <template>
   <v-row>
     <v-col cols="12">
-      <div>Trade Dispute Resolution</div>
-      <!-- {{ getChatsForTrade }} -->
+      <v-card>
+        <v-card-title primary-title>
+          Dispute Resolutions
+        </v-card-title>
+      </v-card>
     </v-col>
-    <v-col class="lighten-4" cols="4">
+    <v-col class="lighten-4" cols="5">
       <v-row>
-        <v-col cols="" v-for="(ticket, i) in tickets" :key="i">
+        <v-col cols="6" v-for="(ticket, i) in tickets" :key="i">
           <ticket v-on:moderate="setTicket(ticket)" :index="i" :ticket="ticket" />
         </v-col>
       </v-row>
     </v-col>
-    <v-col class="parent" cols="8">
+    <v-col class="parent" cols="7">
       <chatbox v-if="currentTicket" :ticket="currentTicket" :chats="chats" class="sticky" />
     </v-col>
 

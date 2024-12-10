@@ -16,12 +16,13 @@
             </div>
             <div class="green--text caption" v-if="parameter.temp">M</div>
           </div>
-          <div class="mt-5 mr-2">
+          <div style="width: 35%;" class="mt-5 mr-2">
             <v-switch
               v-if="parameter.type == 0"
               v-model="parameter.value"
             ></v-switch>
             <v-text-field
+            width="500"
               v-else
               @input="parameter.temp = parameter.value"
               dense

@@ -5,7 +5,9 @@ module.exports = {
   connector: '@edgio/nuxt',
 
   // The name of the site in Edgio to which this app should be deployed.
+
    name: 'AjeProd',
+
 
   // The name of the team in Edgio to which this app should be deployed.
   // team: 'my-team-name',

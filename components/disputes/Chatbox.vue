@@ -1,29 +1,23 @@
 <template>
-  <v-card color="grey lighten-4" elevation-10 class="pa-2">
+  <v-card color="" elevation-10 class="pa-2">
     <div primary-title>
-      <!-- {{ ticket }} -->
+  
       <div class="pb-2">
         <v-card elevation="0">
           <div class="d-flex justify-space-around pt-2">
             <v-chip outlined small class="subtitle-2">{{
-              ticket.flyerOwner
-            }}</v-chip>
+        ticket.flyerOwner
+      }} (owner)</v-chip>
             vs
             <v-chip outlined small class="subtitle-2">{{
-              ticket.consumer
-            }}</v-chip>
+          ticket.consumer
+        }} <span v-if="ticket.whoIsPaying"> (buyer)</span><span v-if="!ticket.whoIsPaying">
+                (seller)</span></v-chip>
           </div>
-          <p class="px-4 pt-3 caption grey--text">{{ ticket.tradeId }}</p>
+          <p class="px-4 pt-3 caption text-center">Flier Description: {{ ticket.flyerDescription }}</p>
           <v-card-text>
-            <v-btn
-              :loading="loading_modbtn"
-              @click="setModerator"
-              elevation="0"
-              block
-              color="primary"
-              dark
-              >Moderate this</v-btn
-            >
+            <v-btn :loading="loading_modbtn" @click="setModerator" elevation="0" block color="primary" dark>Moderate
+              this</v-btn>
           </v-card-text>
         </v-card>
       </div>
@@ -31,28 +25,16 @@
     <v-row>
       <!-- Chat Box -->
       <v-col cols="12" md="6">
-        <v-card
-          height="500"
-          width=""
-          outlined
-          class="d-flex flex-column justify-end"
-        >
+        <v-card height="500" width="" outlined class="d-flex flex-column justify-end">
 
           <v-card-text ref="box" class="ma-2 overflow-x-auto">
-            <v-sheet
-              outlined
-              rounded="lg"
-              class="pa-2 my-2"
-              color="grey lighten-5"
-              v-for="(chat, idx) in chats"
-              :key="idx"
-            >
+            <v-sheet outlined rounded="lg" class="pa-2 my-2" color="" v-for="(chat, idx) in chats" :key="idx">
               <h5 v-if="!chat.isAdminChat" class="subtitle">{{ chat.senderEmail }}</h5>
-              <h5 v-else class="font-weight-bold blue--text">Aje</h5>
+              <h5 v-else class="font-weight-bold">Aje</h5>
               <p>
                 {{ chat.message }}
               </p>
-              <div class="d-flex justify-space-between grey--text">
+              <div class="d-flex justify-space-between">
                 <h6>{{ new Date(chat.createdAt).toLocaleString() }}</h6>
                 <h6>sent</h6>
               </div>
@@ -60,60 +42,27 @@
           </v-card-text>
 
           <v-card-actions>
-            <v-text-field
-              ref="vtf"
-              dense
-              color="blue"
-              append-outer-icon="mdi-send"
-              @click:append-outer="send"
-              outlined
-              filled
-              :label="inputBar.title"
-              v-model="msg"
-            ></v-text-field>
+            <v-text-field ref="vtf" dense color="blue" append-outer-icon="mdi-send" @click:append-outer="send" outlined
+              filled :label="inputBar.title" v-model="msg"></v-text-field>
           </v-card-actions>
         </v-card>
       </v-col>
       <!-- Action Center -->
       <v-col cols="12" md="6">
         <v-card outlined class="">
-          <div class="blue pa-4 white--text mb-4">Resolve Dispute Actions</div>
+          <div style="height: 10%;" class="blue pa-4 white--text mb-4">Resolve Dispute Actions</div>
           <v-card-text>
-            <v-select
-              outlined
-              :items="participants"
-              item-text="user"
-              item-value="Id"
-              v-model="selected_resolvee_price"
-              label="Who gets the trade cost?"
-            ></v-select>
-            <v-select
-              outlined
-              :items="participants"
-              item-text="user"
-              item-value="Id"
-              v-model="selected_resolvee_dfee"
-              label="Who gets the delivery fee?"
-            ></v-select>
-            <v-btn
-              :loading="isResolving_btn"
-              @click="resolve"
-              elevation="0"
-              block
-              color="blue"
-              dark
-              >Resolve</v-btn
-            >
+            <v-select outlined :items="participants" item-text="user" item-value="Id" v-model="selected_resolvee_price"
+              label="Who gets the trade cost?"></v-select>
+            <v-select outlined :items="participants" item-text="user" item-value="Id" v-model="selected_resolvee_dfee"
+              label="Who gets the delivery fee?"></v-select>
+            <v-btn :loading="isResolving_btn" @click="resolve" elevation="0" block color="blue" dark>Resolve</v-btn>
           </v-card-text>
         </v-card>
       </v-col>
     </v-row>
     <!-- {{ chats }} -->
-    <v-snackbar
-      :color="snackBar.color"
-      @timeout="3000"
-      v-model="snackBar.showSnackBar"
-    >
+    <v-snackbar :color="snackBar.color" @timeout="3000" v-model="snackBar.showSnackBar">
       {{ snackBar.message }}
     </v-snackbar>
   </v-card>
