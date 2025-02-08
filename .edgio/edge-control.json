@@ -1,5 +1,5 @@
 {
-  "name": "AjeAdminUI",
+  "name": "ajeprod",
   "origins": [],
   "rules": [
     {
@@ -27,7 +27,7 @@
               {
                 "source": "/service-worker.js:optionalSlash(\\/?)?:optionalQuery(\\?.*)?",
                 "syntax": "path-to-regexp",
-                "destination": "/.nuxt/dist/client/service-worker.js"
+                "destination": "/.nuxt/dist/client/service-worker.js:optionalQuery"
               }
             ]
           }
@@ -58,7 +58,7 @@
               {
                 "source": "/:path*:optionalSlash(\\/?)?:optionalQuery(\\?.*)?",
                 "syntax": "path-to-regexp",
-                "destination": "/dist\\200.html"
+                "destination": "/dist\\200.html:optionalQuery"
               }
             ]
           }
@@ -79,10 +79,12 @@
               "/routes.json",
               "/v.png",
               "/vuetify-logo.svg",
-              "/bankaccount/",
-              "/bankaccount",
+              "/activity/",
+              "/activity",
               "/complaints/",
               "/complaints",
+              "/deposits/",
+              "/deposits",
               "/disputes/",
               "/disputes",
               "/payments/",
@@ -95,54 +97,71 @@
               "/users",
               "/withdraws/",
               "/withdraws",
-              "/_nuxt/02de372.js",
-              "/_nuxt/05430fc.js",
-              "/_nuxt/07759d6.js",
-              "/_nuxt/241c235.js",
-              "/_nuxt/248bc00.js",
-              "/_nuxt/2fafee5.js",
-              "/_nuxt/3321482.js",
-              "/_nuxt/3650528.js",
-              "/_nuxt/372cf56.js",
-              "/_nuxt/39707d6.js",
-              "/_nuxt/45f3dc5.js",
-              "/_nuxt/593397e.js",
-              "/_nuxt/5c685f3.js",
-              "/_nuxt/6102537.js",
-              "/_nuxt/6ef02b2.js",
-              "/_nuxt/7ac2840.js",
-              "/_nuxt/7bf6b4a.js",
-              "/_nuxt/7fd2ec4.js",
-              "/_nuxt/832bc3a.js",
-              "/_nuxt/83c997d.js",
-              "/_nuxt/891dfb7.js",
-              "/_nuxt/893e0ec.js",
-              "/_nuxt/8c7ba77.js",
-              "/_nuxt/8d30148.js",
-              "/_nuxt/96959fd.js",
-              "/_nuxt/ae4804d.js",
-              "/_nuxt/b5a9d86.js",
-              "/_nuxt/ba3dd2e.js",
-              "/_nuxt/c4ec263.js",
-              "/_nuxt/c518c91.js",
-              "/_nuxt/cdbe0db.js",
-              "/_nuxt/d129ffb.js",
-              "/_nuxt/d2e7701.js",
-              "/_nuxt/d99ef56.js",
-              "/_nuxt/dfd57a7.js",
-              "/_nuxt/e223510.js",
-              "/_nuxt/e3b7abd.js",
-              "/_nuxt/eb66f9f.js",
-              "/_nuxt/f1a7a9e.js",
-              "/_nuxt/f2f2079.js",
-              "/_nuxt/f68d59a.js",
-              "/_nuxt/f899af9.js",
+              "/_nuxt/0280d4c.js",
+              "/_nuxt/05f5de7.js",
+              "/_nuxt/0cc1d23.js",
+              "/_nuxt/14edcd4.js",
+              "/_nuxt/151ba49.js",
+              "/_nuxt/174c323.js",
+              "/_nuxt/1a83533.js",
+              "/_nuxt/1bf4c92.js",
+              "/_nuxt/1c70944.js",
+              "/_nuxt/1d98fa4.js",
+              "/_nuxt/1f92ca2.js",
+              "/_nuxt/2cefa52.js",
+              "/_nuxt/3a86109.js",
+              "/_nuxt/3e01a45.js",
+              "/_nuxt/3ecb04f.js",
+              "/_nuxt/48c73de.js",
+              "/_nuxt/49003c4.js",
+              "/_nuxt/4fde29b.js",
+              "/_nuxt/54d714f.js",
+              "/_nuxt/58a4320.js",
+              "/_nuxt/5b1eb75.js",
+              "/_nuxt/5cd7d4f.js",
+              "/_nuxt/5ef4d3d.js",
+              "/_nuxt/61586f0.js",
+              "/_nuxt/65a20bc.js",
+              "/_nuxt/66540ec.js",
+              "/_nuxt/739a9c0.js",
+              "/_nuxt/74f7e0d.js",
+              "/_nuxt/76f3d71.js",
+              "/_nuxt/7d0e9fa.js",
+              "/_nuxt/8c0483e.js",
+              "/_nuxt/8f507da.js",
+              "/_nuxt/9646df1.js",
+              "/_nuxt/9c6f4ad.js",
+              "/_nuxt/9cccea2.js",
+              "/_nuxt/a07ec20.js",
+              "/_nuxt/a9467b0.js",
+              "/_nuxt/a953aa6.js",
+              "/_nuxt/ae9a193.js",
+              "/_nuxt/b2e83d9.js",
+              "/_nuxt/b9e4741.js",
+              "/_nuxt/be03507.js",
+              "/_nuxt/c2d4171.js",
+              "/_nuxt/c3f0108.js",
+              "/_nuxt/c6b0f88.js",
+              "/_nuxt/d9b2189.js",
+              "/_nuxt/d9b39d1.js",
+              "/_nuxt/e01bfba.js",
+              "/_nuxt/e1a07b0.js",
+              "/_nuxt/e3c407a.js",
+              "/_nuxt/e52369a.js",
+              "/_nuxt/ee69672.js",
+              "/_nuxt/f3dd8d8.js",
+              "/_nuxt/f60a076.js",
+              "/_nuxt/fcf5ffc.js",
               "/_nuxt/LICENSES",
               "/_nuxt/service-worker.js",
+              "/activity/logs/",
+              "/activity/logs",
               "/auth/login/",
               "/auth/login",
               "/auth/register/",
-              "/auth/register"
+              "/auth/register",
+              "/users/manage/",
+              "/users/manage"
             ]
           ]
         },
@@ -160,7 +179,7 @@
               {
                 "source": "/:path*:optionalSlash(\\/?)?:optionalQuery(\\?.*)?",
                 "syntax": "path-to-regexp",
-                "destination": "/dist/:path*"
+                "destination": "/dist/:path*:optionalQuery"
               }
             ]
           }
@@ -196,7 +215,7 @@
               {
                 "source": "/:path*:optionalSlash(\\/?)?:optionalQuery(\\?.*)?",
                 "syntax": "path-to-regexp",
-                "destination": "/static/:path*"
+                "destination": "/static/:path*:optionalQuery"
               }
             ]
           }
@@ -228,7 +247,7 @@
               {
                 "source": "/service-worker.js:optionalSlash(\\/?)?:optionalQuery(\\?.*)?",
                 "syntax": "path-to-regexp",
-                "destination": "/dist\\_nuxt\\service-worker.js"
+                "destination": "/dist\\_nuxt\\service-worker.js:optionalQuery"
               }
             ]
           }
@@ -260,7 +279,7 @@
               {
                 "source": "/_nuxt/:path*:optionalSlash(\\/?)?:optionalQuery(\\?.*)?",
                 "syntax": "path-to-regexp",
-                "destination": "/dist\\_nuxt\\:path*"
+                "destination": "/dist\\_nuxt\\:path*:optionalQuery"
               }
             ]
           }
@@ -292,7 +311,7 @@
               {
                 "source": "/__edgio__/devtools/:path*:optionalSlash(\\/?)?:optionalQuery(\\?.*)?",
                 "syntax": "path-to-regexp",
-                "destination": "/node_modules\\@edgio\\devtools\\widget\\:path*"
+                "destination": "/node_modules\\@edgio\\devtools\\widget\\:path*:optionalQuery"
               }
             ]
           }
@@ -343,7 +362,7 @@
               "code": 302,
               "source": "/__edgio__/devtools/enable:optionalSlash(\\/?)?:optionalQuery(\\?.*)?",
               "syntax": "path-to-regexp",
-              "destination": "/"
+              "destination": "/:optionalSlash"
             }
           }
         }
@@ -393,7 +412,7 @@
               "code": 302,
               "source": "/__edgio__/devtools/disable:optionalSlash(\\/?)?:optionalQuery(\\?.*)?",
               "syntax": "path-to-regexp",
-              "destination": "/"
+              "destination": "/:optionalSlash"
             }
           }
         }
@@ -435,6 +454,5 @@
         }
       ]
     }
-  ],
-  "edge_functions": {}
+  ]
 }

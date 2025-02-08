@@ -1,7 +1,19 @@
 <template>
   <v-row>
     <v-col cols="12">
-      <div class="text-h4">Flyers Management</div>
+      <v-card elevation="0" width="50%">
+        <v-card-title primary-title>
+          flyers
+        </v-card-title>
+        <v-card-text class="d-flex justify-space-between">
+          <v-text-field class="mr-2" width="70%" dense name="flierFilter" label="Search by any column..." value="" single-line
+            outlined></v-text-field>
+          <div style="width: 150px;" class="mr-2">
+            <v-select :items='["Active", "Blocked", "In Review"]' v-model="value" label="Status" outlined dense></v-select>
+          </div>
+          <v-btn height="40" text outlined class="text" color="success">fILTER</v-btn>
+        </v-card-text>
+      </v-card>
 
     </v-col>
     <v-col cols="12" lg="12">
@@ -11,16 +23,14 @@
             <v-col class="" cols="12">
               <v-card elevation="0">
                 <v-card-title>
-
-
                   <v-text-field v-model="search" append-icon="mdi-magnify" label="Search by email,date,id" single-line
                     hide-details></v-text-field>
                   <v-spacer></v-spacer>
                 </v-card-title>
                 <v-data-table dense class="mt-8" :headers="headers" :items="flyers" :search="search"
                   @click:row="rowClicked">
-                  <template v-slot:item.created="{item}">
-                    {{new Date(item.created).toLocaleString()}}
+                  <template v-slot:item.created="{ item }">
+                    {{ new Date(item.created).toLocaleString() }}
                   </template>
 
                   <template v-slot:item.action="{ item }">
@@ -250,7 +260,7 @@ export default {
     seeTradeAction() {
       this.dialog = true;
     },
-    deleteAction() {},
+    deleteAction() { },
   },
 };
 </script>

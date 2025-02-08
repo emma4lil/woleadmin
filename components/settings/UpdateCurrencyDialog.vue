@@ -28,7 +28,8 @@ export default {
   methods: {
     save() {
       let payload = {};
-      (payload.id = this.currency.id), (payload.rate = this.val);
+      payload.id = this.currency.id;
+      payload.rate = this.val;
       this.$updateCurrency(payload).then((r) => this.$router.go());
     },
   },

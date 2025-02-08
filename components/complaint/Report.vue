@@ -1,12 +1,11 @@
 <template>
-  <v-card class="elevation-1">
+  <v-card outlined class="elevation-1">
     <div class="d-flex justify-space-between pa-4">
-      <div class="text-h6">#{{ index }}</div>
-      <div v-if="!info.resolved" class="grey--text caption">Not resolved</div>
-      <div v-else class="grey--text caption">Resolved</div>
+      <div class="caption">{{ new Date(info.created).toDateString() }}</div>
+      <v-chip x-small rounded-0 v-if="!info.resolved" class="grey--text caption">Not resolved</v-chip>
+      <v-chip x-small rounded-0 v-else class="grey--text caption">Resolved</v-chip>
     </div>
 
-    <div class="mx-4 caption">{{ info.created }}</div>
     <v-divider></v-divider>
     <v-card-text>
       <v-sheet class="rounded pa-2" color="grey lighten-3">

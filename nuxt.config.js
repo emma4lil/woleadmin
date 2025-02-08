@@ -1,5 +1,9 @@
 import colors from 'vuetify/es5/util/colors'
 
+let localHost = "https://localhost:44366"
+let betaServer = "https://ajebeta.azurewebsites.net"
+let prodServer =  "https://ajeappservice.azurewebsites.net"
+
 export default {
   target: "static",
   // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
@@ -36,7 +40,8 @@ export default {
   plugins: [
     "~/services/auth.js",
     "~/services/admin_repo.js",
-    "~/services/persist.js"
+    "~/services/persist.js",
+    "~/services/dashboard.js"
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -90,22 +95,19 @@ export default {
   },
 
   env: {
-    baseURL: process.env.NODE_ENV == "production" ? "https://ajebeta.azurewebsites.net" : "https://localhost:44366"
+    baseURL: process.env.NODE_ENV == "production" ? "https://ajeappservice.azurewebsites.net" : "https://localhost:44366"
   },
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
-   
-    baseUrl: process.env.NODE_ENV == "production" ? "https://ajebeta.azurewebsites.net" : "https://localhost:44366"
+    baseUrl: process.env.NODE_ENV == "production" ? "https://ajeappservice.azurewebsites.net" : "https://localhost:44366"
   },
-
-
 
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
   vuetify: {
     customVariables: ['~/assets/variables.scss'],
     theme: {
-      dark: false,
+      dark: true,
       themes: {
         dark: {
           primary: colors.blue.darken2,
