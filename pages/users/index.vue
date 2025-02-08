@@ -43,17 +43,20 @@
           <v-toolbar-title>Actions</v-toolbar-title>
           <v-spacer></v-spacer>
           <div style="width: 20%;" class="mr-2 mt-6">
-            <v-select dense label="Filter Invite Statues" solo :items="['All','Requesting', 'Granted']"
-                      v-model="selectedFilter"/>
+            <v-select dense label="Filter Invite Statues" solo :items="['All','Requesting', 'Granted','Rejected', 'Normal']" v-model="selectedFilter"/>
           </div>
-          <div v-if="selected.length > 0" style="width: 10%;" class="mr-2 mt-6">
-            <v-text-field placeholder="5" dense solo v-model="invite.rate" label="Rate"/>
+          <div class="d-flex mt-6">
+            <div v-if="selected.length > 0" style="width: 10%;" class="mr-2">
+              <v-text-field placeholder="5" dense solo v-model="invite.rate" label="Rate"/>
+            </div>
+            <div v-if="selected.length > 0" style="width: 20%;" class="mr-2">
+              <v-select dense label="Set Status" solo :items="inviteStatues" :item-text="inviteStatues.text" :item-value="inviteStatues.value" v-model="invite.status"/>
+            </div>
           </div>
 
-          <v-btn :loading="invite.isSending" v-if="selected.length > 0" color="primary" @click="sendInvitesActivationRequest">Invite {{ selected.length }}
-            users
+          <v-btn :loading="invite.isSending" v-if="selected.length > 0" color="primary" @click="sendInvitesActivationRequest">
+            Execute for {{ selected.length }} users
           </v-btn>
-<!--          <v-btn class="ml-1" v-if="selected.length > 0" color="red" @click="openMenu = true">Deactivate Invites</v-btn>-->
         </v-toolbar>
       </template>
       <!-- Custom Slots -->
@@ -168,10 +171,16 @@ export default {
       users: [],
       selected: [],
       currentUser: {},
+      inviteStatues: [
+        { text: "Normal", value: 0 },
+        { text: "Reject", value: 2 },
+        { text: "Grant", value: 3 }
+      ],
       invite: {
         rate: 5,
         selected: [],
-        isSending: false
+        isSending: false,
+        status: 0
       },
       headers: [
         {text: "Joined", value: "createdAt", sortable: true},
@@ -213,9 +222,10 @@ export default {
         if (response) {
           console.log(response)
           this.invite.isSending = false;
-          alert("Invitation requests sent successfully!");
+
         }
         this.invite.isSending = false;
+        alert("Invitation requests sent successfully!, Reload page to see changes");
       });
     },
     toggleUserActiveState(item) {
