@@ -1,288 +1,257 @@
 <template>
-  <div>
-    <div class="text-h6">Manage users</div>
-    <v-text-field v-model="search" box class="mt-5" label="Search by email, name, date, etc..." outlined></v-text-field>
+  <v-container fluid>
+    <!-- Page Title -->
+    <v-row align="center">
+      <v-col>
+        <div class="text-h5 font-weight-medium">User Management</div>
+      </v-col>
+    </v-row>
 
-    <v-data-table :headers="headers" :items="users" :search="search" dense multi-sort>
+    <!-- Search Bar -->
+    <v-row>
+      <v-col>
+        <div class="d-flex">
+          <div style="width: 70%;">
+            <v-text-field
+              v-model="search"
+              class="my-3"
+              label="Search by email, name, date, etc..."
+              solo
+              clearable
+              append-inner-icon="mdi-magnify"
+            ></v-text-field>
+          </div>
+        </div>
 
+      </v-col>
+    </v-row>
+
+
+    <!-- Data Table -->
+    <v-data-table
+      v-model="selected"
+      :headers="headers"
+      :items="filteredUsers"
+      :search="search"
+      show-select
+      dense
+      outlined
+      class="elevation-1 rounded-lg"
+    >
+      <template v-slot:top>
+        <v-toolbar flat>
+          <v-toolbar-title>Actions</v-toolbar-title>
+          <v-spacer></v-spacer>
+          <div style="width: 20%;" class="mr-2 mt-6">
+            <v-select dense label="Filter Invite Statues" solo :items="['All','Requesting', 'Granted']"
+                      v-model="selectedFilter"/>
+          </div>
+          <div v-if="selected.length > 0" style="width: 10%;" class="mr-2 mt-6">
+            <v-text-field placeholder="5" dense solo v-model="invite.rate" label="Rate"/>
+          </div>
+
+          <v-btn :loading="invite.isSending" v-if="selected.length > 0" color="primary" @click="sendInvitesActivationRequest">Invite {{ selected.length }}
+            users
+          </v-btn>
+<!--          <v-btn class="ml-1" v-if="selected.length > 0" color="red" @click="openMenu = true">Deactivate Invites</v-btn>-->
+        </v-toolbar>
+      </template>
+      <!-- Custom Slots -->
       <template v-slot:item.fullName="{ item }">
-        <span class="blue--text font-weight-medium">{{ item.fullName }}</span>
+        <span class="blue--text text-body-1 font-weight-bold">{{ item.fullName }}</span>
       </template>
+
       <template v-slot:item.inviteStatuses="{ item }">
-        <v-chip class="orange--text" small>{{ item.inviteStatusesDescription }}</v-chip>
+        <v-chip class="ma-1" color="orange lighten-4" text-color="orange darken-2" small>
+          {{ item.inviteStatusesDescription }}
+        </v-chip>
       </template>
+
       <template v-slot:item.lastSeen="{ item }">
-        <div class="text-caption" x-small>{{ getLastSeenString(item.lastSeen) }}</div>
+        <div class="text-caption grey--text">{{ getLastSeenString(item.lastSeen) }}</div>
       </template>
 
       <template v-slot:item.isActive="{ item }">
-        <div class="">
-          <v-btn :loading="statusLoading" color="success" outlined text x-small @click="toggleUserActiveState(item)">{{
-              item.isActive ? "Blocked" :
-                "Active"
-            }}
-          </v-btn>
-        </div>
+        <v-btn
+          :loading="statusLoading"
+          color="primary"
+          outlined
+          small
+          class="mx-1"
+          @click="toggleUserActiveState(item)"
+        >
+          {{ item.isActive ? "Deactivate" : "Activate" }}
+        </v-btn>
       </template>
 
       <template v-slot:item.createdAt="{ item }">
         {{ new Date(item.createdAt).toDateString() }}
       </template>
 
-      <!-- Menu Dialog -->
       <template v-slot:item.action="{ item }">
-        <v-btn color="blue" icon x-small @click="menuClicked(item)">
-          <v-icon>mdi-menu</v-icon>
+        <v-btn icon small @click="menuClicked(item)">
+          <v-icon>mdi-dots-vertical</v-icon>
         </v-btn>
       </template>
     </v-data-table>
 
-    <v-dialog v-model="openMenu" :overlay="false" max-width="500px" scrollable transition="dialog-transition">
+    <!-- User Details Dialog -->
+    <v-dialog v-model="openMenu" max-width="500px" scrollable>
       <v-card>
-        <!-- <v-card-title primary-title>
-          Profile information
-        </v-card-title> -->
-        <v-card-text class="my-4">
-          <!-- Basic information -->
-          <div class=" d-flex justify-space-between">
-            <div class="" style="width: 100%;">
-              <div class="mx-auto d-flex justify-space-between">
-                <div class="overline">{{ currentUser.userRole }}</div>
-                <div class="text-caption mr-2 mt-1">last seen: {{ getLastSeenString(currentUser.lastSeen) }}</div>
-              </div>
-              <h5 class="text-h6">{{ currentUser.fullName }}</h5>
-            </div>
-            <div>
-              <v-img :src="currentUser.avatarUrl" width="120"></v-img>
-            </div>
-          </div>
-        </v-card-text>
-        <!-- Property Table -->
+        <v-card-title class="font-weight-medium text-h6">User Details</v-card-title>
         <v-card-text>
-          <v-simple-table v-if="currentUser" dense>
-            <template v-slot:default>
-              <tbody>
-              <tr>
-                <td>ID</td>
-                <td class="text-caption">{{ currentUser.id }}</td>
-              </tr>
-              <tr>
-                <td>Joined</td>
-                <td>{{ new Date(currentUser.createdAt).toLocaleDateString() }}</td>
-              </tr>
-              <tr>
-                <td>Active</td>
-                <td>
-                  <v-btn color="" x-small>{{ currentUser.isActive }}</v-btn>
-                </td>
-              </tr>
-              <tr>
-                <td>Number of Flyers</td>
-                <td>{{ currentUser.noOfFlyers }}</td>
-              </tr>
-              <tr>
-                <td>Number of Trades</td>
-                <td>{{ currentUser.noOfTrades }}</td>
-              </tr>
-              <tr>
-                <td>Confirmed</td>
-                <td>{{ currentUser.isConfirmed ? "Confirmed" : "Not Confirmed" }}</td>
-              </tr>
-
-              <tr>
-                <td>Phone Number</td>
-                <td>{{ currentUser.phoneNumber ?? "Not specified" }}</td>
-              </tr>
-
-              <tr class="">
-                <td>Invite Count</td>
-                <td>{{ currentUser.inviteCount }} Users</td>
-              </tr>
-              <tr class="">
-                <td>Bonus Earned</td>
-                <td>{{ currentUser.inviteEarned }} Tele</td>
-              </tr>
-              <tr class="">
-                <td>Invite Rate</td>
-                <td>
-                  <v-text-field v-model="currentUser.inviteRate" class="mt-3" dense label="" name="rate" outlined
-                                single-line suffix="Tele"></v-text-field>
-                </td>
-              </tr>
-              <tr class="">
-                <td>Current Invite Status</td>
-                <td>
-                  <v-select v-model="currentUser.inviteStatuses" :items="inviteStatusItem" class="mt-3" dense
-                            outlined></v-select>
-                </td>
-
-              </tr>
-              </tbody>
-            </template>
+          <v-row align="center">
+            <v-col cols="8">
+              <div class="text-subtitle-1 font-weight-bold">{{ currentUser.fullName }}</div>
+              <div class="text-caption grey--text">Role: {{ currentUser.userRole }}</div>
+              <div class="text-caption grey--text">Last seen: {{ getLastSeenString(currentUser.lastSeen) }}</div>
+            </v-col>
+            <v-col cols="4">
+              <v-img :src="currentUser.avatarUrl" class="rounded-circle" width="80"></v-img>
+            </v-col>
+          </v-row>
+          <v-divider class="my-4"></v-divider>
+          <v-simple-table dense>
+            <tbody>
+            <tr>
+              <td class="text-caption font-weight-medium">ID</td>
+              <td class="text-body-2">{{ currentUser.id }}</td>
+            </tr>
+            <tr>
+              <td class="text-caption font-weight-medium">Joined</td>
+              <td class="text-body-2">{{ new Date(currentUser.createdAt).toLocaleDateString() }}</td>
+            </tr>
+            <tr>
+              <td class="text-caption font-weight-medium">Active</td>
+              <td>
+                <v-btn :color="currentUser.isActive ? 'success' : 'error'" small>
+                  {{ currentUser.isActive ? "Active" : "Inactive" }}
+                </v-btn>
+              </td>
+            </tr>
+            <tr>
+              <td class="text-caption font-weight-medium">Phone</td>
+              <td class="text-body-2">{{ currentUser.phoneNumber || "Not specified" }}</td>
+            </tr>
+            <tr>
+              <td class="text-caption font-weight-medium">Invite Count</td>
+              <td class="text-body-2">{{ currentUser.inviteCount }} Users</td>
+            </tr>
+            </tbody>
           </v-simple-table>
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn :loading="postingData" class="white--text" color="blue" small @click="postChanges()">Save changes
-          </v-btn>
+          <v-btn color="primary" small :loading="postingData" @click="postChanges">Save Changes</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
-  </div>
+
+    <!-- Profile Report-->
+    <v-dialog v-model="showProfileReport" :overlay="false" max-width="1000px"
+              transition="dialog-transition">
+      <ProfileReport :ownerId="currentUser.id"/>
+    </v-dialog>
+  </v-container>
 </template>
 
-
 <script>
+import ProfileReport from "~/components/shared/ProfileReport.vue";
+
 export default {
   name: "Users",
-  mounted() {
-    this.$getAllUsers().then((d) => {
-      this.users = d.data;
-    });
-  },
+  components: {ProfileReport},
   data() {
     return {
-      currentUser: {},
-      headers: [
-        {
-          text: "Joined",
-          value: "createdAt",
-          sortable: true
-        },
-        {
-          text: "Email",
-          value: "email",
-          align: "start",
-          sortable: true
-        },
-        {
-          text: "Fullname",
-          value: "fullName",
-        },
-        {
-          text: "Fliers",
-          value: "noOfFlyers",
-
-        },
-        {
-          text: "Trades",
-          value: "noOfTrades",
-
-        },
-        {
-          text: "Role",
-          value: "userRole",
-
-        },
-        {
-          text: "Invite Status",
-          value: "inviteStatuses",
-
-        },
-        {
-          text: "Status",
-          value: "isActive",
-        },
-        {
-          text: "Last Seen",
-          value: "lastSeen",
-        },
-        {
-          text: "More",
-          value: "action"
-        },
-      ],
-      inviteStatusItem: [
-        {
-          text: "Normal",
-          value: 0
-        },
-        {
-          text: "Requesting",
-          value: 1
-        },
-        {
-          text: "Rejected",
-          value: 2
-        },
-        {
-          text: "Accepted",
-          value: 3
-        },
-      ],
-      isDeactivated: false,
-      openMenu: false,
-      postingData: false,
-      roles: ["Regular", "Staff", "Admin"],
       search: "",
-      selectedRole: -1,
-      statusLoading: false,
+      selectedFilter: "All",
       users: [],
+      selected: [],
+      currentUser: {},
+      invite: {
+        rate: 5,
+        selected: [],
+        isSending: false
+      },
+      headers: [
+        {text: "Joined", value: "createdAt", sortable: true},
+        {text: "Email", value: "email", align: "start", sortable: true},
+        {text: "Fullname", value: "fullName"},
+        {text: "Invite Status", value: "inviteStatuses", sortable: true},
+        {text: "Status", value: "isActive"},
+        {text: "Last Seen", value: "lastSeen"},
+        {text: "Action", value: "action"},
+      ],
+      openMenu: false,
+      showProfileReport: false,
+      statusLoading: false,
+      postingData: false,
     };
   },
+  mounted() {
+    this.$getAllUsers().then((response) => {
+      this.users = response.data;
+    });
+  },
+  computed: {
+    // Filter users based on search query
+    filteredUsers() {
+      if (this.selectedFilter === "All") return this.users;
+      return this.users.filter((user) => {
+        return (
+          user.inviteStatusesDescription.toLowerCase().includes(this.selectedFilter.toLowerCase())
+        );
+      });
+    },
+  },
   methods: {
+    sendInvitesActivationRequest() {
+      this.invite.isSending = true;
+      this.invite.selected = this.selected.map((user) => user.id);
+
+      this.$sendInvitationRequests(this.invite).then((response) => {
+        if (response) {
+          console.log(response)
+          this.invite.isSending = false;
+          alert("Invitation requests sent successfully!");
+        }
+        this.invite.isSending = false;
+      });
+    },
     toggleUserActiveState(item) {
-      this.statusLoading = true
-      this.$toggleUserStatebyId(item.id).then((d) => {
-        if (d.success) {
+      this.statusLoading = true;
+      this.$toggleUserStatebyId(item.id).then((response) => {
+        if (response.success) {
           item.isActive = !item.isActive;
-          this.statusLoading = false
+          this.statusLoading = false;
         }
       });
     },
-    menuClicked(current) {
-      this.currentUser = current
-      this.openMenu = true
+    menuClicked(user) {
+      this.currentUser = {}
+      this.currentUser = user;
+      this.showProfileReport = true;
     },
     postChanges() {
-      this.postingData = true
-      this.$updateUserInfo(this.currentUser).then(d => {
-        this.postingData = false
-        if (d.item1) {
-          alert(d.item2)
+      this.postingData = true;
+      this.$updateUserInfo(this.currentUser).then((response) => {
+        this.postingData = false;
+        if (response.success) {
+          alert("Changes saved successfully!");
         }
-      })
+      });
     },
-    changeUserRolesAsync(role, userId) {
-      this.$changeUserRoleAsync(role, userId).then((d) => {
-          if (d.success) {
-            this.$router.go()
-          }
-        }
-      );
-    },
-    // The function that takes a datetime and returns a last seen string
     getLastSeenString(date) {
-      // Get the current datetime
-      let now = new Date();
+      const now = new Date();
+      const diff = now - new Date(date);
 
-      // Get the time span between the date and the current datetime in milliseconds
-      let diff = now - new Date(date);
-
-      // Check the difference and return the appropriate string
-      if (diff < 60000) {
-        // Less than a minute
-        return "Just now";
-      } else if (diff < 3600000) {
-        // Less than an hour
-        return Math.floor(diff / 60000) + " minutes ago";
-      } else if (diff < 86400000) {
-        // Less than a day
-        return Math.floor(diff / 3600000) + " hours ago";
-      } else if (diff < 172800000) {
-        // Less than two days
-        return "Yesterday";
-      } else if (diff < 2592000000) {
-        // Less than a month
-        return Math.floor(diff / 86400000) + " days ago";
-      } else if (diff < 31536000000) {
-        // Less than a year
-        return "Last month";
-      } else {
-        // More than a year
-        return "😶‍🌫️";
-      }
-    }
+      if (diff < 60000) return "Just now";
+      if (diff < 3600000) return `${Math.floor(diff / 60000)} minutes ago`;
+      if (diff < 86400000) return `${Math.floor(diff / 3600000)} hours ago`;
+      if (diff < 172800000) return "Yesterday";
+      if (diff < 2592000000) return `${Math.floor(diff / 86400000)} days ago`;
+      return new Date(date).toLocaleDateString();
+    },
   },
 };
 </script>

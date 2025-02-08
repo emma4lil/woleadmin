@@ -10,6 +10,8 @@
   "dist/trades": "dist/trades/index.html",
   "dist/users": "dist/users/index.html",
   "dist/withdraws": "dist/withdraws/index.html",
+  "dist/activity/logs": "dist/activity/logs/index.html",
   "dist/auth/login": "dist/auth/login/index.html",
-  "dist/auth/register": "dist/auth/register/index.html"
+  "dist/auth/register": "dist/auth/register/index.html",
+  "dist/users/manage": "dist/users/manage/index.html"
 }

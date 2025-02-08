@@ -1,5 +1,5 @@
 <template>
-    <v-card class="pa-4 mx-3" outlined elevation="0">
+    <v-card class="pa-4 " outlined elevation="0">
       <div class="d-flex justify-space-between pa-4">
         <div class="pa-0 text-h6">Bank Accounts for deposits</div>
         <v-btn outlined icon elevation="0" @click="dialog = true" class="mx-2" color="primary">
@@ -33,9 +33,6 @@
 
                     </div>
                 </div>
-            </v-col>
-            <v-col cols="12">
-                <v-btn elevation="0" @click="dialog = true" class="mx-2" color="primary">Add Account</v-btn>
             </v-col>
 
         </v-row>
@@ -92,6 +89,10 @@ export default {
                     title: "USD",
                     value: 111
                 },
+              {
+                title: "GBP",
+                value: 666
+              }
             ],
             accounts: [],
             payload: {

@@ -1,9 +1,9 @@
 <template>
-  <v-container>
+  <div>
     <v-card outlined class="elevation-0">
       <div class="d-flex justify-space-between pa-4">
         <div class="pa-0 text-h6">Supported Currencies</div>
-        <v-btn outlined icon elevation="0" @click="newcurrencydiag = true" class="mx-2" color="primary">
+        <v-btn disabled outlined icon elevation="0" @click="newcurrencydiag = true" class="mx-2" color="primary">
           <v-icon>mdi-plus</v-icon>
         </v-btn>
       </div>
@@ -83,7 +83,7 @@
     >
       <update-currency-dialog :currency="currentcurrency"/>
     </v-dialog>
-  </v-container>
+  </div>
 </template>
 
 <script>

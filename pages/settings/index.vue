@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid>
+  <div>
     <v-row>
       <v-col class="d-flex justify-space-between mt-15">
         <h1>System Configurations</h1>
@@ -7,14 +7,20 @@
           <v-switch dense inset ripple  label="Auto Save" />
         </div>
       </v-col>
-      <v-col cols="12">
+      <v-col v-if="parameters.length !== 0" cols="12">
         <parameter-section Header="General" :Parameters="getGeneralParameters" />
       </v-col>
-      <v-col cols="12">
+      <v-col v-if="parameters.length !== 0" cols="12">
+        <parameter-section Header="Fliers" :Parameters="getFlierParameters" />
+      </v-col>
+      <v-col v-if="parameters.length !== 0" cols="12">
         <parameter-section Header="Trades" :Parameters="getTradeParameters" />
       </v-col>
-      <v-col cols="12">
+      <v-col v-if="parameters.length !== 0" cols="12">
         <parameter-section Header="Wallets" :Parameters="getWalletParameters" />
+      </v-col>
+      <v-col v-if="parameters.length !== 0" cols="12">
+        <parameter-section Header="Invites" :Parameters="getInvitesParameters" />
       </v-col>
       <v-col cols="12">
         <supported-currency />
@@ -24,7 +30,7 @@
       </v-col>
     </v-row>
 
-  </v-container>
+  </div>
 </template>
 
 <script>
@@ -54,19 +60,36 @@ export default {
       });
     },
   },
-  mounted() {
+  created() {
     this.$getParameters().then((d) => (this.parameters = d));
   },
   computed: {
     getGeneralParameters() {
-      return this.parameters.filter((param) => param.tags == 0);
+      return Array.isArray(this.parameters)
+        ? this.parameters.filter((param) => param.tags == 0)
+        : [];
     },
     getTradeParameters() {
-      return this.parameters.filter((param) => param.tags == 1);
+      return Array.isArray(this.parameters)
+        ? this.parameters.filter((param) => param.tags == 1)
+        : [];
     },
     getWalletParameters() {
-      return this.parameters.filter((param) => param.tags == 3);
+      return Array.isArray(this.parameters)
+        ? this.parameters.filter((param) => param.tags == 3)
+        : [];
+    },
+    getInvitesParameters() {
+      return Array.isArray(this.parameters)
+        ? this.parameters.filter((param) => param.tags == 6)
+        : [];
+    },
+    getFlierParameters() {
+      return Array.isArray(this.parameters)
+        ? this.parameters.filter((param) => param.tags == 2)
+        : [];
     },
   },
+
 };
 </script>

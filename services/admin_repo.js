@@ -1,3 +1,6 @@
+import UserManagement from "~/services/UserManagement";
+import {UsersFilter} from "~/service_models/UserModels";
+
 class AdminServices {
   constructor(axios) {
     this.axios = axios;
@@ -196,11 +199,16 @@ class AdminServices {
     return res
   }
 
-
 }
 
 export default ({ app, $axios }, inject) => {
   var admin = new AdminServices($axios);
+  var userManagement = new UserManagement($axios);
+
+  // User Management
+  inject("getUsersV2", (filter) => userManagement.getUsersV2(filter))
+  inject("sendInvitationRequests", (payload) => userManagement.sendInvitationRequests(payload))
+
   inject('getMetrics', () => admin.getMetrics());
   // flyers+
   inject('getFlyers', () => admin.getFlyers())
@@ -246,7 +254,6 @@ export default ({ app, $axios }, inject) => {
   inject("deleteAccount", (id) => admin.deleteAccount(id))
   inject("getDepositClaims", (filter) => admin.getDepositClaims(filter))
   inject("processDeposit", (claim) => admin.ProcessDeposit(claim))
-
 
   // Parameters
   inject("getParameters", () => admin.getParameters())
