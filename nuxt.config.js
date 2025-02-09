@@ -95,12 +95,12 @@ export default {
   },
 
   env: {
-    baseURL: process.env.NODE_ENV == "production" ? "https://ajebeta.azurewebsites.net" : "https://localhost:44366"
+    baseURL: process.env.NODE_ENV == "production" ? "https://ajeappservice.azurewebsites.net" : "https://localhost:44366"
   },
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
-    baseUrl: process.env.NODE_ENV == "production" ? "https://ajebeta.azurewebsites.net" : "https://localhost:44366"
+    baseUrl: process.env.NODE_ENV == "production" ? "https://ajeappservice.azurewebsites.net" : "https://localhost:44366"
   },
 
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
