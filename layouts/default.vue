@@ -131,6 +131,7 @@ export default {
     items: [
       ["mdi-chart-areaspline", "Dashboard", "/"],
       ["mdi-note-plus", "Activity Logs", "/activity"],
+      ["mdi-message","Broadcast Messages", "/broadcast"],
       ["mdi-wallet-giftcard", "Flyers Management", "/flyers"],
       ["mdi-alpha-t-box", "Trade Management", "/trades"],
       ["mdi-gavel", "Dispute Resolutions", "/disputes"],

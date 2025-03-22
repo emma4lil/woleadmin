@@ -1,4 +1,5 @@
 import UserManagement from "~/services/UserManagement";
+import BroadcastMessages from "~/services/BroadcastMessages";
 import {UsersFilter} from "~/service_models/UserModels";
 
 class AdminServices {
@@ -204,6 +205,11 @@ class AdminServices {
 export default ({ app, $axios }, inject) => {
   var admin = new AdminServices($axios);
   var userManagement = new UserManagement($axios);
+  var broadcastMessages = new BroadcastMessages($axios);
+
+  // Broadcast Messages
+  inject("getBroadcastMessages", () => broadcastMessages.getBroadcastMessages())
+  inject("sendBroadcastMessage", (payload) => broadcastMessages.sendBroadcastMessage(payload))
 
   // User Management
   inject("getUsersV2", (filter) => userManagement.getUsersV2(filter))
